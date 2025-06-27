@@ -81,7 +81,10 @@
         "performance bond",
         "advance payment bond",
         "warranty bond",
-        "maintenance bond"
+        "maintenance bond",
+        "anzahlungsbürgschaft",
+        "performancebürgschaft",
+        "gewährleistungsbürgschaft"
       ],
       "yellow": [
         "derivable",
@@ -95,8 +98,8 @@
     },
     "type": "fuzzy",
     "thresholds": {
-      "green": 92,
-      "yellow": 80
+      "green": 85,
+      "yellow": 70
     }
   },
   {
@@ -108,23 +111,27 @@
         "performance",
         "advance payment",
         "warranty",
-        "maintenance"
+        "maintenance",
+        "anzahlungsbürgschaft",
+        "gewährleistungsbürgschaft"
       ],
       "yellow": [
         "unclear"
       ],
       "red": [
-        "stand-by letter of credit",
+        "stand‑by letter of credit",
         "letter of credit",
         "global guarantee",
         "stand‑by lc",
-        "sbLC"
+        "sblc",
+        "stand‑by letter of credit",
+        "globalbürgschaft"
       ]
     },
     "type": "fuzzy",
     "thresholds": {
-      "green": 92,
-      "yellow": 80
+      "green": 85,
+      "yellow": 70
     }
   },
   {
@@ -135,23 +142,28 @@
       "green": [
         "first demand",
         "after breach",
-        "subject to"
+        "subject to",
+        "nach vertragsverletzung"
       ],
       "yellow": [
         "unclear wording",
-        "simple first demand"
+        "simple first demand",
+        "unbestimmte formulierung"
       ],
       "red": [
         "on first demand",
         "unconditional",
         "without prerequisites",
-        "payable on first demand"
+        "payable on first demand",
+        "auf erstes anfordern",
+        "erstes anfordern",
+        "unwiderruflich auf erstes anfordern"
       ]
     },
     "type": "fuzzy",
     "thresholds": {
-      "green": 92,
-      "yellow": 80
+      "green": 85,
+      "yellow": 70
     }
   },
   {
@@ -163,21 +175,27 @@
         "reference to contract",
         "contract dated",
         "contract number",
-        "parties stated"
+        "parties stated",
+        "vertragsnummer",
+        "vertragsdatum",
+        "parteien"
       ],
       "yellow": [
         "unclear reference",
-        "incomplete reference"
+        "incomplete reference",
+        "unklare referenz"
       ],
       "red": [
         "abstract guarantee",
-        "no reference to underlying obligation"
+        "no reference to underlying obligation",
+        "abstrakte bürgschaft",
+        "ohne vertragsbezug"
       ]
     },
     "type": "fuzzy",
     "thresholds": {
-      "green": 92,
-      "yellow": 80
+      "green": 85,
+      "yellow": 70
     }
   },
   {
@@ -209,7 +227,8 @@
     "patterns": {
       "yellow": [
         "promptly",
-        "without undue delay"
+        "without undue delay",
+        "unverzüglich"
       ]
     },
     "type": "numeric_days",
@@ -226,12 +245,14 @@
         "german law",
         "urgd 758",
         "urgd",
-        "not specified"
+        "not specified",
+        "deutsches recht"
       ],
       "yellow": [
         "switzerland",
         "ch law",
-        "eu member state law"
+        "eu member state law",
+        "schweizer recht"
       ],
       "red": [
         "non-eu",
@@ -243,8 +264,8 @@
     },
     "type": "fuzzy",
     "thresholds": {
-      "green": 92,
-      "yellow": 80
+      "green": 85,
+      "yellow": 70
     }
   },
   {
@@ -256,13 +277,16 @@
         "european union",
         "eu",
         "fos",
-        "freedom of services"
+        "freedom of services",
+        "deutschland",
+        "bundesrepublik deutschland"
       ],
       "yellow": [
         "switzerland",
         "ch",
         "third country",
-        "fronting"
+        "fronting",
+        "schweiz"
       ],
       "red": [
         "iran",
@@ -272,8 +296,8 @@
     },
     "type": "fuzzy",
     "thresholds": {
-      "green": 92,
-      "yellow": 80
+      "green": 85,
+      "yellow": 70
     }
   },
   {
@@ -286,21 +310,25 @@
         "waives the defenses",
         "§§ 770",
         "§§ 771",
-        "defences waived"
+        "defences waived",
+        "einredeverzicht",
+        "verzicht auf einreden"
       ],
       "yellow": [
         "unclear waiver wording",
-        "may waive defenses"
+        "may waive defenses",
+        "unklarer einredeverzicht"
       ],
       "red": [
         "no waiver",
-        "defenses not waived"
+        "defenses not waived",
+        "kein einredeverzicht"
       ]
     },
     "type": "fuzzy",
     "thresholds": {
-      "green": 92,
-      "yellow": 80
+      "green": 85,
+      "yellow": 70
     }
   },
   {
@@ -308,16 +336,11 @@
     "name": "Liability under MiLoG / AEntG / SGB",
     "severity": "medium",
     "patterns": {
-      "green": [
-        "MiLoG",
-        "AEntG",
-        "SGB"
-      ],
-      "yellow": [],
       "red": [
         "MiLoG",
         "AEntG",
-        "SGB"
+        "SGB",
+        "mindestlohngesetz"
       ]
     },
     "type": "presence_inverse",
@@ -341,7 +364,8 @@
       "green": [
         "URDG 758",
         "ICC URDG",
-        "uniform rules for demand guarantees"
+        "uniform rules for demand guarantees",
+        "icc regeln für erstattungsfähige zahlungsgarantien"
       ],
       "yellow": [
         "ICC rules",
@@ -352,8 +376,8 @@
     },
     "type": "fuzzy",
     "thresholds": {
-      "green": 92,
-      "yellow": 80
+      "green": 85,
+      "yellow": 70
     }
   },
   {
@@ -365,23 +389,28 @@
         "expiry",
         "return of guarantee",
         "cancellation",
-        "expiration date"
+        "expiration date",
+        "rückgabe",
+        "endgültiges ablaufdatum"
       ],
       "yellow": [
         "vague",
         "unclear",
-        "on demand"
+        "on demand",
+        "unklare regelung"
       ],
       "red": [
         "no expiry",
         "no return clause",
-        "extension options"
+        "extension options",
+        "kein ablaufdatum",
+        "keine rückgabeklausel"
       ]
     },
     "type": "fuzzy",
     "thresholds": {
-      "green": 92,
-      "yellow": 80
+      "green": 85,
+      "yellow": 70
     }
   }
 ]
