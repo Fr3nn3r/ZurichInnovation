@@ -2,8 +2,8 @@ import openai
 from pinecone.grpc import PineconeGRPC as Pinecone
 
 # ✅ Config
-openai.api_key = ""
-pc = Pinecone(api_key="")
+# openai.api_key = ""
+# pc = Pinecone(api_key="")
 index = pc.Index("zurich-bond-clauses")
 
 # ✅ Your test clause
