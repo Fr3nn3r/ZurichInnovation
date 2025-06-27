@@ -14,6 +14,7 @@ from clause_splitter import split_clauses
 import os
 from unidecode import unidecode
 import language_tool_python
+import argparse
 
 
 # --- Text Normalization ---
@@ -267,24 +268,19 @@ def evaluate_clause(clause_text, rules):
     return clause_results
 
 
-def main():
-    """Main function to orchestrate the file evaluation."""
-    if len(sys.argv) < 2:
-        print(f"Usage: python {sys.argv[0]} <path_to_file>")
-        sys.exit(1)
+def generate_training_data(file_path, rules, output_path):
+    """
+    Generates a list of [rule_id, score, label] for calibrating fuzzy thresholds.
+    Appends to the output file if it already exists.
+    """
+    print(f"Processing {os.path.basename(file_path)} for training data...")
 
-    file_path = sys.argv[1]
-
-    # Create output directory and define output path
-    output_dir = "output"
-    os.makedirs(output_dir, exist_ok=True)
-    base_name = os.path.basename(file_path)
-    output_filename = os.path.splitext(base_name)[0] + "_evaluation.json"
-    output_path = os.path.join(output_dir, output_filename)
-
-    # Adjust path to be relative to script location
-    script_dir = os.path.dirname(__file__)
-    rules_path = os.path.join(script_dir, "../rules_detailed.json")
+    # Load existing scores if the file exists
+    if os.path.exists(output_path):
+        with open(output_path, "r", encoding="utf-8") as f:
+            all_scores = json.load(f)
+    else:
+        all_scores = []
 
     try:
         with open(file_path, "r", encoding="utf-8") as f:
@@ -292,44 +288,111 @@ def main():
     except FileNotFoundError:
         print(f"Error: The file '{file_path}' was not found.")
         sys.exit(1)
-    except Exception as e:
-        print(f"Error reading file: {e}")
+
+    clauses = split_clauses(text)
+
+    for clause in clauses:
+        clause_text = clause["clause"]
+        for rule in rules:
+            if rule.get("type") == "fuzzy":
+                patterns = rule.get("patterns", {})
+
+                # Green/Yellow patterns are considered "good" matches (label=True)
+                for pattern in patterns.get("green", []) + patterns.get("yellow", []):
+                    score = fuzz.partial_ratio(
+                        clause_text, pattern, processor=normalize_text
+                    )
+                    all_scores.append([rule["id"], score, True])
+
+                # Red patterns are "bad" matches (label=False)
+                for pattern in patterns.get("red", []):
+                    score = fuzz.partial_ratio(
+                        clause_text, pattern, processor=normalize_text
+                    )
+                    all_scores.append([rule["id"], score, False])
+
+    # Save the combined results
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(all_scores, f, indent=2)
+    print(f"Training data updated in '{output_path}'")
+
+
+def run_evaluation(file_path, rules, output_path):
+    """
+    Runs the standard evaluation and saves the report.
+    """
+    # This function will contain the original logic from main()
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            text = f.read()
+    except FileNotFoundError:
+        print(f"Error: The file '{file_path}' was not found.")
         sys.exit(1)
 
     clauses = split_clauses(text)
-    rules = load_rules(rules_path)
-
     clause_level_results = []
     cross_clause_data = []
 
     for i, clause in enumerate(clauses, 1):
         clause_text = clause["clause"]
-
-        # Perform standard evaluation
         evaluations = evaluate_clause(clause_text, rules)
         clause_level_results.append(
             {"clause_number": i, "clause_text": clause_text, "evaluations": evaluations}
         )
-
-        # Extract data for the final cross-clause check
         cross_clause_data.append(check_cross_clause_data(clause_text))
 
-    # Perform the final, document-level check
     document_level_results = perform_final_cross_clause_check(cross_clause_data)
 
-    # Combine all results
     final_output = {
         "clause_level_evaluation": clause_level_results,
         "document_level_evaluation": document_level_results,
     }
 
-    # Save the results to a JSON file in the output folder
-    try:
-        with open(output_path, "w", encoding="utf-8") as f:
-            json.dump(final_output, f, indent=2, ensure_ascii=False)
-        print(f"Evaluation complete. Results saved to '{output_path}'")
-    except Exception as e:
-        print(f"Error saving results to JSON: {e}")
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(final_output, f, indent=2, ensure_ascii=False)
+    print(f"Evaluation complete. Results saved to '{output_path}'")
+
+
+def main():
+    """Main function to orchestrate file processing."""
+    parser = argparse.ArgumentParser(
+        description="Evaluate a document against a set of rules."
+    )
+    parser.add_argument("file_path", help="Path to the text file to evaluate.")
+    parser.add_argument(
+        "--generate-training-data",
+        action="store_true",
+        help="Generate training data for threshold calibration.",
+    )
+    parser.add_argument("--output-file", help="Optional path for the output file.")
+
+    args = parser.parse_args()
+
+    # Common setup
+    output_dir = "output"
+    os.makedirs(output_dir, exist_ok=True)
+    script_dir = os.path.dirname(__file__)
+    rules_path = os.path.join(script_dir, "../rules_detailed.json")
+    rules = load_rules(rules_path)
+
+    if args.generate_training_data:
+        output_path = (
+            args.output_file
+            if args.output_file
+            else os.path.join(output_dir, "training_scores.json")
+        )
+        generate_training_data(args.file_path, rules, output_path)
+    else:
+        output_path = (
+            args.output_file
+            if args.output_file
+            else os.path.join(
+                output_dir,
+                os.path.splitext(os.path.basename(args.file_path))[0]
+                + "_evaluation.json",
+            )
+        )
+        run_evaluation(args.file_path, rules, output_path)
 
 
 if __name__ == "__main__":

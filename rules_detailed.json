@@ -83,8 +83,18 @@
         "warranty bond",
         "maintenance bond",
         "anzahlungsbürgschaft",
-        "performancebürgschaft",
-        "gewährleistungsbürgschaft"
+        "vorauszahlungsbürgschaft",
+        "gewährleistungsbürgschaft",
+        "mängelansprüchebürgschaft",
+        "vertragserfüllungsbürgschaft",
+        "ausführungsbürgschaft",
+        "bietungsbürgschaft",
+        "offertgarantie",
+        "warenlieferungsbürgschaft",
+        "lieferbürgschaft",
+        "liefergarantie",
+        "bauhandwerkersicherungsbürgschaft",
+        "zahlungsbürgschaft"
       ],
       "yellow": [
         "derivable",
@@ -98,8 +108,8 @@
     },
     "type": "fuzzy",
     "thresholds": {
-      "green": 85,
-      "yellow": 70
+      "green": 60,
+      "yellow": 45
     }
   },
   {
@@ -108,12 +118,13 @@
     "severity": "high",
     "patterns": {
       "green": [
-        "performance",
-        "advance payment",
-        "warranty",
-        "maintenance",
-        "anzahlungsbürgschaft",
-        "gewährleistungsbürgschaft"
+        "performance", "advance payment", "warranty", "maintenance",
+        "anzahlungsbürgschaft", "vorauszahlungsbürgschaft",
+        "gewährleistungsbürgschaft", "mängelansprüchebürgschaft",
+        "vertragserfüllungsbürgschaft", "ausführungsbürgschaft",
+        "bietungsbürgschaft", "offertgarantie",
+        "warenlieferungsbürgschaft", "lieferbürgschaft",
+        "bauhandwerkersicherungsbürgschaft", "zahlungsbürgschaft"
       ],
       "yellow": [
         "unclear"
@@ -126,13 +137,10 @@
         "sblc",
         "stand‑by letter of credit",
         "globalbürgschaft"
-      ]
-    },
-    "type": "fuzzy",
-    "thresholds": {
-      "green": 85,
-      "yellow": 70
-    }
+    ]
+  },
+  "type": "fuzzy",
+  "thresholds": { "green": 60, "yellow": 45 }
   },
   {
     "id": 7,
