@@ -9,10 +9,8 @@ with open("chunks_v3_cleaned_normalized.json", "r", encoding="utf-8") as f:
     chunks = json.load(f)
 
 # ✅ Step 2: OpenAI & Pinecone config
-openai.api_key = "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"
-pc = Pinecone(
-    api_key="pcsk_Um1CV_CGg6L8mCas75VBHgGMTrjCry2huzbS9xmfweSN7Azvod3ju6p8NKea4pM1rQi44"
-)
+openai.api_key = "TBD"
+pc = Pinecone(api_key="TBD")
 
 index = pc.Index("zurich-bond-clauses")
 
