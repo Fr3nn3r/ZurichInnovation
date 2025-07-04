@@ -4,7 +4,11 @@ from langdetect import detect
 import pandas as pd
 
 # --- load rules ---
-rules = json.load(open("rules.json"))
+rules = json.load(open("rules_detailed.json"))
+
+
+def get_rules():
+    return rules
 
 
 # --- helper funcs ---
@@ -45,16 +49,12 @@ def evaluate_clause(clause_text):
     return "GREEN", None, "all checks passed"
 
 
-# --- pipeline entry ---
-def screen_pdf(path):
-    results = []
-    with pdfplumber.open(path) as pdf:
-        raw_text = "\n".join(p.extract_text() or "" for p in pdf.pages)
-    lang = detect(raw_text)
-    clauses = re.split(r"\n\s*(?:§?\d+\S*\.?|[A-Z ]{4,})\s*\n", raw_text)[
-        1:
-    ]  # naive split
+def split_into_clauses(text):
+    return re.split(r"\n\s*(?:§?\d+\S*\.?|[A-Z ]{4,})\s*\n", text)[1:]  # naive split
 
+
+def screen_clauses(clauses, rules):
+    results = []
     for idx, text in enumerate(clauses, 1):
         colour, rule_id, ev = evaluate_clause(text)
         results.append(
@@ -66,7 +66,21 @@ def screen_pdf(path):
                 "evidence": ev,
             }
         )
-    json.dump(results, open(f"{path}.json", "w"), indent=2, ensure_ascii=False)
+    return results
+
+
+# --- pipeline entry ---
+def screen_pdf(path):
+    with pdfplumber.open(path) as pdf:
+        text = ""
+        for page in pdf.pages:
+            text += page.extract_text()
+
+    clauses = split_into_clauses(text)
+
+    # screen all clauses
+    results = screen_clauses(clauses, rules)
+    print(results)
 
 
 if __name__ == "__main__":

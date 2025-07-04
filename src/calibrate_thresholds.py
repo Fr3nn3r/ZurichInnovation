@@ -1,68 +1,57 @@
 import json
-import matplotlib.pyplot as plt
 import numpy as np
-import os
+import matplotlib.pyplot as plt
 import argparse
+import os
 
 
-def calibrate_thresholds():
+def plot_score_distributions(rule_id, score_paths):
     """
-    Loads training scores from a specified file and generates a plot for a
-    specific rule ID to help visualize and determine optimal thresholds.
+    Plots the distribution of scores for a specific rule from one or more score files.
     """
-    parser = argparse.ArgumentParser(
-        description="Generate score distribution plot for a specific rule."
-    )
-    parser.add_argument("scores_path", help="Path to the training scores JSON file.")
-    parser.add_argument(
-        "rule_id", type=int, help="The rule ID to generate the plot for."
-    )
-    args = parser.parse_args()
+    plt.figure(figsize=(10, 6))
 
-    try:
-        with open(args.scores_path, "r") as f:
-            scores = json.load(f)
-    except FileNotFoundError:
-        print(f"Error: Could not find '{args.scores_path}'.")
-        print("Please ensure the training data has been generated.")
-        return
+    for scores_path in score_paths:
+        try:
+            with open(scores_path, "r") as f:
+                scores_data = json.load(f)
+        except FileNotFoundError:
+            print(f"Error: Scores file not found at {scores_path}")
+            continue
 
-    # Process only the specified rule
-    rule_id = args.rule_id
-    pos = [score for r, score, label in scores if r == rule_id and label]
-    neg = [score for r, score, label in scores if r == rule_id and not label]
+        # Filter scores for the specified rule and exclude 'N/A'
+        rule_scores = [
+            score
+            for r_id, score, label in scores_data
+            if r_id == rule_id and isinstance(score, (int, float))
+        ]
 
-    if not pos and not neg:
-        print(f"No data found for Rule {rule_id}. Exiting.")
-        return
+        if not rule_scores:
+            print(f"No numerical scores found for Rule {rule_id} in {scores_path}")
+            continue
 
-    plt.figure()
-    plt.hist([pos, neg], bins=20, label=["good", "bad"], stacked=True, density=True)
-
-    if pos:
-        green_threshold = np.percentile(pos, 10)
-        yellow_threshold = np.percentile(pos, 50)
-        plt.axvline(
-            green_threshold,
-            color="g",
-            linestyle="--",
-            label=f"Green (10th %): {green_threshold:.2f}",
+        # Plot histogram
+        label = (
+            os.path.basename(scores_path).replace(".json", "").replace("_", " ").title()
         )
-        plt.axvline(
-            yellow_threshold,
-            color="y",
-            linestyle=":",
-            label=f"Yellow (50th %): {yellow_threshold:.2f}",
-        )
+        plt.hist(rule_scores, bins=20, alpha=0.7, label=label, density=True)
 
     plt.title(f"Score Distribution for Rule {rule_id}")
     plt.xlabel("Fuzzy Match Score")
-    plt.ylabel("Density")
+    plt.ylabel("Frequency Density")
     plt.legend()
-
-    print(f"Displaying plot for Rule {rule_id}. Close the plot window to continue.")
+    plt.grid(True)
     plt.show()
 
 
 if __name__ == "__main__":
-    calibrate_thresholds()
+    parser = argparse.ArgumentParser(
+        description="Plot score distributions for a given rule from multiple files."
+    )
+    parser.add_argument("rule_id", type=int, help="The rule ID to plot.")
+    parser.add_argument(
+        "score_paths", nargs="+", help="Path(s) to the scores JSON file(s)."
+    )
+    args = parser.parse_args()
+
+    plot_score_distributions(args.rule_id, args.score_paths)

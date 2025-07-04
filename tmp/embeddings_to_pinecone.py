@@ -3,14 +3,15 @@ import openai
 from pinecone.grpc import PineconeGRPC as Pinecone
 import uuid
 from tqdm import tqdm
+import os
 
 # ✅ Step 1: Load your cleaned clauses
 with open("chunks_v3_cleaned_normalized.json", "r", encoding="utf-8") as f:
     chunks = json.load(f)
 
 # ✅ Step 2: OpenAI & Pinecone config
-# openai.api_key = ""
-# pc = Pinecone(api_key="")
+openai.api_key = os.getenv("OPENAI_API_KEY")
+pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
 
 index = pc.Index("zurich-bond-clauses")
 

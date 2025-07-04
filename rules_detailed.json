@@ -148,31 +148,24 @@
     "severity": "critical",
     "patterns": {
       "green": [
-        "first demand",
-        "after breach",
-        "subject to",
-        "nach vertragsverletzung"
+        "first demand", "after breach", "subject to", "nach vertragsverletzung",
+        "after default is proven", "subject to court judgment",
+        "nach schriftlichem Nachweis der Vertragsverletzung"
       ],
       "yellow": [
-        "unclear wording",
-        "simple first demand",
-        "unbestimmte formulierung"
+        "unclear wording", "simple first demand", "on simple demand",
+        "auf bloße anforderung", "unbestimmte formulierung"
       ],
       "red": [
-        "on first demand",
-        "unconditional",
-        "without prerequisites",
-        "payable on first demand",
-        "auf erstes anfordern",
-        "erstes anfordern",
-        "unwiderruflich auf erstes anfordern"
+        "on first demand", "upon first written demand", "unconditional",
+        "without prerequisites", "without protest or demur", "without proof",
+        "payable on first demand", "auf erstes anfordern", "erstes anfordern",
+        "unwiderruflich auf erstes anfordern", "unabhängig von einreden",
+        "unabhängige garantie"
       ]
     },
     "type": "fuzzy",
-    "thresholds": {
-      "green": 85,
-      "yellow": 70
-    }
+    "thresholds": { "green": 70, "yellow": 50 }
   },
   {
     "id": 8,
@@ -180,31 +173,22 @@
     "severity": "critical",
     "patterns": {
       "green": [
-        "reference to contract",
-        "contract dated",
-        "contract number",
-        "parties stated",
-        "vertragsnummer",
-        "vertragsdatum",
-        "parteien"
+        "reference to contract", "contract dated", "contract number",
+        "parties stated", "vertragsnummer", "vertragsdatum", "parteien",
+        "vertrag vom", "auftragsnr", "purchase order", "PO"
       ],
       "yellow": [
-        "unclear reference",
-        "incomplete reference",
-        "unklare referenz"
+        "unclear reference", "incomplete reference", "unklare referenz",
+        "no contract date", "no po number"
       ],
       "red": [
-        "abstract guarantee",
-        "no reference to underlying obligation",
-        "abstrakte bürgschaft",
-        "ohne vertragsbezug"
+        "abstract guarantee", "independent guarantee",
+        "no reference to underlying obligation", "abstrakte bürgschaft",
+        "ohne vertragsbezug", "unabhängige zahlungspflicht", "nicht akzessorisch"
       ]
     },
     "type": "fuzzy",
-    "thresholds": {
-      "green": 85,
-      "yellow": 70
-    }
+    "thresholds": { "green": 70, "yellow": 50 }
   },
   {
     "id": 9,
@@ -272,40 +256,31 @@
     },
     "type": "fuzzy",
     "thresholds": {
-      "green": 85,
-      "yellow": 70
+      "green": 60,
+      "yellow": 45
     }
   },
   {
     "id": 13,
     "name": "Beneficiary Location",
     "severity": "high",
-    "patterns": {
-      "green": [
-        "european union",
-        "eu",
-        "fos",
-        "freedom of services",
-        "deutschland",
-        "bundesrepublik deutschland"
-      ],
-      "yellow": [
-        "switzerland",
-        "ch",
-        "third country",
-        "fronting",
-        "schweiz"
-      ],
-      "red": [
-        "iran",
-        "north korea",
-        "cuba"
-      ]
+    "patterns": { 
+"green": [
+  "eu", "european union", "eea", "efta", "fos",
+  "freedom of services", "deutschland", "bundesrepublik deutschland"
+],
+"yellow": [
+  "schweiz", "switzerland", "ch", "eea third country",
+  "fronting arrangement required", "fronting required"
+],
+"red": [
+  "iran", "north korea", "cuba", "sudan", "syria"
+]
     },
     "type": "fuzzy",
     "thresholds": {
-      "green": 85,
-      "yellow": 70
+      "green": 60,
+      "yellow": 45
     }
   },
   {
@@ -313,30 +288,25 @@
     "name": "Waiver of Defenses (§§ 770, 771 BGB) (sureties only)",
     "severity": "medium",
     "patterns": {
-      "green": [
-        "waiver of defenses",
-        "waives the defenses",
-        "§§ 770",
-        "§§ 771",
-        "defences waived",
-        "einredeverzicht",
-        "verzicht auf einreden"
-      ],
-      "yellow": [
-        "unclear waiver wording",
-        "may waive defenses",
-        "unklarer einredeverzicht"
-      ],
-      "red": [
-        "no waiver",
-        "defenses not waived",
-        "kein einredeverzicht"
-      ]
+"green": [
+  "waiver of defenses", "waives the defenses",
+  "§§ 770", "§ 770", "§§ 771", "§ 771",
+  "einredeverzicht", "verzicht auf einreden",
+  "aufrechenbarkeit*", "vorausklage*"
+],
+"yellow": [
+  "may waive defenses", "unklarer einredeverzicht",
+  "limited waiver", "beschränkter einredeverzicht"
+],
+"red": [
+  "no waiver", "defenses not waived", "kein einredeverzicht",
+  "vorbehalt der einreden", "without waiver of defenses"
+]
     },
     "type": "fuzzy",
     "thresholds": {
-      "green": 85,
-      "yellow": 70
+      "green": 60,
+      "yellow": 45
     }
   },
   {
@@ -384,8 +354,8 @@
     },
     "type": "fuzzy",
     "thresholds": {
-      "green": 85,
-      "yellow": 70
+      "green": 60,
+      "yellow": 45
     }
   },
   {
@@ -393,32 +363,25 @@
     "name": "Return / Expiry of Guarantee",
     "severity": "high",
     "patterns": {
-      "green": [
-        "expiry",
-        "return of guarantee",
-        "cancellation",
-        "expiration date",
-        "rückgabe",
-        "endgültiges ablaufdatum"
-      ],
-      "yellow": [
-        "vague",
-        "unclear",
-        "on demand",
-        "unklare regelung"
-      ],
-      "red": [
-        "no expiry",
-        "no return clause",
-        "extension options",
-        "kein ablaufdatum",
-        "keine rückgabeklausel"
-      ]
+"green": [
+  "expiry", "expiration date", "expiration", "cancellation",
+  "return of guarantee", "rückgabe", "rückgabeklausel", "endgültiges ablaufdatum",
+  "endet am", "erlischt am", "gilt bis"
+],
+"yellow": [
+  "vage", "unklar", "on demand", "unklare regelung",
+  "verzicht auf rückgabe"
+],
+"red": [
+  "no expiry", "no return clause", "extension options",
+  "kein ablaufdatum", "keine rückgabeklausel", "unbefristet",
+  "verlängerungsoption"
+]
     },
     "type": "fuzzy",
     "thresholds": {
-      "green": 85,
-      "yellow": 70
+      "green": 60,
+      "yellow": 45
     }
   }
 ]
