@@ -51,7 +51,9 @@ def upload_context_files_to_supabase(directory: str):
 
     try:
         files_to_process = [
-            f for f in os.listdir(directory) if f.endswith("-context-clean.txt")
+            f
+            for f in os.listdir(directory)
+            if f.endswith("-context-clean.txt") and f.startswith("ROBO")
         ]
         if not files_to_process:
             print("No files ending with '-context-clean.txt' found in the directory.")
@@ -76,8 +78,9 @@ def upload_context_files_to_supabase(directory: str):
                     data_to_upsert = {
                         "dataset_id": dataset_id,
                         "context_value": content,
-                        "context_key": "sample_data_2",  # Set to the required constant value
-                        "zurich_challenge_id": "05- Claims- Liability Decisions- Canada",  # Set to the required constant value
+                        "context_key": dataset_id,  # Use dataset_id as the context_key (must be unique)
+                        "zurich_challenge_id": "04- Claims- Motor- Ecuador",  # Required constant value for this batch
+                        "data_upload_id": "zurich_07_2025",  # Identifier for this upload batch
                     }
 
                     # Perform the upsert operation

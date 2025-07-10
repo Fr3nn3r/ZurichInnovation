@@ -1,4 +1,26 @@
 import os
+import sys
+import subprocess
+
+# Ensure required packages are installed
+required_packages = [
+    "pytesseract",
+    "pypdfium2",
+    "pillow",  # Provides PIL
+]
+
+
+def install_packages():
+    for pkg in required_packages:
+        try:
+            __import__(pkg if pkg != "pillow" else "PIL")
+        except ImportError:
+            print(f"Installing {pkg}...")
+            subprocess.check_call([sys.executable, "-m", "pip", "install", pkg])
+
+
+install_packages()
+
 import pytesseract
 import pypdfium2 as pdfium
 from PIL import Image, ImageOps
@@ -9,7 +31,8 @@ import re
 # You may need to configure the path to the Tesseract executable.
 # For example: pytesseract.pytesseract.tesseract_cmd = r'"C:\Program Files\Tesseract-OCR\tesseract.exe"'
 
-pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+
 
 def preprocess_image_for_ocr(pil_image):
     """
@@ -55,8 +78,20 @@ def main():
     Main function to iterate through case folders, process PDFs, and save the text.
     """
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    input_dir = os.path.join(base_dir, "Canada - Liability decisions data files")
-    output_dir = os.path.join(base_dir, "output")
+
+    # Allow custom input and output directories via CLI args
+    # Usage: python simple_ocr.py [input_dir] [output_dir]
+    # If not provided, fall back to original defaults.
+    args = sys.argv[1:]
+    if len(args) >= 1:
+        input_dir = os.path.abspath(args[0])
+    else:
+        input_dir = os.path.join(base_dir, "Canada - Liability decisions data files")
+
+    if len(args) >= 2:
+        output_dir = os.path.abspath(args[1])
+    else:
+        output_dir = os.path.join(base_dir, "output")
 
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
