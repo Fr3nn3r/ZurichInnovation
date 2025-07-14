@@ -5,9 +5,13 @@ import logging
 import argparse
 import base64
 import mimetypes
+import io
+import re
+import traceback
 from pathlib import Path
 from typing import Optional, Dict, Any, List, Union
 import pandas as pd
+import pypdfium2 as pdfium
 
 # --- Setup Logging ---
 logging.basicConfig(
@@ -133,6 +137,127 @@ def get_image_ai_description(client: OpenAI, file_path: Path) -> str:
         return ""
 
 
+def is_ocr_gibberish(text: str) -> bool:
+    """
+    Detects if the OCR output is sparse or gibberish based on simple rules.
+    """
+    clean_text = text.strip()
+
+    if not clean_text or len(clean_text) < 50:  # If the text is empty or very short
+        return True
+
+    # Check the ratio of alphanumeric characters to total characters
+    alphanum_chars = sum(c.isalnum() for c in clean_text)
+    total_chars = len(clean_text)
+
+    if total_chars > 0 and (alphanum_chars / total_chars) < 0.6:
+        return True  # Less than 60% alphanumeric characters suggests gibberish
+
+    return False
+
+
+def extract_json_from_output(raw_output: str) -> Dict[str, Any]:
+    """
+    Extracts and parses JSON from a raw string, cleaning up markdown code blocks.
+    """
+    # Remove Markdown code block if present
+    match = re.search(r"```json(.*?)```", raw_output, re.DOTALL | re.IGNORECASE)
+    if match:
+        json_str = match.group(1).strip()
+    else:
+        # fallback: try to find the first '{' and last '}'
+        start = raw_output.find("{")
+        end = raw_output.rfind("}")
+        if start != -1 and end != -1 and end > start:
+            json_str = raw_output[start : end + 1]
+        else:
+            raise ValueError("No JSON found in output")
+    # Parse JSON
+    return json.loads(json_str)
+
+
+def encode_image_to_base64(file_path: Path) -> str:
+    """Encodes an image file to a base64 string."""
+    with open(file_path, "rb") as image_file:
+        return base64.b64encode(image_file.read()).decode("utf-8")
+
+
+def analyze_with_vision(client: OpenAI, image_base64: str) -> str:
+    """
+    Generates a description or extracts structured data from an image using the
+    OpenAI Vision API with the new universal prompt.
+    """
+    new_prompt = """
+You are an AI assistant for universal document and image processing.
+For the image provided:
+
+If the image is a document (receipt, ticket, invoice, form, etc.), extract all visible information in structured JSON format (include key fields, tables, totals, dates, etc.).
+
+If the image is a photo (e.g., a vehicle, damaged property, or objects), describe the content and any visible details as clearly as possible.
+
+In all cases, identify the type of image or document, and include this as a field in your output.
+"""
+    response = client.chat.completions.create(
+        model="gpt-4o",
+        messages=[
+            {
+                "role": "user",
+                "content": [
+                    {"type": "text", "text": new_prompt},
+                    {
+                        "type": "image_url",
+                        "image_url": {"url": f"data:image/jpeg;base64,{image_base64}"},
+                    },
+                ],
+            }
+        ],
+        max_tokens=2048,
+    )
+    return response.choices[0].message.content
+
+
+def process_pdf_with_vision(client: OpenAI, file_path: Path) -> List[Dict[str, Any]]:
+    """
+    Processes a PDF page-by-page using the Vision API.
+    Used as a fallback when Tesseract OCR fails.
+    """
+    results = []
+    logging.info(f"Processing PDF {file_path.name} with Vision API fallback...")
+    try:
+        pdf_doc = pdfium.PdfDocument(file_path)
+        for i, page in enumerate(pdf_doc):
+            logging.info(f"  - Analyzing page {i + 1}/{len(pdf_doc)}...")
+            # Render page to a PIL image
+            bitmap = page.render(scale=2)  # Scale can be adjusted
+            pil_image = bitmap.to_pil()
+
+            # Convert PIL image to base64
+            buffered = io.BytesIO()
+            pil_image.save(buffered, format="PNG")
+            img_base64 = base64.b64encode(buffered.getvalue()).decode("utf-8")
+
+            # Analyze the image of the page
+            vision_output_str = ""
+            try:
+                vision_output_str = analyze_with_vision(client, img_base64)
+                vision_output_json = extract_json_from_output(vision_output_str)
+                results.append(vision_output_json)
+            except (ValueError, json.JSONDecodeError) as e:
+                logging.warning(
+                    f"    - Could not parse JSON from Vision API for page {i + 1}: {e}. Storing raw output."
+                )
+                results.append(
+                    {"error": "Invalid JSON from API", "raw_output": vision_output_str}
+                )
+            except Exception as e:
+                logging.error(f"    - Vision API analysis failed for page {i + 1}: {e}")
+                results.append({"error": "Vision API call failed", "details": str(e)})
+        return results
+    except Exception as e:
+        logging.error(f"Failed to process PDF {file_path} with Vision API: {e}")
+        return [{"error": "PDF processing with Vision failed", "details": str(e)}]
+
+
 # --- Main Orchestration Function ---
 
 
@@ -188,27 +313,56 @@ def generate_context(basefolder: str, output_folder: Optional[str] = None) -> No
 
         try:
             if file_type == "pdf":
-                content = process_pdf_ocr_only(str(file_path))
+                ocr_text = process_pdf_ocr_only(str(file_path))
+                if is_ocr_gibberish(ocr_text):
+                    logging.warning(
+                        f"Sparse OCR for {relative_path}. Falling back to Vision API."
+                    )
+                    if client:
+                        content = process_pdf_with_vision(client, file_path)
+                    else:
+                        logging.error(
+                            "Cannot use Vision API fallback for PDF as OPENAI_API_KEY is not configured."
+                        )
+                        content = {"error": "OCR failed and Vision API not available."}
+                else:
+                    content = ocr_text
             elif file_type == "image":
-                ai_description = ""
                 if client:
-                    ai_description = get_image_ai_description(client, file_path)
+                    vision_output_str = ""
+                    try:
+                        image_base64 = encode_image_to_base64(file_path)
+                        vision_output_str = analyze_with_vision(client, image_base64)
+                        content = extract_json_from_output(vision_output_str)
+                    except (ValueError, json.JSONDecodeError) as e:
+                        logging.warning(
+                            f"Could not parse JSON from Vision API for image {relative_path}: {e}. Storing raw output."
+                        )
+                        content = {
+                            "error": "Invalid JSON from API",
+                            "raw_output": vision_output_str,
+                        }
+                    except Exception as e:
+                        logging.error(
+                            f"Vision API analysis failed for image {relative_path}: {e}"
+                        )
+                        content = {"error": "Vision API call failed", "details": str(e)}
                 else:
                     logging.warning(
                         f"Skipping AI description for {relative_path} due to missing API key."
                     )
+                    # Fallback to just OCR if vision is not available
+                    content = {
+                        "ai_description": "",
+                        "ocr_text": get_image_ocr_text(file_path),
+                    }
 
-                ocr_text = get_image_ocr_text(file_path)
-                content = {"ai_description": ai_description, "ocr_text": ocr_text}
             elif file_type == "text":
                 content = read_text_file(file_path)
             elif file_type == "sheet":
                 content = read_sheet_file(file_path)
             else:
-                logging.warning(
-                    f"Unsupported file type for {relative_path}. Skipping content extraction."
-                )
-                all_files_context.append(entry)
+                logging.warning(f"Unsupported file type for {relative_path}. Skipping.")
                 continue
 
             if content is not None:
@@ -220,9 +374,8 @@ def generate_context(basefolder: str, output_folder: Optional[str] = None) -> No
                 )
 
         except Exception as e:
-            logging.error(
-                f"An unexpected error occurred processing {relative_path}: {e}"
-            )
+            logging.error(f"An unexpected error occurred processing {relative_path}:")
+            logging.error(traceback.format_exc())
             # Add entry with no content if processing fails
             all_files_context.append(entry)
 
@@ -249,7 +402,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--output_folder",
         type=str,
-        default=None,
+        default="output",
         help="The folder to save the output JSON file. Defaults to the current working directory.",
     )
 

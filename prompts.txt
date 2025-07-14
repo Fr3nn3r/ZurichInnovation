@@ -120,8 +120,8 @@ Add support for excel and csv files, convert them to json:
     "content": "{...file contents...}"
   }
 
-++++++++++++++++++++++++++++++++++++++++++++++++
-For PDF files, we need to detect when Tesseract OCR processing has failed if the output is sparse, mostly empty, or gibberish (use simple rules: not enough alphanumeric chars, weird symbol ratios, etc.) we want to fallback to OPenAI image to text. 
+++++++++++++++++++++++++++++++++++++++++++++++++ before commit "Working on inproving data quality"
+For PDF files, we need to detect when Tesseract OCR processing has failed if the output is sparse, mostly empty, or gibberish (use simple rules: not enough alphanumeric chars relative to the filesize, weird symbol ratios, etc.) we want to fallback to OPenAI image to text. 
 
 Here is a new prompt to use for the openAI vision API (all calls):
 
