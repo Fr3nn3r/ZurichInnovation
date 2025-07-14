@@ -30,23 +30,13 @@ from tqdm import tqdm
 load_dotenv(override=True)
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 
-# --- Argument Parsing ---
-if len(sys.argv) < 2:
-    print(
-        "Usage: python image_to_text_analyzer.py <input_directory> [output_directory]"
-    )
-    sys.exit(1)
-
-INPUT_DIR = sys.argv[1]
-OUTPUT_DIR = sys.argv[2] if len(sys.argv) > 2 else "output"
-
 
 # --- Main Logic ---
-def create_output_directory():
+def create_output_directory(output_dir):
     """Create the output directory if it doesn't exist."""
-    if not os.path.exists(OUTPUT_DIR):
-        os.makedirs(OUTPUT_DIR)
-        print(f"Created output directory: {OUTPUT_DIR}")
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+        print(f"Created output directory: {output_dir}")
 
 
 def is_image_file(filepath):
@@ -106,19 +96,29 @@ def analyze_image_with_openai(client, image_base64, image_path):
 
 def main():
     """Main function to orchestrate the image analysis process."""
+    if len(sys.argv) < 2:
+        print(
+            "Usage: python image_to_text_analyzer.py <input_directory> [output_directory]"
+        )
+        sys.exit(1)
+
+    input_dir = sys.argv[1]
+    output_dir = sys.argv[2] if len(sys.argv) > 2 else "output"
+
     if not OPENAI_API_KEY:
         print("Error: OPENAI_API_KEY must be set in the .env file.")
         sys.exit(1)
 
-    if not os.path.isdir(INPUT_DIR):
-        print(f"Error: Input directory '{INPUT_DIR}' not found.")
+    if not os.path.isdir(input_dir):
+        print(f"Error: Input directory '{input_dir}' not found.")
         sys.exit(1)
 
     client = OpenAI(api_key=OPENAI_API_KEY)
-    create_output_directory()
 
-    print(f"Scanning for images in '{INPUT_DIR}'...")
-    image_paths = find_image_files(INPUT_DIR)
+    create_output_directory(output_dir)
+
+    print(f"Scanning for images in '{input_dir}'...")
+    image_paths = find_image_files(input_dir)
 
     if not image_paths:
         print("No image files found.")
@@ -130,7 +130,7 @@ def main():
         for image_path in image_paths:
             base_filename = os.path.splitext(os.path.basename(image_path))[0]
             output_filename = f"{base_filename}-damage-analysis.txt"
-            output_filepath = os.path.join(OUTPUT_DIR, output_filename)
+            output_filepath = os.path.join(output_dir, output_filename)
 
             image_base64 = encode_image_to_base64(image_path)
             analysis_result = analyze_image_with_openai(

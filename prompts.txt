@@ -1,0 +1,162 @@
+
++++++++++++++++++++++++++ Python Script for Folder Context Extraction V0
+Write a python script that takes a folder (basefolder) as input parameter and produces a txt file 
+
+List all files contained in basefolder at any level of the folder structure:
+  - file_0
+  - file_1  
+  - ...
+  - file_n
+
+
+output-file-name: basefolder-context.txt
+output-file-location: ouput folder
+output-file-structure:
+---
+Context file: "file_0_relative_to_basefolder_pathname"
+<content_of_file_0_in_plain_text>
+---
+Context file: "file_1_relative_to_basefolder_pathname"
+<content_of_file_1_in_plain_text>
+---
+...
+---
+Context file: "file_n_relative_to_basefolder_pathname"
+<content_of_file_n_in_plain_text>
+---
+
+for pdf files use Tesseract (example available in src/simple_ocr.py)
+for txt, json, any markup language, include the text verbatim
+for image formats use BOTH 
+  - openai image to text API to get a clear description of the image (example available in src/image_to_text_analyzer.py)
+  - AND Tesseract OCR
+  Format the content as follow:
+  AI description: <open_ai_image_to_text>
+  OCR: <OCR_text>
+
+You must log progress all the way throught and provide detailed logging.
+The function must be callable from the CLI and from a programmatic interface.
+
+++++++++++++++++++++++++++++++++++ GPT4.1 version: 1.0
++++++++++++++++++++++++++++++++++ Prompt: Python Script for Folder Context Extraction (JSON Output)
+Write a Python script that:
+
+Inputs:
+basefolder (path to folder to process)
+output_folder (optional, default: current working directory)
+
+Behavior
+Recursively scan basefolder for all files at any depth.
+For each file, create a JSON entry with:
+"relative_path": path relative to basefolder
+"file_type": detected file type (e.g. pdf, image, text, json, etc.)
+"content": see rules below
+
+File handling rules:
+Text, JSON, markup files:
+Read content as plain text.
+
+PDF files:
+Extract text using Tesseract OCR (src/simple_ocr.py for example).
+
+Image files (e.g., .png, .jpg):
+Use OpenAI Image-to-Text API (see src/image_to_text_analyzer.py) to get "ai_description".
+Use Tesseract OCR to get "ocr_text".
+Store both under "content": { "ai_description": "...", "ocr_text": "..." }
+
+Logging:
+Log all major steps and per-file processing with the logging module (including progress)
+
+Usability:
+Script should be executable both as a CLI and as a Python function.
+
+CLI arguments:
+basefolder (positional)
+
+--output_folder (optional)
+
+Function interface:
+
+def generate_context(basefolder: str, output_folder: Optional[str] = None) -> None:
+
+Output:
+
+JSON file named {basefolder_name}-context.json in output_folder
+
+Top-level structure: a list of file context entries
+
+[
+  {
+    "relative_path": "docs/report.pdf",
+    "file_type": "pdf",
+    "content": "<text extracted via Tesseract>"
+  },
+  {
+    "relative_path": "images/logo.png",
+    "file_type": "image",
+    "content": {
+      "ai_description": "<OpenAI description>",
+      "ocr_text": "<Tesseract output>"
+    }
+  },
+  {
+    "relative_path": "data/config.json",
+    "file_type": "json",
+    "content": "{...file contents...}"
+  }
+  // etc.
+]
+Special notes:
+
+Use error handling for unreadable files (log and skip).
+Output file must be valid UTF-8 JSON
+If you encounter an unsupported file display a warning message and continue
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Add support for excel and csv files, convert them to json:
+  {
+    "relative_path": "data/prices.xls",
+    "file_type": "xls",
+    "content": "{...file contents...}"
+  }
+
+++++++++++++++++++++++++++++++++++++++++++++++++
+For PDF files, we need to detect when Tesseract OCR processing has failed if the output is sparse, mostly empty, or gibberish (use simple rules: not enough alphanumeric chars, weird symbol ratios, etc.) we want to fallback to OPenAI image to text. 
+
+Here is a new prompt to use for the openAI vision API (all calls):
+
+You are an AI assistant for universal document and image processing.
+For the image provided:
+
+If the image is a document (receipt, ticket, invoice, form, etc.), extract all visible information in structured JSON format (include key fields, tables, totals, dates, etc.).
+
+If the image is a photo (e.g., a vehicle, damaged property, or objects), describe the content and any visible details as clearly as possible.
+
+In all cases, identify the type of image or document, and include this as a field in your output.
+
+Output JSON Example:
+{
+  "detected_type": "receipt",
+  "fields": { "total": "874,000", ... },
+  "raw_text": "full OCR text here",
+  "image_description": "not applicable"
+}
+
+
+
+------- FB: backup 14.07.2025
+now for all folder Sample 2 Claims.... / (Fault or Split Liability)/* create a context file in the output folder with all the text from the non-image non-video files (.md .html .json) include in the  context the description of the picture we created at the previous step (for all pictures we already have the description in the damage-analysis file)
+
+now for each new dataset context, insert a new row in n8n_context_cache, context_key=dataset_id=base_filename without-context.txt, context_value=content of base_filname-context.txt, zurich_challenge_id=02- Claims- Motor Liability- UK, data_upload_id=zurich_07_2025 
+
+for all folder in "Data - New UW Sample" create a txt context file (filename=foldername) in the output folder containing all the text from all the files included in the folder. The content of the context files should look like:
+Filename: XXXXX.txt
+<content of XXXXX.txt>
+----
+Filename: ABS.pdf
+<content of ABS.pdf>
+----
+etc...
+for PDF files use the code in @simple_ocr.py to extract the text
+for excel files convert content into CSV format
+Any doubt ask questions,
