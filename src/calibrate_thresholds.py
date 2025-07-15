@@ -1,3 +1,42 @@
+# This script is a data visualization tool designed to help in the calibration
+# of scoring thresholds for a rules-based system. Its primary function is to plot
+# the distribution of scores for a specific rule, allowing for a visual analysis
+# of how the scores are grouped.
+#
+# The script's main functionalities are:
+# 1.  **Data Loading**: It can load scoring data from one or more JSON files.
+#     These files are expected to contain a list of tuples or lists, where each
+#     entry includes a rule ID, a score, and a label.
+#
+# 2.  **Rule-Specific Filtering**: It filters the loaded data to isolate the scores
+#     that correspond to a single, specific rule ID provided by the user. It also
+#     ensures that only numerical scores are processed, ignoring any non-numerical
+#     values (like 'N/A').
+#
+# 3.  **Histogram Plotting**: The core of the script is its ability to generate
+#     and display a histogram. This histogram visually represents the frequency
+#     distribution of the scores for the selected rule.
+#
+# 4.  **Multi-File Comparison**: The script is capable of overlaying histograms
+#     from multiple input files onto a single plot. This is particularly useful
+#     for comparing score distributions across different datasets or different
+#     versions of the scoring algorithm. Each histogram is given a distinct label
+#     in the plot's legend, derived from its filename.
+#
+# 5.  **Command-Line Interface**: It is designed to be run from the command line,
+#     requiring the user to provide the `rule_id` they wish to analyze and the
+#     paths to one or more score files.
+#
+# By visualizing how scores are distributed, a user can make more informed
+# decisions about where to set thresholds to distinguish between different
+# outcomes (e.g., pass/fail, true/false).
+#
+# Usage:
+#   python src/calibrate_thresholds.py <rule_id> <path_to_scores1.json> [<path_to_scores2.json> ...]
+#
+# Example:
+#   python src/calibrate_thresholds.py 17 output/scores.json output/scores_new.json
+
 import json
 import numpy as np
 import matplotlib.pyplot as plt

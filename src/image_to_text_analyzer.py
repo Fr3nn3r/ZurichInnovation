@@ -1,3 +1,45 @@
+# This script is a specialized tool for analyzing images, particularly those
+# relevant to motor insurance claims. It recursively scans a given directory for
+# image files, sends them to the OpenAI Vision API (GPT-4o) for analysis, and
+# saves the resulting description to a text file.
+#
+# The script's main functionalities are:
+# 1.  **Dependency Management**: It includes a simple function to check for and
+#     install required Python packages (`openai`, `python-dotenv`, `tqdm`) if they
+#     are not already present in the environment.
+#
+# 2.  **Image Discovery**: It walks through a specified input directory and all of
+#     its subdirectories to find all image files. It identifies images based on
+#     their MIME type, making it robust against a variety of image extensions.
+#
+# 3.  **OpenAI Vision API Integration**: The script is configured to use the OpenAI
+#     API. It encodes each found image into a base64 string and sends it to the
+#     `gpt-4o` model.
+#
+# 4.  **Specialized Prompting**: It uses a specific, carefully crafted prompt that
+#     instructs the AI model to analyze the image from the perspective of a motor
+#     insurance claim. The prompt asks the model to describe any visible damage
+#     to a vehicle, focusing on the type, location, and severity of the damage.
+#
+# 5.  **Output Generation**: For each image analyzed, the script saves the AI-generated
+#     text description into a new text file in a specified output directory. The
+#     output filename is derived from the original image filename, with
+#     '-damage-analysis.txt' appended.
+#
+# 6.  **Progress Tracking**: It uses the `tqdm` library to display a progress bar,
+#     providing a clear visual indication of how many images have been processed
+#     and how many are remaining.
+#
+# 7.  **Command-Line Interface**: The script is run from the command line, requiring
+#     the user to provide an input directory. An optional output directory can also
+#     be specified; otherwise, it defaults to a folder named 'output'.
+#
+# Usage:
+#   - To analyze images in a folder and save to the default 'output' directory:
+#     `python src/image_to_text_analyzer.py /path/to/image_folder`
+#   - To specify a custom output directory:
+#     `python src/image_to_text_analyzer.py /path/to/image_folder /path/to/output`
+
 import os
 import sys
 import subprocess

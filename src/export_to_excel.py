@@ -1,3 +1,46 @@
+# This script is a reporting tool designed to convert the JSON output from an
+# evaluation process (like `evaluate_file.py`) into a single, well-formatted,
+# and human-readable Excel spreadsheet.
+#
+# The script's main functionalities are:
+# 1.  **JSON Aggregation**: It is capable of reading and parsing multiple JSON
+#     evaluation files in a single run. The data from all provided files is
+#     combined into one dataset.
+#
+# 2.  **Data Transformation**: It processes the hierarchical JSON structure into a
+#     flat, tabular format suitable for a spreadsheet. Each row in the final
+#     Excel file represents a single "clause," and each column represents a
+#     specific "rule" that the clause was evaluated against.
+#
+# 3.  **Data Enrichment**: It adds a 'Filename' column to the spreadsheet, which
+#     is derived from the name of the source JSON file. This provides crucial
+#     context, allowing users to trace each clause back to its original document.
+#
+# 4.  **Column Organization**: The columns in the output Excel file are logically
+#     reordered. The 'Filename' and 'Clause Text' columns are placed first for
+#     easy identification, followed by the rule columns, which are sorted
+#     alphabetically.
+#
+# 5.  **Conditional Formatting**: The script applies conditional formatting to the
+#     cells containing scores, making the report easier to interpret at a glance:
+#     - Scores above 90 are highlighted in green.
+#     - Scores between 70 and 90 are highlighted in yellow.
+#     This visual cue helps to quickly identify high-confidence matches and areas
+#     that may require further review.
+#
+# 6.  **Excel Styling**: Beyond cell coloring, the script also automatically adjusts
+#     the width of each column to fit the content, ensuring that the final report
+#     is clean and readable without manual adjustments.
+#
+# 7.  **Command-Line Interface**: The script is run from the command line and accepts
+#     one or more paths to the JSON evaluation files as arguments.
+#
+# Usage:
+#   python src/export_to_excel.py <path_to_eval1.json> [<path_to_eval2.json> ...]
+#
+# Example:
+#   python src/export_to_excel.py output/Case-1_evaluation.json output/Case-2_evaluation.json
+
 import pandas as pd
 import json
 import argparse

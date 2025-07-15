@@ -162,6 +162,9 @@ Later, if it works I will ask you to run the same script on many videos.
 +++++++++++++++++++++++++++++++++++++++++++++++++++++
 Add docx files support to the generate_context.py
 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+There is not enough comments in our code, take all the files in src folder and add a comment section at the top describing what the file does at a high level. Do not change the code cimply add a comment section to each .py file so that I can undertsand what it does immediately when I click on the editor
+
 ++++++++++++++++++++++++++++++
 ok now run generate_context.py for all the folder in "C:\Users\fbrun\Documents\GitHub\ZurichInnovation\data\02- Claims- Motor Liability- UK\Data\TEMP" (in the output folder) and also update the output\analysis.xlsx file in the process
 

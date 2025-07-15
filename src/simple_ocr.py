@@ -1,3 +1,46 @@
+# This script is a dedicated Optical Character Recognition (OCR) tool for
+# processing PDF documents. It is designed to iterate through a directory of case
+# folders, extract text from all PDF files within each folder using the Tesseract
+# OCR engine, and then save the aggregated text into a single, clean context file
+# for each case.
+#
+# The script's main functionalities are:
+# 1.  **Dependency Management**: It includes a function to check for and install
+#     necessary Python packages, including `pytesseract` for the OCR interface,
+#     `pypdfium2` for PDF rendering, and `Pillow` for image manipulation.
+#
+# 2.  **PDF-to-Image Conversion**: It uses `pypdfium2` to render each page of a
+#     PDF document into a high-resolution image. This is a crucial step as
+#     Tesseract operates on images, not directly on PDF files.
+#
+# 3.  **Image Preprocessing**: Before performing OCR, each rendered page (as a
+#     Pillow image object) is preprocessed to improve the accuracy of the text
+#     extraction. This includes converting the image to grayscale and then to a
+#     binary (black and white) format, which often yields better results with
+#     Tesseract.
+#
+# 4.  **OCR with Tesseract**: The preprocessed image of each page is then passed
+#     to the `pytesseract` library, which interfaces with the Tesseract engine
+#     to extract the text content.
+#
+# 5.  **Text Cleaning and Aggregation**: The raw text extracted from each page is
+#     cleaned to remove extra whitespace. The cleaned text from all pages and all
+#     PDFs within a single case folder is then aggregated into one string, with
+#     headers indicating the source file for each block of content.
+#
+# 6.  **Context File Generation**: The final aggregated text for each case folder
+#     is saved to a `-context-clean.txt` file in a specified output directory.
+#
+# 7.  **Command-Line Interface**: The script can be run with optional command-line
+#     arguments to specify the input directory (containing the case folders) and
+#     the output directory. If no arguments are provided, it defaults to a
+#     pre-defined folder structure.
+#
+# Note:
+#   This script requires that the Tesseract OCR engine is installed on the system.
+#   On Windows, the path to the `tesseract.exe` executable is hardcoded and may
+#   need to be adjusted depending on the installation location.
+
 import os
 import sys
 import subprocess

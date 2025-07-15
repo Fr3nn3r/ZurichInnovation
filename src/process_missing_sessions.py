@@ -1,3 +1,42 @@
+# This script serves as a batch processor for generating transcripts and summaries for
+# "missing" AMA (Ask Me Anything) sessions. It identifies sessions that do not
+# yet have a transcript or summary file and processes them in a batch.
+#
+# The script's main functionalities are:
+# 1.  **Scanning for Missing Sessions**: It leverages another script,
+#     `scan_missing_sessions.py`, to recursively scan a specified data directory
+#     and identify all video sessions. It then determines which of these sessions
+#     are "missing" by checking for the absence of the corresponding transcript
+#     and summary files.
+#
+# 2.  **Session Filtering**: The script provides a command-line option to filter
+#     the sessions to be processed based on a substring match with the session's
+#     folder name. This allows the user to target specific sessions for processing,
+#     rather than running the entire batch.
+#
+# 3.  **Dry Run Mode**: A `--dry-run` flag is available to allow users to see which
+#     sessions *would* be processed without actually initiating the processing. This
+#     is useful for verifying the scope of a batch run before committing to it.
+#
+# 4.  **Batch Processing**: For each identified missing session, the script invokes
+#     `process_video.py` as a separate subprocess. This modular approach delegates
+#     the heavy lifting of video processing (audio extraction, transcription, and
+#     summarization) to a specialized script.
+#
+# 5.  **Reporting and Error Handling**: The script provides a clear, high-level
+#     summary of the batch run, including a list of sessions to be processed.
+#     After the batch is complete, it reports the number of successful and failed
+#     sessions. If a session fails, it captures and displays the last 500 characters
+#     of stdout and stderr from the subprocess to aid in debugging.
+#
+# Usage:
+#   - To process all missing sessions:
+#     `python src/process_missing_sessions.py`
+#   - To process sessions with "Canada" in the folder name:
+#     `python src/process_missing_sessions.py --filter "Canada"`
+#   - To see which sessions would be processed without running them:
+#     `python src/process_missing_sessions.py --dry-run`
+
 #!/usr/bin/env python3
 
 """

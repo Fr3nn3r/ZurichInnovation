@@ -1,3 +1,48 @@
+# This script is a data processing tool specifically designed to handle a sample
+# of underwriting (UW) documents. It iterates through subfolders within a
+# predefined root directory ('Data - New UW Sample'), processes all the files in
+# each subfolder, and consolidates their content into a single text file per
+# subfolder.
+#
+# The script's main functionalities are:
+# 1.  **Dependency Management**: It includes a function to check for and install
+#     necessary Python packages like pandas, openpyxl, and various OCR-related
+#     libraries (Tesseract, Pillow, etc.) if they are not already installed.
+#
+# 2.  **Multi-Format File Processing**: It is capable of handling several different
+#     file types, including:
+#     - **PDFs**: It uses a pure OCR (Optical Character Recognition) approach with
+#       Tesseract and PyPDFium2 to extract text from PDF documents. It includes
+#       image preprocessing steps (grayscale, converting to monochrome) to improve
+#       OCR accuracy.
+#     - **Excel Files**: It reads all sheets from an Excel workbook and converts
+#       their content into a CSV-like string format.
+#     - **Text-Based Files**: It can read content from a variety of plain text
+#       formats like .txt, .md, .json, .html, and .csv.
+#
+# 3.  **Content Aggregation**: For each subfolder, the script processes all
+#     supported files it contains. It then aggregates the extracted content from
+#     all these files into a single string, with clear separators and filenames
+#     indicating the source of each piece of content.
+#
+# 4.  **Context File Generation**: The aggregated content for each subfolder is saved
+#     into a single '.txt' file in the 'output' directory. The filename is derived
+#     from the name of the subfolder (e.g., 'subfolder_name-context.txt').
+#
+# 5.  **Progress Tracking**: The script uses the `tqdm` library to display nested
+#     progress bars, showing the overall progress of processing the subfolders and
+#     the progress of processing files within each subfolder.
+#
+# 6.  **Platform-Specific Configuration**: It includes a check for the operating
+#     system and explicitly sets the path to the Tesseract executable on Windows,
+#     addressing a common configuration issue.
+#
+# Usage:
+#   python src/process_uw_sample.py
+#
+#   Note: The input directory is hardcoded to 'Data - New UW Sample' and the
+#   output directory is hardcoded to 'output'.
+
 import os
 import sys
 import subprocess

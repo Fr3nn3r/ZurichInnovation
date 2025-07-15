@@ -1,3 +1,25 @@
+# This script is responsible for organizing and centralizing meeting summaries.
+# It scans a root 'data' directory for files named 'Meeting Recording_summary.txt',
+# which are assumed to be located in subdirectories with a specific naming
+# convention (e.g., '01- Claims- Travel- Canada').
+#
+# The script performs the following steps:
+# 1. Finds all summary files within the 'data' directory.
+# 2. For each summary, it identifies the numbered parent folder to extract a
+#    unique identifier and a descriptive name.
+# 3. It sanitizes the folder name to create a clean, URL-friendly string.
+# 4. It checks for the presence of 'Follow-Up' in the names of any .mp4 files
+#    in the same directory to determine if the summary is for a follow-up meeting.
+# 5. Based on this information, it constructs a new, standardized filename in the
+#    format 'AMA-XX-folder-name.txt' or 'AMA-XX-folder-name-follow-up.txt'.
+# 6. Finally, it copies and renames the summary files to a centralized
+#    'AMA-summaries' directory.
+#
+# A progress bar is displayed to track the copying process.
+#
+# Usage:
+#   python src/collect_summaries.py
+
 import re
 import shutil
 from pathlib import Path

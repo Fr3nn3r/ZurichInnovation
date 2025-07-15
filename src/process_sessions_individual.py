@@ -1,3 +1,47 @@
+# This script is designed to process a predefined list of "missing" AMA (Ask Me Anything)
+# sessions. It iterates through a hardcoded list of sessions, each defined by a
+# folder and a video filename, and processes them one by one.
+#
+# The main functionalities of this script are:
+# 1.  **Session Identification**: It uses a `MISSING_SESSIONS` list to identify which
+#     video files need processing. It constructs the full path to each video file
+#     by searching within 'Ask Me Anything' subdirectories inside the specified
+#     session folder.
+#
+# 2.  **Completion Check**: Before processing, it checks if a session is already
+#     complete by verifying the existence of both a transcript and a summary file
+#     ('Meeting Recording_transcript.txt' and 'Meeting Recording_summary.txt').
+#     If both files exist, the session is skipped.
+#
+# 3.  **Individual Processing**: For each session that is not complete, it invokes
+#     another script, `process_video.py`, as a subprocess to handle the actual
+#     transcription and summarization. This allows for modular processing and
+#     clear separation of concerns.
+#
+# 4.  **Retry Logic**: If the processing of a video fails (i.e., the subprocess
+#     returns a non-zero exit code), the script will automatically retry the
+#     processing up to a defined maximum number of attempts, with a short delay
+#     between retries.
+#
+# 5.  **Progress Tracking and Reporting**: The script provides detailed, real-time
+#     feedback to the user, including which session is being processed, whether it
+#     is being skipped, the status of transcript and summary creation, and the
+#     final outcome of the processing. It concludes with a summary report of
+#     successful, skipped, and failed sessions.
+#
+# 6.  **Command-Line Control**: It includes command-line arguments to specify the
+#     root data directory, start processing from a specific session number, or
+#     process only a single, specified session, offering flexibility in how the
+#     processing is run.
+#
+# Usage:
+#   - To run all missing sessions:
+#     `python src/process_sessions_individual.py`
+#   - To start from the 3rd session in the list:
+#     `python src/process_sessions_individual.py --start-from 3`
+#   - To process only the 5th session:
+#     `python src/process_sessions_individual.py --only-session 5`
+
 #!/usr/bin/env python3
 
 """

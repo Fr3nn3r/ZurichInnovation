@@ -1,3 +1,45 @@
+# This script provides a robust solution for extracting text from PDF documents
+# using a hybrid approach that combines direct text extraction with Optical
+# Character Recognition (OCR). It is designed to handle a variety of PDF types,
+# including those with embedded text and those that are purely image-based.
+#
+# The script's main functionalities are:
+# 1.  **Hybrid Text Extraction**: For each page in a PDF, it first attempts to
+#     extract text directly using the `pdfplumber` library. This method is fast
+#     and accurate for PDFs with embedded, machine-readable text.
+#
+# 2.  **Noise Detection and OCR Fallback**: If the text extracted by `pdfplumber`
+#     is empty or contains a significant amount of "noise" (specifically, `(cid:XX)`
+#     artifacts that indicate font encoding issues), the script automatically
+#     falls back to a more robust OCR-based method for that page.
+#
+# 3.  **Page-level OCR**: In the fallback scenario, the script renders the specific
+#     page into a high-resolution image and then uses the Tesseract OCR engine
+#     to extract the text from the image.
+#
+# 4.  **Full OCR Fallback**: If `pdfplumber` fails to open or process a PDF file
+#     entirely, the script has a secondary fallback mechanism that uses `pypdfium2`
+#     to render every page to an image and process the entire document with OCR.
+#
+# 5.  **Image Preprocessing**: Before any OCR is performed, the rendered page images
+#     are preprocessed. They are converted to grayscale and then to a binary
+#     (black and white) format to improve the accuracy of the Tesseract engine.
+#
+# 6.  **Text Cleaning**: All extracted text, whether from direct extraction or OCR,
+#     is cleaned to remove the `(cid:XX)` artifacts and to normalize whitespace,
+#     ensuring a cleaner final output.
+#
+# 7.  **Batch Processing**: The `main` function orchestrates the processing of
+#     multiple case folders. It iterates through subdirectories in a specified
+#     input folder, processes all PDFs within each, aggregates the cleaned text,
+#     and saves it to a single `-context.txt` file per case folder in an
+#     output directory.
+#
+# Note:
+#   This script requires that the Tesseract OCR engine is installed on the system.
+#   The path to the executable may need to be configured within the script,
+#   especially on Windows.
+
 import os
 import pytesseract
 import pdfplumber

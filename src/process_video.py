@@ -1,3 +1,46 @@
+# This script is a comprehensive tool for processing video files to extract audio,
+# transcribe the audio to text, and then generate both a detailed transcript and a
+# concise summary. It is designed to handle large video files by automatically
+# splitting the audio into smaller, manageable chunks that comply with the size
+# limits of the OpenAI Whisper API.
+#
+# The script's workflow is as follows:
+# 1.  **Video to Audio Extraction**: It takes a video file as input and extracts the
+#     audio into an MP3 file using the MoviePy library.
+#
+# 2.  **Audio Chunking**: If the extracted audio file is larger than the Whisper API's
+#     limit (25 MB), the script splits it into smaller chunks. It first attempts to
+#     use FFmpeg for efficient, copy-based splitting. If FFmpeg is not available,
+#     it falls back to a time-based splitting method using MoviePy.
+#
+# 3.  **Transcription**: Each audio chunk is then sent to the OpenAI Whisper-1 model
+#     for transcription. The script processes chunks sequentially, providing detailed
+#     progress for each one. The resulting transcripts from all chunks are then
+#     stitched together to form a complete transcript.
+#
+# 4.  **Transcript Summarization**: The full transcript is then chunked again, this
+#     time into segments suitable for processing by a language model (like GPT-4o).
+#     Each text chunk is individually summarized with a specific prompt that maintains
+#     context.
+#
+# 5.  **Final Summary Combination**: The summaries of the individual text chunks are
+#     then combined into a final, coherent summary using another call to the language
+#     model, ensuring a high-quality and readable output.
+#
+# 6.  **Output Files**: The script saves two output files in the same directory as the
+#     original video:
+#     - `Meeting Recording_transcript.txt`: The full, combined transcript.
+#     - `Meeting Recording_summary.txt`: The final, combined summary.
+#
+# 7.  **Progress and Error Handling**: Throughout the process, the script provides
+#     detailed progress bars (using `tqdm`) for each major step, including audio
+#     extraction, chunking, transcription, and summarization. It also includes
+#     robust error handling, such as the fallback for audio splitting and clear
+#     messages if a step fails.
+#
+# Usage:
+#   python src/process_video.py /path/to/your/video.mp4
+
 import os
 import argparse
 import openai

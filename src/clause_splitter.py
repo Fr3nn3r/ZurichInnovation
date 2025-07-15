@@ -1,3 +1,44 @@
+# This script provides a sophisticated text-splitting mechanism designed to break
+# down a large block of legal or contractual text into meaningful, distinct
+# "clauses." It uses a multi-stage process that combines pattern matching and
+# size constraints to achieve a more intelligent split than simple line breaks.
+#
+# The script's main functionalities are:
+# 1.  **Marker-Based Splitting**: The core of the splitter is a list of predefined
+#     "marker" phrases and regular expressions (e.g., "§ 770", "Wir verpflichten uns",
+#     numbered lists). The script injects a special delimiter ('¶') before each
+#     of these markers in the text. This serves as the primary way to identify
+#     the start of a new clause.
+#
+# 2.  **Hard Break Splitting**: In addition to the markers, it also splits the text
+#     based on the presence of multiple consecutive newlines (hard breaks), which
+#     often signify a paragraph or section break in documents.
+#
+# 3.  **Oversize Chunk Handling**: After the initial splits, the script checks if
+#     any of the resulting text chunks are too large (exceeding a `MAX_W` word count).
+#     If a chunk is oversized, the script attempts to break it down further into
+#     individual sentences. It then intelligently groups these sentences back
+#     together to form smaller chunks that still respect the maximum word count.
+#
+# 4.  **Minimum Size Filtering**: Once all splitting and chunking is complete, the
+#     script filters the results, discarding any chunks that are too small (below
+#     a `MIN_W` word count). This helps to eliminate noise and irrelevant fragments
+#     from the final output.
+#
+# 5.  **Text Normalization**: Before processing, the script normalizes the input
+#     text by standardizing whitespace and line endings, which improves the
+#     reliability of the pattern-matching steps.
+#
+# 6.  **Structured Output**: The final output is a list of dictionaries, where each
+#     dictionary represents a valid clause and contains the clause text under the
+#     key "clause".
+#
+# Usage:
+#   This script is primarily designed to be used as a module. The `split_clauses`
+#   function can be imported and called by other scripts (like `evaluate_file.py`)
+#   that need to process text on a clause-by-clause basis. The `if __name__ == "__main__"`
+#   block provides a simple example of how to use it with sample text.
+
 import re
 
 MAX_W = 150  # max words per clause

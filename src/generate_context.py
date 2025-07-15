@@ -1,3 +1,29 @@
+# This script is designed to process a directory of files and generate a structured
+# JSON file that serves as a "context" for further analysis. It recursively scans
+# a specified base folder, identifies different file types (PDF, images, text, sheets),
+# and extracts their content using various methods like OCR, AI-based image analysis,
+# and standard file reading.
+#
+# The script can handle:
+# - Text-based files (e.g., .txt, .json, .csv) by reading their content directly.
+# - PDF files by performing OCR with Tesseract. If the OCR output appears to be
+#   gibberish, it falls back to using the OpenAI Vision API for a more robust analysis.
+# - Image files by generating descriptions using the OpenAI Vision API.
+# - Sheet files (CSV, Excel) by converting their content to JSON.
+#
+# It supports two modes of operation:
+# 1. Processing a single base folder to generate one context file.
+# 2. Processing each immediate subfolder within a base folder to generate a separate
+#    context file for each, which is useful for partitioned datasets.
+#
+# The final output is a single JSON file (or multiple, if processing subfolders)
+# containing a list of entries, where each entry represents a file and includes its
+# relative path, detected file type, and the extracted content.
+#
+# Usage:
+# - For a single folder: python generate_context.py /path/to/folder --output_folder /path/to/output
+# - For subfolders: python generate_context.py /path/to/root_folder --process-subfolders
+
 import os
 import sys
 import json
@@ -403,7 +429,12 @@ if __name__ == "__main__":
         "--output_folder",
         type=str,
         default="output",
-        help="The folder to save the output JSON file. Defaults to the current working directory.",
+        help="The folder to save the output JSON file. Defaults to 'output'.",
+    )
+    parser.add_argument(
+        "--process-subfolders",
+        action="store_true",
+        help="Process each immediate subfolder of the basefolder individually.",
     )
 
     args = parser.parse_args()
@@ -425,4 +456,24 @@ if __name__ == "__main__":
             )
             sys.exit(1)
 
-    generate_context(args.basefolder, args.output_folder)
+    if args.process_subfolders:
+        root_folder = Path(args.basefolder.strip("'\""))
+        output_folder = Path(args.output_folder)
+        if not root_folder.is_dir():
+            logging.error(
+                f"Error: The root folder '{root_folder}' does not exist or is not a directory."
+            )
+            sys.exit(1)
+
+        logging.info(f"Processing subfolders in '{root_folder}'...")
+        for subfolder in root_folder.iterdir():
+            if subfolder.is_dir():
+                logging.info(f"--- Generating context for: {subfolder.name} ---")
+                try:
+                    generate_context(str(subfolder), str(output_folder))
+                except Exception as e:
+                    logging.error(f"Failed to process subfolder {subfolder.name}: {e}")
+                    logging.error(traceback.format_exc())
+        logging.info("--- All subfolders processed. ---")
+    else:
+        generate_context(args.basefolder, args.output_folder)

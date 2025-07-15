@@ -1,3 +1,48 @@
+# This script is a utility designed to scan a directory of AMA (Ask Me Anything)
+# session folders to identify which sessions are missing their corresponding
+# transcript and/or summary files. It provides a clear report of the status of
+# all sessions and can generate a list of sessions that require processing.
+#
+# The script's core functionalities include:
+# 1.  **Folder Scanning**: It systematically iterates through numbered subdirectories
+#     (e.g., '01-', '02-') within a specified root data folder. Within each of
+#     these, it looks for an 'Ask Me Anything' subdirectory where the session
+#     recordings are stored.
+#
+# 2.  **Video File Discovery**: It identifies all video files (based on a list of
+#     common video extensions) within the 'Ask Me Anything' subdirectory. This
+#     allows for multiple video sessions to exist within a single parent folder.
+#
+# 3.  **Completion Check**: For each video file found, it checks for the existence
+#     of two key output files: 'Meeting Recording_transcript.txt' and
+#     'Meeting Recording_summary.txt'. The presence or absence of these files
+#     determines the completion status of the session.
+#
+# 4.  **Detailed Reporting**: The script prints a detailed, real-time log to the
+#     console as it scans, showing the status of each video session in each
+#     folder. It then generates a comprehensive summary report that categorizes
+#     sessions into:
+#     - Complete (both transcript and summary exist)
+#     - Missing both files
+#     - Missing only the transcript
+#     - Missing only the summary
+#
+# 5.  **Exporting a "To-Process" List**: An optional command-line flag (`--list-missing`)
+#     allows the user to generate a clean, formatted list of all sessions that are
+#     missing at least one of the required files. This list can be used to inform
+#     a batch processing script (like `process_missing_sessions.py`).
+#
+# 6.  **Modular Functions**: The script is structured with clear, single-responsibility
+#     functions (e.g., `find_video_files`, `check_transcript_summary_exists`,
+#     `get_sessions_to_process`), making it easy to import its logic into other
+#     scripts in the workflow.
+#
+# Usage:
+#   - To get a full report of all sessions:
+#     `python src/scan_missing_sessions.py`
+#   - To get a report and also list the files that need processing:
+#     `python src/scan_missing_sessions.py --list-missing`
+
 #!/usr/bin/env python3
 
 """

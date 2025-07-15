@@ -1,3 +1,47 @@
+# This script implements a document screening process designed to evaluate clauses
+# from a PDF document against a predefined set of rules. It extracts text from a
+# PDF, splits it into individual clauses, and then evaluates each clause to assign
+# it a color-coded status (GREEN, YELLOW, or RED).
+#
+# The script's main functionalities are:
+# 1.  **Rule Loading**: It loads a set of evaluation rules from an external JSON
+#     file (`rules_detailed.json`). These rules define the patterns, thresholds,
+#     and logic for evaluating the text.
+#
+# 2.  **PDF Text Extraction**: It uses the `pdfplumber` library to open a PDF file
+#     and extract the raw text content from all of its pages.
+#
+# 3.  **Clause Splitting**: It employs a naive but effective regular expression to
+#     split the full text of the document into individual clauses. The splitting
+#     is based on patterns that typically denote the start of a new clause, such
+#     as section symbols (§), numbers, or capitalized headings.
+#
+# 4.  **Multi-Type Rule Evaluation**: It evaluates each clause against the loaded
+#     rules in a priority order. The script supports different types of rules:
+#     - **Fuzzy Matching**: Uses the `rapidfuzz` library to perform partial ratio
+#       string matching against a list of "green," "yellow," and "red" patterns.
+#       The clause is assigned a color based on which threshold the match score
+#       exceeds.
+#     - **Numeric Rules**: Extracts numerical values from the clause and checks
+#       if they fall within a specified maximum value.
+#     The evaluation for a clause stops at the first rule that does not result
+#     in a "GREEN" status.
+#
+# 5.  **OCR Confidence (Helper)**: Although not used in the main pipeline, a helper
+#     function `ocr_confidence` is included, which can calculate the average
+#     confidence score of text extracted via Tesseract's OCR data output.
+#
+# 6.  **Results Aggregation**: It compiles the evaluation results for each clause
+#     into a structured list of dictionaries. Each dictionary contains the clause
+#     ID, a truncated version of the text, the ID of the rule that was triggered,
+#     the final color status, and the evidence for that status.
+#
+# 7.  **Command-Line Execution**: The script is designed to be run from the command
+#     line, taking the path to a single PDF file as an argument.
+#
+# Usage:
+#   python src/clause_screening.py /path/to/document.pdf
+
 import re, json, pdfplumber, pytesseract, numpy as np
 from rapidfuzz import process, fuzz
 from langdetect import detect

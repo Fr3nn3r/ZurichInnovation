@@ -1,3 +1,41 @@
+# This script is a data aggregation tool designed to create consolidated "context"
+# files from various source files related to insurance claims. It operates on a
+# specific, predefined directory structure, targeting subfolders within 'Fault' and
+# 'Split liability' directories inside a main 'Sample 2 Claims files OCR' folder.
+#
+# The script's main functionalities are:
+# 1.  **Dependency Management**: It includes a simple function to ensure that the
+#     `tqdm` package, used for progress bars, is installed before the main logic
+#     runs.
+#
+# 2.  **Targeted File Aggregation**: For each individual claim folder, the script
+#     scans for and reads content from two main sources:
+#     - **Text-Based Files**: It recursively searches for common text formats
+#       (`.md`, `.html`, `.json`, `.txt`) and appends their entire content to the
+#       context file.
+#     - **Image Damage Analyses**: It identifies image files (`.jpg`, `.png`, etc.)
+#       within the claim folder and then looks for a corresponding
+#       '-damage-analysis.txt' file in the 'output' directory. If found, the
+#       content of this analysis file is also included in the context.
+#
+# 3.  **Context File Generation**: The aggregated text from all these sources is
+#     then written into a single, consolidated text file named after the claim
+#     folder (e.g., 'claim_folder_name-context.txt'). These context files are
+#     all saved in a centralized 'output' directory.
+#
+# 4.  **Structured Output**: The content from each source file is clearly delineated
+#     within the context file using headers (e.g., '--- Content from [filename] ---'),
+#     making it easy to trace the origin of each piece of information.
+#
+# 5.  **Progress Tracking**: It uses the `tqdm` library to display a progress bar,
+#     providing a visual indication of how many claim folders have been processed.
+#
+# Usage:
+#   python src/create_context_files.py
+#
+#   Note: The input directory is hardcoded to 'Sample 2 Claims files OCR' and the
+#   output directory is hardcoded to 'output'.
+
 import os
 import subprocess
 import sys

@@ -1,3 +1,59 @@
+# This script is a sophisticated document evaluation engine. Its primary purpose is
+# to take a text file as input, split it into individual clauses, and then
+# evaluate each clause against a comprehensive, configurable set of rules loaded
+# from a JSON file.
+#
+# The script's main functionalities are:
+# 1.  **Rule-Based Evaluation**: The core of the script is a dispatch system that
+#     selects the appropriate evaluation function based on the 'type' of a rule
+#     defined in `rules_detailed.json`.
+#
+# 2.  **Multiple Evaluation Types**: It supports a wide variety of rule types,
+#     including:
+#     - **Fuzzy Matching**: Uses fuzzy string matching to check for the presence
+#       of specific keywords or phrases.
+#     - **Numeric Checks**: Can handle various numeric constraints, such as
+#       checking years, days, percentages, or the simple presence of an amount.
+#     - **Inverse Presence**: Checks for the absence of undesirable or "forbidden"
+#       terms.
+#     - **Grammar Checking**: Uses `language_tool_python` to count the number of
+#       grammatical errors in a clause.
+#
+# 3.  **Cross-Clause Consistency**: Beyond evaluating individual clauses, the script
+#     includes functionality to perform a final, holistic check across all clauses.
+#     It extracts key data points (like amounts, currencies, and contract numbers)
+#     from each clause and then checks for inconsistencies (e.g., multiple different
+#     contract numbers) across the entire document.
+#
+# 4.  **Text Preprocessing**: It includes text normalization functions to lowercase
+#     text and remove diacritics (`unidecode`) before performing fuzzy matching,
+#     which improves the accuracy and robustness of the matches.
+#
+# 5.  **Clause Splitting**: It relies on a separate `clause_splitter` module to
+#     break the input document into meaningful, evaluable clauses.
+#
+# 6.  **Structured JSON Output**: The final output of the evaluation is a detailed
+#     JSON file. This file contains the overall document score, a list of all
+#     clauses with their text, and, for each clause, a list of all the rules it
+
+#     was evaluated against, including the score/color and the evidence for that
+#     result.
+#
+# 7.  **Training Data Generation**: The script also has a mode to generate training
+#     data. In this mode, it evaluates the file but then prompts the user to
+#     manually verify or correct the evaluation for each rule, saving the results
+#     as labeled training examples.
+#
+# 8.  **Command-Line Interface**: The script is driven by command-line arguments,
+#     allowing the user to specify the input file, the rules file, the output path,
+#     and whether to run in 'training' or 'evaluation' mode.
+#
+# Usage:
+#   - For standard evaluation:
+#     `python src/evaluate_file.py /path/to/document.txt`
+#   - To generate training data:
+#     `python src/evaluate_file.py /path/to/document.txt --mode training`
+
 """
 This script evaluates a given document by splitting it into clauses
 and scoring each clause against a predefined set of rules using a dispatch table.
