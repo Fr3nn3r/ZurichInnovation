@@ -1,0 +1,32 @@
+Q: Can I access the things? 
+A: The team will check on the access and permissions you need and try to resolve the issue.
+
+Q: For the segmentation and clusters, does Zurich already have some segmentation that we can use or do you want us to use something we bring? 
+A: For the use case, you should do your own clustering and segmentation using the provided data files.
+
+Q: Are the clusters we create supposed to tie into previously existing clusters? 
+A: No, you don't need to map any existing data or clusters. The data provided for the use case is semi-fictional.
+
+Q: Can information about existing personas be shared to guide segmentation? 
+A: No, the company would prefer not to share specific personas at this stage.
+
+Q: Can we use both provided datasets to develop two separate communication strategies?
+A: Yes, the two data sets are not connected and hence could be used to design independent solutions.
+
+Q: When testing the solution, will one data set be used at a time or would both be used together?
+A: Since the datasets are not connected, testing the solution would involve using one dataset at a time.
+
+Q: Is this data accessible on a daily or monthly basis?
+A: The sales data is freely available and can be accessed up to the day.
+
+Q: Is the solution expected to be local or cloud-based?
+A: There are no strict preferences, though local solutions would likely face fewer approval challenges.
+
+Q: Should we anticipate any restrictions on compute capacity for local models?
+A: The team doesn't anticipate any restrictions in terms of compute capacity for local models.
+
+Q: Will we need to show a real-time demo of how the solution works using provided data sets? 
+A: Yes, the deliverables for the challenge include a video recording of the solution, a technical summary document, a clickable prototype (optional but preferred), and a summary deck. The live demo would come after these at the pitch session stage if applicable.
+
+Q: Will another updated dataset be provided for making the solution work in the video recording?
+A: No, the existing datasets should be used to demonstrate how the solution works.

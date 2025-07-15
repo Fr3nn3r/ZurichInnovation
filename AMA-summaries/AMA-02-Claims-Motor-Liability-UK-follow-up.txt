@@ -1,0 +1,29 @@
+Q: How is the competition going so far for you?
+A: The competition has been quite tiring. There have been good engagements and lots of good questions. The next time might require a few more weeks to prepare.
+
+Q: Do we need to take care of the anonymization of the screenshots or is it already taken care of?
+A: The provided data should already be anonymized. If anything isn't, you should anonymize it yourself, but all data provided have had the sensitive details stripped out.
+
+Q: You mentioned that new data in.json format has been uploaded. Where can it be found?
+A: The new data has been uploaded to the team's file section under 'data'. It can also be seen in the channel, it's called 'sample two claims files'.
+
+Q: What is the liability associated with labeling test data?
+A: The organizers will review whether it was split liability or not and get back to you. The data was just provided to give an idea of what kind of data you'll be working with.
+
+Q: Is the data provided the only information received in the first stage by the insurer? 
+A: The data provided is only the key pieces of information needed to make a decision. There would usually be more information included in the documents, but what's provided are just samples of key parts of the documents.
+
+Q: What is the expectation from the shared API documentation?
+A: The API documentation was provided to help teams understand how Zurich does integration. It is not expected for teams to use it at this stage, rather it's provided to help understand how possible future integration could occur.
+
+Q: Will adjusters be able to access another platform to check the decision made by the AI agent?
+A: While having a separate platform isn't a blocker, ideally in the future, there would be one system that we could have on our main platform.
+
+Q: What is the expectation for split liability cases?
+A: Ideally, the solution should provide the handler with an assessment of what the liability decision would be and guidance on next steps. It should definitely include some sort of guidance or assessment that handlers can use to discuss with customers.
+
+Q: What are the most time-consuming parts of the claims process and where can AI help?
+A: Currently, the process is driven by claims handler knowledge and manual assessment which involves reading all statements, sketches, witness evidence, police reports, etc. The process could be made faster if AI could automate these assessments and come up with strategies. 
+
+Q: How to calculate recovery opportunities?
+A: Recovery opportunities are directly linked to assessment of liability. If there's an assessment showing that there's a split liability opportunity, it would mean that there's an element of recovery opportunity available. The recovery side is directly linked to the determination of liability.

@@ -1,0 +1,32 @@
+Q: Should the solution be able to integrate in the Zurich platforms? 
+A: No, for the case, a standalone solution that could possibly integrate later is appropriate. There is no need to immediately connect to Zurich systems.
+
+Q: What are the deliverables and the corresponding procedure for the project?
+A: The mandatory deliverables are: a five-minute video walkthrough, a pitch deck explaining the solution, a technical summary document, and an optional clickable prototype. 
+
+Q: What would happen after the submission deadline?
+A: After the deadline, the technical and business teams review submissions, select finalists who can pitch to the Xcode jury. Promising solutions could get further collaboration opportunities as they will be shared internally regardless of not being selected.
+
+Q: How does the submission review and winner selection process work? 
+A: The process involves both a technical team and a business review team. The teams review the deliverables and select finalists based on an aggregated evaluation. Finalists then get to pitch to the Xcode jury, who choose the winners for a paid pilot project. 
+
+Q: What is the success rate of the use case for a business? 
+A: This question appears to be unanswered in the transcript provided.
+
+Q: Where is the added value of SEO?
+A: The added value of SEO can be tracked and analyzed through changes in SEO traffic, which indicates its effectiveness in increasing online visibility.
+
+Q: What would be looked into for a "like for like" comparison?
+A: A "like for like" comparison would involve a long observation window, with data collected over a couple of months used to evaluate changes in traffic due to SEO strategies.
+
+Q: How is the SEO process being developed keeping in mind the evolution and optimization of Language Model technologies (LLM)?
+A: The SEO process has been developed with a focus on the evolution of LLM, taking into account changes in optimization and brand mention strategies.
+
+Q: What factors guide the assumption towards whether a particular case or prototype would be beneficial or not?
+A: The assumption is based on previous experience, confidence in the potential positive contribution of the case or prototype, and an understanding that SEO is a long-term strategy that doesn't necessarily produce immediate returns.
+
+Q: What is the view on return of investment (ROI) with respect to SEO?
+A: SEO is seen as a long-term strategy, and it's understood that it might not deliver immediate ROI. However, confidence in its potential for long-term improvements is a key factor in decision-making.
+
+Q: What is the perception of the short development cycles related to SEO?
+A: It’s recognized that SEO requires continuous adjustments and doesn't assure instant gains in gross return premium. The value of short development cycles and their assessments cannot solely be based on immediate monetary returns.

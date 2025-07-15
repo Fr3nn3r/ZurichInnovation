@@ -1,0 +1,23 @@
+Q: What do you want to see in a solution that makes a liability decision and how should it build around it?
+A: The main output expected would be a summary document detailing the analysis of an accident, what the AI thinks is the right liability decision, along with any relevant case law or legal precedents and a rationale that handlers can use to assess their discussions with customers and brokers.
+
+Q: Could you provide us rules, policies, or precedents that can show how you determine split liability?
+A: The team can provide a standard operating procedure for high-level guidance. They also use external platforms for case laws, but those are licensed-based, so they're not owned by Zurich. 
+
+Q: Is access to LexisNexis and other online sources read-only or do you have API access?
+A: Access to these sources is read-only. Handlers have individual logins and passwords to gain access. 
+
+Q: Would you be looking for us to provide a solution that used API access to platforms like LexisNexis to cross-reference the inference from the dataset?
+A: Zurich's main focus is on the output that would benefit their handlers. Whether the solution uses an API site or not is not their primary concern.
+
+Q: Regarding the data content for the application, are the handlers the ones producing the documents or are they getting these documents from elsewhere?
+A: They have provided all of the documents and images that they can within the SharePoint.
+
+Q: What is the meaning of the case law identification and recovery opportunity in the evaluation criteria?
+A: Case law identification refers to identifying relevant cases from UK case law appropriate to accident circumstances which are available on external platforms that their handlers access. Recovery opportunity refers to the cases where Zurich could recover repair costs from a responsible party. 
+
+Q: What are the latency expectations?
+A: If the relevant documents are available for a claim, Zurich would expect a same-day turnaround for the processing of the claim.
+
+Q: Are there people manually reading case law right now to determine liability or recovery opportunities? What does the current process look like?
+A: Currently, it's a manual process. Handlers manually assess claims based on the information available to them at the time of claim setup. They route the claim based on their assessment.

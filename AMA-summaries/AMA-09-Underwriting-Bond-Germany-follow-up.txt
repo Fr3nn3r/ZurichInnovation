@@ -1,0 +1,47 @@
+Q: Is there a guide or label helping identify which documents should pass in the data provided?
+A: Yes, there are additional test files uploaded for the validation approaches.
+
+Q: Should the new data files uploaded be used for validation and do they represent final outputs?
+A: Yes, the raw files uploaded are wordings that are not allowed and should be flagged. There's also a document with a checklist to grade according to criteria. 
+
+Q: Are the daily uploaded data files meant to be flagged?
+A: Yes, all the uploaded files should be flagged for varying reasons.
+
+Q: How does the flagging system rely on real data to ensure validation of the approach?
+A: Standard wordings should be flagged green. Yellow and red flags are for unallowed criteria. One yellow flag is enough to stop the automatic process.
+
+Q: Do we need to evaluate each criteria individually and then perform an overall document evaluation?
+A: Yes, the input data should be checked on specific criteria first. If one criteria is not met, flag it yellow. One yellow flag is enough to flag the entire document.
+
+Q: Can we confirm that if all criteria are flagged green, the document passes?
+A: Yes, that's correct.
+
+Q: Can we alter rules in a dynamic clause system, either globally or within a specific process?
+A: Changing any business rule within a central criteria table affects all processes.
+
+Q: Could the system's interface or output be multilingual, or should it stick to German or English?
+A: For the initial step, German is sufficient as all the underwriters understand it.
+
+Q: Given that we don't have specific roles beyond underwriters, how do we manage the criteria per team member?
+A: Current roles do not need to be mirrored in the system. Creativity is encouraged in managing criteria per team member or role.
+
+Q: If one yellow flag turns the whole document yellow, how should we handle it for evaluation purposes?
+A: Knowing the specific reason for the yellow flag is useful, such as an unclear legal reference. Proposing a solution for the flags and a replacement phrase is seen as beneficial but not initially required.
+
+Q: Should we enhance the definitions of what mandates a green or yellow flag for more clarity and automation later on?
+A: Yes, refining these definitions in later stages would promote clarity and automation.
+
+Q: Do you have a benchmark for whether the project meets required expectations?
+A: The project should reduce manual work by handling semantic differences in acceptable wording variations that deviate from standard wordings.
+
+Q: Is exploring our capabilities and refining the AI's performance based on possible findings preferred over having a fixed criterion set?
+A: Yes, the focus is on exploring capabilities and gradual refinement of how the AI works.
+
+Q: What is the target for reducing manual effort per document?
+A: The goal is to reduce manual effort by at least 40% for each document.
+
+Q: How much time does a nonstandard text document currently take to be approved by an underwriter?
+A: Approval currently takes between 15 to 20 minutes per document.
+
+Q: Is there a time sensitivity in the bond issuance process that could benefit from AI automation?
+A: Yes, the approval process can cause delays, especially when checking the wording of multiple bonds. AI could significantly improve efficiency in this area.

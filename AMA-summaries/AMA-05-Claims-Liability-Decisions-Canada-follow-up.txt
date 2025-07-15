@@ -1,0 +1,35 @@
+Q: What is the rule set that should be used to determine the 40% split? 
+A: The company uses proprietary rules which might be difficult to share. The general rule is to determine if the accident that caused the claim falls under the policy coverage.
+
+Q: Should we assume the determination of what caused an accident is 100% on our customer every time? 
+A: Yes, as most cases seen are slips and falls which tend to be the customer's fault.
+
+Q: Are we expected to go through the data set and determine what the expected outcome should be, or will you provide it at a later time? 
+A: The expectation is for you to determine if the accident is covered under the policy and if the claimant was at fault, impacting the claim amount. The goal is to gauge a high-level approach to the claim's worth based on injuries sustained.
+
+Q: Can we have a document outlining the expected liability based on the data? 
+A: Although this would aid in training the model for evaluation, it is unconfirmed if such a document will be provided.
+
+Q: Will reviewing and cleaning each of the 133 data sets for the solution breach any company policies?
+A: This needs to be approved by the privacy officer.
+
+Q: Are the case reserves shared in the hackathon dataset closed or are there any active ones?
+A: All the cases in the dataset are closed.
+
+Q: How will the team manage the sharing of specific reserve amounts for each case?
+A: They are considering providing a range instead of the exact amount to maintain privacy.
+
+Q: The provided anonymized data appears messy. How has it been improved?
+A: The team has uploaded a bunch of documents in their original format with personal details anonymized on top of it.
+
+Q: Will the datasets shared for use case five be updated?
+A: New files have been uploaded recently. There should now be about 25 claims files, totaling to 150 documents.
+
+Q: When does the evaluation of early submissions start?
+A: The evaluation will begin from the 14th of July. If there are any early submissions, evaluation can start earlier. The final deadline for submission is the 13th of July at midnight, Central European Time.
+
+Q: What should Andrea do?
+A: Andrea is asked to submit a vote or fill out a survey to help organize the reviewers.
+
+Q: What is the purpose of the survey?
+A: The survey aims to manage the demand for business and tech reviewers for the use case plan.

@@ -1,0 +1,20 @@
+Q: What are the expectations of the agent regarding work with Coupa, and is there an accessible testing environment to explore its functionality?
+A: Coupa has out-of-the-box APIs for objects like requisitions, process orders, invoices, and contracts that can be used in the context of the hackathon. Though using external APIs within Zurich's environment is a bit more complicated due to extra IT security scrutiny. There is no testing environment for Coupa but the agent could demonstrate through a test how it interacts with Coupa.
+
+Q: How is the link between PDF contracts and Coupa entries established?
+A: In a production environment, this is done through metadata in Coupa. Every contract has a record in Coupa, with links between the metadata and the PDFs attached to that particular contract. For the hackathon purposes, it's necessary to create a fake data model to show this relationship.
+
+Q: Who is the contract owner for each contract, and where are their email addresses retrieved from?
+A: In a real-world, production environment, contract owner information would come from the metadata in Coupa. For the hackathon, participants would need to mock it up in their mock data model.
+
+Q: Can contracts be altered and supplier names manually inserted for the hackathon?
+A: Yes, participants are welcome to do this for the purposes of the hackathon.
+
+Q: Regarding comparison of contracts, what information would be expected at the time of the prompt?
+A: There could be two scenarios: comparing rate for a certain role between specific companies and providing a list of rates from all suppliers for a certain role.
+
+Q: How should the contract owner email interaction be managed considering Zurich AI guidelines?
+A: The goal would be for the agent to show that it's capable of triggering an email, but the actual email could be sent to any designated recipient for the hackathon purposes.
+
+Q: Regarding contract comparison, what would a comparison process look like?
+A: In reality, the comparison might be done against standard terms and conditions. For the hackathon, participants could create a fake, simplified version of this process to demonstrate how it can be done.

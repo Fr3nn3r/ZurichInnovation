@@ -1,0 +1,23 @@
+Q: Regarding the analysis done on the two policies, is the expectation a brief summary of all the policies or a detailed, separated analysis per policy?
+A: The ideal result would be a detailed analysis per policy indicating whether it's acceptable (green), acceptable but needing special sign-off (yellow), or not acceptable (red).
+
+Q: If a new policy comes in, what is needed from it?
+A: The dream is that when a new policy comes in, it can be placed into the system and evaluated on where it stands in terms of being green, yellow, or red.
+
+Q: Is a document that summarizes the outcome of policy analysis desired?
+A: Yes, ideally we would like a document that summarizes the outcomes of the policy analysis, grouping items by their green, yellow, and red status.
+
+Q: Which policy in the datasets is the master policy?
+A: The files in directories numbered zero and one are the basis. They include the guidance and the real base policy.
+
+Q: How should the execution of transactions into the core system occur?
+A: The execution currently occurs manually. The analysis should help to streamline this process by providing the comparison details necessary for creating exceptions and sign-offs within a new policy.
+
+Q: Which document can be referred to for risks in the policy?
+A: There isn't a comprehensive list of risks. However, Zurich has a couple of rule books (guideline documents) under directories numbered zero and one, which contain acceptable policies and rules that the team must follow.
+
+Q: Is the actual execution of transactions into the core system to be simulated?
+A: At the moment, a lot of the execution is done manually. There is a project to automate certain parts of the process, but it has not been implemented yet.
+
+Q: What might a minimum acceptable solution look like?
+A: A bare minimum solution could potentially be a system that identifies items within new policies that may require an exception or special approval. Items not identified as such would be considered "red flags".

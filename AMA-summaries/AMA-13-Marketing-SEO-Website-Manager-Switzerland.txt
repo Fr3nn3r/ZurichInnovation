@@ -1,0 +1,32 @@
+Q: What's the first action we have to take in terms of pitching or sending in documents or presentations?
+A: All the information regarding what you need to deliver and the formatting request is posted in the general chat channel. The deadlines can also be found in the presentation provided.
+
+Q: When is the official deadline for the work we are currently doing?
+A: The deadline is set for the end of the current week, but updates will be provided if there are any changes.
+
+Q: Can we reuse approaches and tools we've used for similar projects in the past?
+A: As long as the final solution meets the requirements and is scalable globally, approaches and tools from past projects can be reused.
+
+Q: Do you have a particular tech stack preference?
+A: Zurich does not have a specific tech stack preference due to different BU's using different tech stacks. The aim is to keep the tech stack open and generic.
+
+Q: Is Zurich prepared to have information from existing systems shared in one location for analysis?
+A: Zurich is open to having information shared in one central location for analysis.
+
+Q: Has Zurich tried any LLMS that they have a preference for, or any that they wouldn't touch?
+A: Zurich primarily uses an in-house LLM from subsidiary AlphaJet unless there are security reasons to use something different.
+
+Q: What is the format of the submission for the project? 
+A: The details on the format of the submission for the project are provided in a presentation in the general chat channel.
+
+Q: Is Zurich ready for publishing AI generated images?
+A: Zurich has strict internal guidelines regarding AI-generated images currently, but they are open to softening them based on potential learnings or advancements from this hackathon.
+
+Q: When the SEO agent provides a comprehensive website analysis report, are charts or numbers expected?
+A: Zurich is open to more technical and raw formats for the analysis report as the primary users will be SEO managers and the online editorial team, who are experts in the field.
+
+Q: What is the main objective of the project?
+A: The main objective is to improve day-to-day business functions such as SEO, UX/UI improvements, and content generation through innovation.
+
+Q: Is there a focus on certain brand terms or product names that Zurich wants to appear in the AI generated answers?
+A: The focus, for the sake of this case, will be on motor insurance as it is one of Zurich's fast-moving businesses. There are no specific branded search terms specified.

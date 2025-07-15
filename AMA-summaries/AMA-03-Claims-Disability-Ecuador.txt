@@ -1,0 +1,20 @@
+Q: Is there a use case that provides a perfect set of documents that can be used to test the system?
+A: We are aware that the OCR we use for the anonymization is not the best, and we're working on providing better data. For use cases with good quality data, consider the sales use cases using synthetic data, and the finance and actuarial ones. Some underwriting ones also have good data, although it varies. 
+
+Q: Do you expect the user interface to operate in English or Spanish?
+A: Ultimately, the UI will be used by the Ecuadorian team, so it will operate in Spanish. However, since the reviewers of this project are based in various countries including Switzerland and Germany, English becomes a unifying language. So, for the purpose of this project, it should be in English. In a real-life scenario, it would be in Spanish.
+
+Q: What is the preferred evaluation criteria for the interface? 
+A: From the technology side, evaluations will assess what has been built, how it was built, and how it is controlled. From the business side, it will assess if it shows progress against the objectives set out. The looks of the UI is not a significant criterion.
+
+Q: Is the success criterion based only on the Ecuadorian laws related to TPD or will it need to expand to other countries as well?
+A: The focus begins with Ecuador. However, understanding how it could be applied in different markets based on their laws and regulations would be interesting.
+
+Q: How do we equip ourselves with the knowledge and understanding of PUC model and other insurance terminologies if we're new to this field?
+A: There are official documents provided at the beginning of the challenge that help calculate the percentage of disability. If the disability certificate is not found, medical records are used. If those aren't clear, a company physician's assessment is sought. This process must be understood and applied.
+
+Q: Are there any documents to check against to determine if it's covered or not? 
+A: Each case should have a policy text from which the coverage can be checked. The document called 'Policia de Seguros' is the policy document that should have the coverage information.
+
+Q: Is age important in determining coverage?
+A: Yes, there's an age limit for each coverage. For total and permanent disability, coverage is available up to 70 years old. If the insured person is older, an alert should be triggered since companies often forget to mention exceeding age limits.

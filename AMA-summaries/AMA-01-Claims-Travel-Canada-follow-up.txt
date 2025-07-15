@@ -1,0 +1,35 @@
+Q: Can you elaborate on the process generating the new data format and why it took time?
+A: The new data is being checked to make sure there's no personal data included. The data is in the original formats and should be easier to work with. 
+
+Q: Could you clarify the claim 7 with two unrelated customer contact messages?
+A: They need to look into claim 7 more and determine why the two messages seem unrelated, they plan to come back with a response later.
+
+Q: How are discrepancies in the claims data going to be considered during evaluation?
+A: Mistakes between pieces of information within a claim could lead to the claim being questioned, example being provided: a baggage claim's itinerary not aligning with the actual baggage tags. Also, it's more important to witness the end-to-end process, rather than the same outcomes seen from specific scenarios.
+
+Q: Should an API be implemented for payment integration during claims processing?
+A: Implementing actual payment system is not required, but the process should indicate whether a claim is valid or not, which would trigger a payment gateway under normal circumstances. 
+
+Q: What is the claim process start like?
+A: The claims process usually starts through email.
+
+Q: Are the validation rules changeable by the admin?
+A: The rules for validation are typically quite standard and don't change often.
+
+Q: Should the program implement a flight delay verification process?
+A: This isn't mandatory as it's not currently done in practice, but it would be useful and a positive addition to implement flight delay verification.
+
+Q: When would a document be declined or require more information?
+A: A document could be declined if there is conflicting or inaccurate information that isn't resolved after reaching out to the customer for clarity. More information would be requested if the document data doesn't align with the claim.
+
+Q: Is it conceivable to have a fourth claim result, where the system isn't certain and refers the claim to a human evaluator?
+A: Yes, bringing a human into the loop for uncertainty is a possible end-state and is part of the real-life process.
+
+Q: How do we decide which of the human employees would review a claim if the system is uncertain?
+A: Currently, claims are divided based on their dollar amounts and assigned manually. But for this example, one could simply mock the referral process.
+
+Q: Will there be a structured list of necessary supporting documents for each claim type?
+A: There is not currently an official database or list for what type of documentation is required for each claim type, but this is something that could be created based on what is typically asked for in these circumstances. 
+
+Q: Should we simulate that the broker is sending all the insurance info to Zurich, or would it be the client directly sending all of it to you?
+A: Both scenarios can occur and should therefore be considered.

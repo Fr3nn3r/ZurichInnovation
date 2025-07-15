@@ -1,118 +1,150 @@
 import os
 import sys
-import subprocess
+import json
+import logging
+import argparse
 from pathlib import Path
 from dotenv import load_dotenv
 from supabase import create_client, Client
 
+# --- Setup Logging ---
+logging.basicConfig(
+    level=logging.INFO,  # Default level
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    stream=sys.stdout,
+)
 
-def install_dependencies():
+# --- Supabase Configuration ---
+load_dotenv(override=True)
+SUPABASE_URL = os.environ.get("SUPABASE_URL")
+SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
+
+
+def get_supabase_client():
+    """Initializes and returns the Supabase client if credentials are available."""
+    if SUPABASE_URL and SUPABASE_KEY:
+        logging.info("Supabase client initialized.")
+        return create_client(SUPABASE_URL, SUPABASE_KEY)
+    logging.warning("Supabase URL or Key not found. Cannot proceed.")
+    return None
+
+
+# --- Main Logic ---
+
+
+def upload_context_files(output_folder: str):
     """
-    Checks if all necessary dependencies are installed and, if not, installs them.
+    Scans for '*-context.json' files, reads their content, and upserts them
+    to the 'n8n_context_cache' table in Supabase.
     """
-    try:
-        import tqdm
-        import supabase
-        import dotenv
-    except ImportError:
-        print("Installing required dependencies...")
-        subprocess.check_call(
-            [
-                sys.executable,
-                "-m",
-                "pip",
-                "install",
-                "supabase",
-                "python-dotenv",
-                "tqdm",
-            ]
-        )
-        print("Dependencies installed successfully.")
-
-
-def main():
-    install_dependencies()
-    from tqdm import tqdm
-
-    load_dotenv(override=True)
-
-    # --- Supabase Connection ---
-    url = os.environ.get("SUPABASE_URL")
-    key = os.environ.get("SUPABASE_KEY")
-
-    if not all([url, key]):
-        print("Error: SUPABASE_URL and SUPABASE_KEY must be set in the .env file.")
-        sys.exit(1)
-
-    try:
-        supabase: Client = create_client(url, key)
-    except Exception as e:
-        print(f"Error connecting to Supabase: {e}")
-        sys.exit(1)
-
-    # --- File Processing ---
-    output_dir = Path("output")
-    context_files = list(output_dir.glob("*-context.txt"))
-
-    if not context_files:
-        print("No context files found in the 'output' directory.")
+    supabase_client = get_supabase_client()
+    if not supabase_client:
         return
 
-    print(f"Found {len(context_files)} context files to upload.")
+    output_path = Path(output_folder)
+    if not output_path.is_dir():
+        logging.error(f"Output folder not found: {output_path}")
+        return
 
-    # --- Data Upload ---
-    table_name = "n8n_context_cache"
-    zurich_challenge_id = "02- Claims- Motor Liability- UK"
-    data_upload_id = "zurich_07_2025"
+    logging.info(f"Scanning for context files in: {output_path}")
+    context_files = list(output_path.glob("*-context.json"))
 
-    for file_path in tqdm(context_files, desc="Uploading Context Files"):
-        base_filename = file_path.name.replace("-context.txt", "")
+    if not context_files:
+        logging.warning("No '*-context.json' files found to upload.")
+        return
+
+    logging.info(f"Found {len(context_files)} context files to process.")
+
+    for context_file in context_files:
+        dataset_id = context_file.name.replace("-context.json", "")
+        context_key = context_file.name
+        logging.info(f"Processing {context_file.name}...")
 
         try:
-            with open(file_path, "r", encoding="utf-8") as f:
-                context_value = f.read().replace("\u0000", "")
+            with open(context_file, "r", encoding="utf-8") as f:
+                context_value = f.read()
 
-            data_to_upload = {
-                "context_key": base_filename,
-                "dataset_id": base_filename,
+            data_to_upsert = {
+                "context_key": context_key,
+                "dataset_id": dataset_id,
                 "context_value": context_value,
-                "zurich_challenge_id": zurich_challenge_id,
-                "data_upload_id": data_upload_id,
+                "zurich_challenge_id": "01- Claims- Travel- Canada",
+                "data_upload_id": "zurich_07_2025",
             }
 
-            # Check if a row with the same context_key already exists
+            # --- Check-Then-Act Logic ---
+            # 1. Check if a record with the same dataset_id exists
             select_response = (
-                supabase.table(table_name)
+                supabase_client.table("n8n_context_cache")
                 .select("id")
-                .eq("context_key", base_filename)
+                .eq("dataset_id", dataset_id)
                 .execute()
             )
 
             if select_response.data:
-                # Update the existing row
-                tqdm.write(f"Updating existing record for {base_filename}...")
-                response = (
-                    supabase.table(table_name)
-                    .update(data_to_upload)
-                    .eq("context_key", base_filename)
+                # 2. If it exists, update it
+                logging.info(
+                    f"  -> Found existing record for dataset_id: {dataset_id}. Updating..."
+                )
+                update_response = (
+                    supabase_client.table("n8n_context_cache")
+                    .update(data_to_upsert)
+                    .eq("dataset_id", dataset_id)
                     .execute()
                 )
+                if hasattr(update_response, "error") and update_response.error:
+                    logging.error(
+                        f"  -> Failed to update {context_key}: {update_response.error.message}"
+                    )
+                else:
+                    logging.info(f"  -> Successfully updated: {context_key}")
             else:
-                # Insert a new row
-                tqdm.write(f"Inserting new record for {base_filename}...")
-                response = supabase.table(table_name).insert(data_to_upload).execute()
-
-            # The API response for insert/update is in response.data
-            if len(response.data) == 0:
-                tqdm.write(
-                    f"Warning: No data returned for {base_filename}. Response: {response}"
+                # 3. If it does not exist, insert it
+                logging.info(
+                    f"  -> No record found for dataset_id: {dataset_id}. Inserting..."
                 )
+                insert_response = (
+                    supabase_client.table("n8n_context_cache")
+                    .insert(data_to_upsert)
+                    .execute()
+                )
+                if hasattr(insert_response, "error") and insert_response.error:
+                    logging.error(
+                        f"  -> Failed to insert {context_key}: {insert_response.error.message}"
+                    )
+                else:
+                    logging.info(f"  -> Successfully inserted: {context_key}")
 
         except Exception as e:
-            tqdm.write(f"An error occurred while processing {file_path.name}: {e}")
+            logging.error(
+                f"An exception occurred during processing of {context_key}: {e}"
+            )
 
-    print("\n--- Upload process complete. ---")
 
+# --- CLI Interface ---
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description="Upload context files to Supabase.")
+    parser.add_argument(
+        "output_folder",
+        type=str,
+        default="output",
+        nargs="?",  # Makes the argument optional
+        help="The folder containing the '*-context.json' files. Defaults to 'output'.",
+    )
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        action="store_true",
+        help="Enable verbose (DEBUG) logging output.",
+    )
+
+    args = parser.parse_args()
+
+    # Configure logging level based on verbosity flag
+    if args.verbose:
+        logging.getLogger().setLevel(logging.DEBUG)
+    else:
+        logging.getLogger().setLevel(logging.INFO)
+
+    upload_context_files(args.output_folder)

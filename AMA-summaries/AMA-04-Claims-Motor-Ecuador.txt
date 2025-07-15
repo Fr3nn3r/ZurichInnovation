@@ -1,0 +1,23 @@
+**Question: How do you guys usually map the claims to each other?**
+
+Answer: We have two ways. We would attach a claim file, a claim number to the claim file, and then we would say this individual or about this case is granted a certain unique claims number. All those in the folder should have the same claim number. We would either have the claim number attached or know it's referenced to a vehicle or to a driver, and then with those three bits, we would sort of map it to the claims number.
+
+**Question: Is it required to do API calls to gather policies about a certain client?**
+
+Answer: The short answer is yes. APIs will still have a role in an agentified architecture. We would want to be able to integrate with your solution using APIs. It's expected that the architecture should be able to interact with different policy systems, claim systems, payment systems, CRM systems. 
+
+**Question: Is everyone in Zurich using the same claim system internally?**
+
+Answer: No, Zurich uses a wide variety of different systems which are not the same. The focus should be on how the solution would integrate into different ones as there is the need to cater for many different territories and lines of business. 
+
+**Question: Would Zurich's adjusters be open to working on another tool? What information needs to be stored in the current systems?**
+
+Answer: The journey to provide another tool for adjusters might be a long one. In the long run, Ideally, not providing another tool should be the goal. The interaction layer with the AI agent might eventually change and might not be some of those systems records. 
+
+**Question: Is there a minimum amount of documents expected to be handled during the two weeks?**
+
+Answer: A case usually has five or six documents. You might find additional ones, but the vital ones are always the claim advice, looking at the policy, and some official documents. With three main documents, you can acquire 80% of the information you need to perform a calculation of the amount reserve and the conditions that determine the vehicle is covered within the policy. 
+
+**Question: If we want to apply or submit multiple use cases, would we submit them all in one or would we hand in multiple submissions?**
+
+Answer: Multiple submissions should be done separately. They should go into separate documents for individual review.

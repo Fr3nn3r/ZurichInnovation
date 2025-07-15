@@ -1,0 +1,23 @@
+Q: With respect to accuracy, do you have any guardrails, boundaries for the degree of hallucinations or the degree of emissions?
+A: Accuracy in this context means that we are spotting the right areas. We will check that these are all data where the reporting team did the analysis already. We should be able to link what we have in your report with their knowledge and experience. 
+
+Q: How are you going to measure the quality of the output?
+A: When you send us the report, the report will say we are analyzing this specific evaluation date or quarter. And we think that there are these areas to be investigated. And we will assess the accuracy based on whether we agree that they are all relevant or not. We would also like from you some measures or suggestions that could be helpful for us to consider.
+
+Q: What elements do you want to be in the report?
+A: The report can be a set of bullets with areas to investigate. The goal is to produce questions with a bit of context of why we should ask that question. We are not expecting a full analysis, it's very focused on a few areas to be investigated.
+
+Q: Is AOC analysis of change report the same report we're discussing here?
+A: Yes, in part, the slides in the template are AOC. We expect some kind of analysis of change to identify the questions to ask which is more in the background.
+
+Q: What is your pain point in your current process, why agentic?
+A: The pain point is the very compressed time we have to review data from multiple units, contact them for questions, and prepared everything for the next step in the process. Agentic could automate some of these processes, allowing us to focus on value-added analysis and interaction with the business unit.
+
+Q: Are there typical steps that you take every time with these reports as you are doing the analysis?
+A: There is a first step of data quality controls. The next steps are dependent on the analyst, which is doing the work. 
+
+Q: What exactly is meant by comparing internal metrics with external information? 
+A: It means spotting a trend in a certain line of business across multiple countries. Then checking if this is a trend in the market and what is driving it. This can be confirmed by market data or rumours, or sentiment analysis.
+
+Q: Is one aspect of the evaluation criteria more important than the others?
+A: Identifying the areas to be investigated is more valuable than the other aspects.

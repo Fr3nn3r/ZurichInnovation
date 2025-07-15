@@ -1,0 +1,56 @@
+Q: Is there a type or style of visualization expected when designing our output? 
+A: The expectation is a clear output such as a PDF that shows which criteria have been fulfilled and what additional documents or information are required.
+
+Q: Is there a sequential process for document review and adjustments? 
+A: No, it's a complete process wherein the AI identifies issues in the document, after which we process the necessary adjustments, not the AI.
+
+Q: When changes are made, does a new AI process start or does the previous process continue? 
+A: It ends the process. From the agent's perspective, their task is complete upon reaching one final state.
+
+Q: Should we focus more on technical aspects, interaction, or the modularity of the project in terms of effort allocation? 
+A: The evaluation has both a technical and business lens. The main focus is on assessing whether the solution can potentially be scaled across the organization in the future.
+
+Q: Regarding the pitch recording, do we need to find our own dummy data for submission? 
+A: Yes, no additional data will be provided, so you'll need to source it for the video recording.
+
+Q: Can you explain the real-life underwriting process? 
+A: Underwriting is a daily task where underwriters review and evaluate documents to determine acceptance based on specific text passages.
+
+Q: How long does the underwriting process typically take? Are there any standard deadlines? 
+A: The time taken varies based on the complexity of the contract and the company handling it. There's no standard deadline.
+
+Q: Would it be beneficial to use historical data for process efficiency? 
+A: No, the evaluation criteria can change over time and thus documents need re-evaluation.
+
+Q: What factors influence the underwriting process? 
+A: The process depends on regulation and risk assessment.
+
+Q: Have standard operating procedures and risk profiles for contract review been shared? 
+A: Yes, various risk profiles have already been provided.
+
+Q: Will new data be added to TruePoint, or is it just current data? 
+A: No new data is expected.
+
+Q: Is the format of the input document uniform? 
+A: The documents have standard texts with a consistent structure, but deviations and special clauses can occur.
+
+Q: Is there a need for screening filters on the document inputs like region?
+A: This wasn't clarified during the meeting.
+
+Q: Do we need a legal reference for critical classification? 
+A: If feasible, using a legal reference is advisable.
+
+Q: Is there a standard rule book or will one be shared later? 
+A: There's no rule book, only a checklist document and proof criterion for the first prototype.
+
+Q: Does the AI need to account for foreign country laws in addition to Germany's?
+A: Yes, any reference to foreign laws must be double-checked.
+
+Q: What's the difference between court decisions, executed guarantees, and publicly available guarantees?
+A: Publicly available guarantees are from the internet, executed guarantees have been processed with customers, and court decisions, also found online, relate to 'book shaft'. Guarantees bear higher risks for Zurich.
+
+Q: How is risk mitigated with guarantees? 
+A: Risks can be mitigated by adding a clause requiring the beneficiary to prove the contractor didn't meet contractual obligations before benefiting from the guarantee.
+
+Q: How will the accuracy of the AI agent be evaluated? 
+A: This question requires further detail and will be addressed later due to lack of data.

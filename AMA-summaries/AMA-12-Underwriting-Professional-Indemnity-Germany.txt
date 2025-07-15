@@ -1,0 +1,20 @@
+Q: Are we giving more time for people to join?
+A: One more minute and then we're going to get going.
+
+Q: So my question is regarding the clean template that was shared. So we have kind of once we generate this data, is it required that we dump this data into an Excel template or it's OK if it remains in kind of a CSV or shown on a web page?
+A: It would be ideal if it could be entered in this Excel, but it's not absolutely necessary. For us, it is important to get the data, preferably in Excel. But if you have another format, we can look at it as well.
+
+Q: And the second question is regarding the company summaries. So the summary is something that will be used for the purpose of underwriting. And so there are two parts. One is the summary and one is the delta between the last year or the 12 months. Does this also for the purpose of this exercise need to be as detailed and as accurate as possible?
+A: Yes, it's important. We are trying to simulate that desktop research and to sort of say, OK, look, is this, you know, what would I want to know about this? And there is that sort of like quantitative information about, you know, what are they doing, what kind of activities, the number of people doing it, which is important to the underwriter, 
+
+Q: So we anyway, we scrape from the Internet and get whatever is available in the public domain. So this is not really getting into any closed data sources or any specific information?
+A: That's correct.
+
+Q: OK, so it's also combined with also the one year changes. So this changes could be whatever we find from the Internet search. It is not like we cannot go beyond what we have from the Internet search. So for some companies, we get really small information and this is really difficult. Where would you go beyond the Internet search?
+A: We have access to some sort of data sources. So we would then do have, for example, have access to Dun and Bradstreet, which would have some of that. But we haven't provided that.
+
+Q: Is there any other questions?
+A: No other questions have been presented. 
+
+Q: I think there are around 100 companies in the list. And do you want some of them pre-filled already as data or you would want to execute the agents yourself at your end?
+A: We will provide some more next week to say, OK, these will be the ones, right, not that you've kind of had an army of people just going off and finding it yourselves. So we'll do that. So we'll provide another set very, very similar to those. So if you could kind of run it on some of those, like, you know, and I guess we do want to be able to see, well, you know, that it is automated. But I think it's another, I forget how many we have, but it's another data set which we also have asked you to fill as part of the submission.

@@ -1,0 +1,20 @@
+Q: What is the process for sharing company process flows? 
+A: The company has documented processes, however, they can't currently share them. Instead, some understanding of the process can be surmised from some related documents in the system. 
+
+Q: How is the claim process managed within Zurich? 
+A: Claim process is fairly manual, involving looking at e-mails, verifying certain bits, and using that for decision-making. The focus is understanding the nature of claim, checking the validity of coverage, and deciding the payment part.
+
+Q: Are there any deviations, process level variations, that are specific to Zurich?
+A: Any variances depend on the client the team is working with. The core claims review process is the same across the board but there are minor differences based on specific client needs.
+
+Q: What is the evaluation process? 
+A: The evaluation process would provide a sample of claims for testing and review. The expectations for accuracy is to understand how far it matches with a professional review. Although complete precision isn't expected, there's interest to evaluate how close the system can achieve a high degree of accuracy.
+
+Q: What is the current speed of claim processing?
+A: Currently, examination of a claim can take from 10 to 15 minutes up to an hour, depending on the complexity of the claim. An average non-medical claim can take about 15-20 minutes.
+
+Q: How are the claims coming in processed? 
+A: Claims are made by customers either through a call or online. An email is sent out to the claimant with a list of necessary documents to be submitted. Once received, the documents are uploaded into the system and flagged for review.
+
+Q: How is sanction screening done currently? 
+A: Zurich

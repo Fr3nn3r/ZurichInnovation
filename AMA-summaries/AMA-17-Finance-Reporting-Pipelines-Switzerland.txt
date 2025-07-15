@@ -1,0 +1,23 @@
+Q: How do you view the task? Do you want participants to innovate around the brief or deliver against the requirements?
+A: The answer is somewhere in the middle. The objective is to have a better interface for consumers of the reporting and to help the reporting to flow more efficiently through the organization. The outcome is known; we want to produce the reports required by regulators, stock exchange, and for internal needs, but we also want to innovate and improve operational efficiency.
+
+Q: Is the focus on getting rid of manual, repetitive tasks for actuaries or on enabling them to be more creative?
+A: While enabling actuaries to be more creative is valuable, the primary focus is on removing operational bottlenecks. If the manual work isn't automated first, there won't be time to use or enjoy the innovative aspects.
+
+Q: Do your current pipeline systems need to be overhauled or merely improved upon?
+A: Current pipelines are short and disconnected. There's desire to switch from JavaScript to Python, better organize metadata, and operationalize the pipeline system. While there's an existing operational system, it's at the beginning of its journey and changes will be happening soon.
+
+Q: How is the evaluation going to be handled? 
+A: Evaluation should be based on how well the system can handle different types of data, such as Parquet files, Excel files, CSV files, and data from a database. It should also be able to parse PDF documents for requirements on what should be delivered each quarter.
+
+Q: Is it useful to focus on scalability and deployment? 
+A: Yes, scalability and applicability to other processes within the organization is a valuable factor during evaluation.
+
+Q: What personas are expected to interact with the system?
+A: The personas likely to be interacting with the system include data source owners, reporting owners, and management who consume the reports. However, the preparation, creation, and consumption of reports are often done by the same team.
+
+Q: What should be done about operational risks and AI risks?
+A: While some risks might exist, the use of AI and LMs in this system is mostly operational and not about content creation. Keeping manual checks along the way and using AI for defined, operational tasks can help manage risks. However, there should be some visibility for manual review when AI makes interventions or changes to the process.
+
+Q: What sign-off procedures need to be considered?
+A: There should be some form of sign-off by people for AI interventions, especially those relating to data that introduces risk. Formal sign-off happens at the end of the process by high-level management. Logging and keeping references to people's interactions should be standard.

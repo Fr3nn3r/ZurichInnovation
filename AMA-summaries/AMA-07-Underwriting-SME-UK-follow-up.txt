@@ -1,0 +1,32 @@
+Q: What's the best way to demo our prototypes to Zurich, given that they sometimes get blocked by Zurich's spam protection? 
+A: You should send an email to innovationazurich.com with details necessary for whitelisting the prototypes, such as IP addresses. 
+
+Q: What are you looking for in the end product? How can we demonstrate most our value for Zurich? 
+A: Zurich is looking for insights on scenarios that could be automated, and the types of transactions that could benefit from automation. The aim is not just about replacing human interaction with bots, but to identify areas where technology can be used to improve efficiency while still retaining value from human interactions.
+
+Q: Has the timeline for the selection of finalists been changed now that the submission deadline has been extended? 
+A: Yes, the new timeline for the finals has been pushed to the last two weeks of August due to the summer holidays. The reviews have started, and if there are any questions, the team will reach out to the participants. 
+
+Q: Can we get feedback on our submissions before the final deadline? 
+A: While there is a possibility to resubmit, the team doesn't guarantee feedback on all submissions. They will reach out if they have any questions.
+
+Q: If we submitted early, does that count for any merit?
+A: It doesn't count against you, but it doesn't necessarily give you higher favor. It can, however, provide the opportunity for early feedback if there are any questions from our side.
+
+Q: Will there be more chat data available in the coming week? 
+A: We are not planning on releasing another large batch of chat data, but we are considering providing more chat data or prompts for testing purposes.
+
+Q: Will the new chat data be similar or more filtered with just the questions? 
+A: We're still figuring out the specifics, but it'll likely include similar types of questions. We thought about creating a bot to interact with the data, but it doesn't seem feasible within the next week.
+
+Q: Regarding the policy and workflow-related details that will be coming by 6th of July, was any additional information shared? 
+A: Yes, there will be example schedules provided. These pertain mainly to the policy, quote, or renewal and serve as summaries of prior conversations. There are also provided Excel spreadsheets that relate to platform interaction, as well as final contracts that are the outcome of human advisor transactions.
+
+Q: Hardart asked whether different policy types have differences in workflows or similar user queries.
+A: The principle of workflow remains the same across different policy types. Each is triaged, and then broker-initiated questions related to the product are funneled to a suitable underwriter. However, the rules may differ slightly based on the product type.
+
+Q: How does the complexity go and how important is the actual contract? Can you answer questions already without it, or you always need the customers and contract to specify or to give information or an answer to it?
+A: Every product has its own schema; its own question set. Commercial combined is the most complex. Brokers self-serve the completion of the questions on site. The answers you'll see within those schedules are ordinarily populated by the broker.
+
+Q: In general insurance, or the way the business occurs when we are quoting or creating a policy, several questions may be asked, with potentially hundreds of attributes of information required by the insurance company. In policy creation, do you want to see all of them being transacted, or is a proof of concept with fewer attributes acceptable?
+A: A few attributes is fine. We're not expecting a full production ready solution right away, but we want to see if it can do it, if it can then scale, and if we can improve the accuracy of it.

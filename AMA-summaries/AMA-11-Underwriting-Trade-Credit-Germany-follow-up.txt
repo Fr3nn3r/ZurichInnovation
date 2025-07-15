@@ -1,0 +1,16 @@
+Q: How can we evaluate the accuracy of the results that we get from the chatbot?
+A: Evaluating the accuracy in numbers may not be straightforward. The best evaluation method would involve domain experts manually comparing the chatbot's results with their own findings to identify any differences and potential solutions.
+
+Q: Are there any benchmarks for the use cases that we have?
+A: There are no set benchmarks for these use cases. However, again, experts within the team can serve as checks, comparing the results provided by the chatbot against their anticipated outcomes.
+
+Q: Can you elaborate on the meaning of the green, yellow, red ranking system in the policy evaluation process?
+A: This color-coding system helps categorize items during the policy evaluation process. Green items require no further attention, yellow items might require additional approval or modifications, and red items must be excluded due to apparent discrepancies or unfitting conditions.
+
+Q: What happens if we identify something as "red" in the evaluation and there seems to be no fix?
+A: If an item is designated as "red," it is marked as undesirable and must be omitted from the policy.
+
+Q: Does the offer Zurich sends to the customer for the top-up serve as a reference point for us during policy evaluation?
+A: Yes, the top-up cover policy serves as a reference during policy evaluation. It can provide a clear example of what the desired end result should look like.
+
+Additionally, the objective for the system is to autonomously identify 90% of the "red" markers, which are undesirable conditions not outlined in the original policy. The system should also learn from repeated experiences to filter out irrelevant "red" markers from competitors. Any subsequent queries or issues will be promptly addressed by Laura.

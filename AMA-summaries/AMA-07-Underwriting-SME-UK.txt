@@ -1,0 +1,20 @@
+Q: Do we have additional data sources beyond the chat logs for training the chatbot? 
+A: There are underwriting guides available, and underwriters undergo a complex training program. However, sensitive data like the real underwriting guides and pricing tools cannot be provided. 
+
+Q: What does the success state look like? 
+A: The success state involves the chatbot effectively classifying types of queries, providing insights into non-value interactions, and distinguishing between complex human-led interactions and simpler queries that can be automated. 
+
+Q: What is the evaluation criteria for the chatbot?
+A: Evaluation will be based on how well the chatbot interacts, if it can handle different scenarios based on chat data, and if it can accurately refer to an underwriter when needed. There isn't a specific success percentage set. 
+
+Q: How would you convey the assumptions or synthetic data used in making inferences during the evaluation?
+A: There will be application of a smaller sample set for demonstration. An additional set of data will be used to run undisclosed tests. 
+
+Q: Should the deployed model be specific to jurisdictions regarding data handling rules?
+A: The jurisdiction for this exercise is specific to the UK. For the purpose of the hackathon, the location of where the inference happens is not a major concern. 
+
+Q: How to improve the chatbot's interpretation and decision-making process?
+A: Providing more rules or better instruction documents can be beneficial. Access to more samples, instructions for beginners in the area, and specific rules can help train the chatbot better. 
+
+Q: What action is expected from the chatbot upon successfully interacting with the users? 
+A: The chatbot must execute certain actions upon successful interaction. Mock ups of agent interactions after the chat, showing how the agent would execute the action, would be useful as we can't provide access to policy admin or CRM systems.

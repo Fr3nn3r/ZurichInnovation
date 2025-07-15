@@ -1,0 +1,17 @@
+Q: How are we going to demonstrate the effectiveness of our tool for the Hackathon?
+A: The solution involves several steps. You can use our data to create a demo showing us your solution. You're also free to demonstrate any additional features that could potentially interact with our APIs.
+
+Q: Can we add certain identities or 'massage' the data, including synthetic data, to show the full flow of our solution?
+A: Yes, adding a couple of columns to our data is acceptable. Feel free to add additional columns and make improvements using your judgement.
+
+Q: In our solution, we sometimes assume certain tools exist in your ecosystem. Is this acceptable?
+A: Yes, it is understood that assumptions are made due to limited knowledge. The goal is to find a better solution and it can be a solution that is already on the market. The Hackathon is an opportunity to find and improve such solutions.
+
+Q: Are gaps in the solution regarding media mix modelling and campaign management acceptable?
+A: For the current Hackathon, focus on the campaign management. Assume later on we might connect this to some media mix modelling. Each case does not need to sit isolated, so it is completely fine if there are gaps.
+
+Q: Can we propose solutions without considering your current ecosystem since we don't have a complete understanding?
+A: Yes, focus on providing an "umbrella solution". It is understood that the company is very decentralized and the ecosystem can vary from market to market.
+
+Q: If during the presentation, we find things that may not work, can we re-adjust and present a different solution?
+A: Yes, the Hackathon is also about discussions, feedback, and readjustments. The objective is to find the best fitting solution, and the product does not have to be fully fledged in the initial stages.

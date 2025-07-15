@@ -1,0 +1,29 @@
+Q: Is the underwriting mid-market Australia line a topic that we can ask here?
+A: No, this meeting is focused more on the business mix and performance, as well as the actuarial pricing elements.
+
+Q: When will the updated file for Clayton Premium be available?
+A: The file has been uploaded to the shared drive.
+
+Q: Are you expecting the AI to pick a model like GAM or GLM, refit it, and select the best variables from the dataset automatically?
+A: No, the plan is simpler. The AI tool is expected to lessen the manual time required to identify shifting trends, using experience from each factor as weight, and flagging significant factors of interest.
+
+Q: Are you expecting that the model will also include calculations for rate sufficiency?
+A: Indirectly, if the model flags areas where the company might not be charging enough, that would indicate insufficient rating.
+
+Q: What types of risk factors are driving your decisions?
+A: The team utilizes all the factors available from their provided data.
+
+Q: Is there a specific level of change that should trigger an alert?
+A: Currently, this is done manually and is based on judgment. The aim is to use AI to flag segments that are shifting significantly.
+
+Q: How often is the data for this model updated?
+A: Currently, the data is refreshed once per month, but the plan is to move towards a daily update.
+
+Q: Are there any specific interactions of factors that would be of interest, like high value homes and warehouses?
+A: The factors of interest vary depending on the line of business. What is needed here is a universal tool that would apply to any portfolio, allowing AI to make the decisions.
+
+Q: Are there any specific KPIs that you will track to measure the model's performance?
+A: The main KPIs primarily revolve around loss ratio, claim frequency, burning costs, and average cost per claim. The goal is to flag segments that are contributing to high loss ratios.
+
+Q: Is the data that is going into the model real-time, or is it snapshot-based?
+A: The data refreshes once a month, but the goal is to have a daily update in terms of the database.

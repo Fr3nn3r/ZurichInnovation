@@ -1,0 +1,14 @@
+Q: Are you a participant in the authentic AI?
+A: No, I'm a participant in the challenge as a whole but my team's solution will be for case 01.
+
+Q: Is there going to be additional data for case 01?
+A: Yes, additional data will be provided latest on Monday. There should be concrete 20 additional cases in a better format.
+
+Q: Do you also need more data for case 01?
+A: Yes, a completely out-of-sample dataset for testing has been provided to Tomas and we are constantly working on providing better and more data.
+
+Q: What's the status of this particular use case with regard to the additional data?
+A: The data is ready and will be uploaded on Monday.
+
+Q: Can the evaluation criteria be applied to more lines of business than simple SME TL?
+A: Yes, the solution doesn't just apply to the example data but it should be able to generalize and apply to different lines of business and datasets. Trends from the new dataset may indicate if the solution is working as intended.

@@ -141,8 +141,31 @@ Output JSON Example:
   "raw_text": "full OCR text here",
   "image_description": "not applicable"
 }
++++++++++++++++++++++++++++++++++++++++++++++
+now for each new dataset context in output, insert a new row in n8n_context_cache, context_key=dataset_id=base_filename without-context.json, context_value=content of base_filname-context.json, zurich_challenge_id=01- Claims- Travel- Canada, data_upload_id=zurich_07_2025 
 
++++++++++++++++++++++++++++++++++++++
+ok now run generate_context.py for all the folder in "C:\Users\fbrun\Documents\GitHub\ZurichInnovation\data\01- Claims- Travel- Canada\Data\Sample Travel Claim Files" (in the output folder) and also update the analysis.xlsx file in the process
 
++++++++++++++++++++++++++++
+
+for each context file in the output foder I want a estimate of the number od tokens in it and compute the overall size of the corresponding original folder in .\data\01- Claims- Travel- Canada\Data\Sample claims files 2\ in KB 
+append a new row in an excel sheet for each context-file/dataset with basefoldername,folder_size_in_KB, estimated_tokens 
+
+++++++++++++++++++++++++
+now for each new dataset context in output, insert a new row in n8n_context_cache, context_key=base_filename without-context.json, dataset_id=base_filename without-context.json, context_value=content of base_filname-context.json, zurich_challenge_id=01- Claims- Travel- Canada, data_upload_id=zurich_07_2025
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+create a python script using OpenAI whisper API of this video, I care only about the sound transcript, create a txt file in the same folder with a shorter name. Then use GPT4.0 to create a summary of the transcript with each Q&A, create a summary.txt in the same folder. C:\Users\fbrun\Documents\GitHub\ZurichInnovation\data\01- Claims- Travel- Canada\Ask Me Anything Session Recording\Ask Me Anything Session – Agentic AI HyperChallenge - Straight-through-processing for high-volume claims-20250624_153102-Meeting Recording.mp4
+Later, if it works I will ask you to run the same script on many videos.
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Add docx files support to the generate_context.py
+
+++++++++++++++++++++++++++++++
+ok now run generate_context.py for all the folder in "C:\Users\fbrun\Documents\GitHub\ZurichInnovation\data\02- Claims- Motor Liability- UK\Data\TEMP" (in the output folder) and also update the output\analysis.xlsx file in the process
+
+++++++++++++++++++++++++++++++++++++++++
 
 ------- FB: backup 14.07.2025
 now for all folder Sample 2 Claims.... / (Fault or Split Liability)/* create a context file in the output folder with all the text from the non-image non-video files (.md .html .json) include in the  context the description of the picture we created at the previous step (for all pictures we already have the description in the damage-analysis file)

@@ -1,0 +1,89 @@
+Q: Are we waiting for somebody specific or do you have questions, Sunny and Sleigh?
+A: The group is waiting for specific answers, not waiting for a person.
+
+Q: We have made a few assumptions based on our own experience in the insurance space, particularly regarding the availability of data and lack of metadata. Does this resonate with your observation in the industry too?
+A: Yes, Tomas agrees that they see the same issues with metadata in their industry as well. They believe the solution could involve being more careful about how they document metadata and processes.
+
+Q: Is there any value in tapping into unstructured data sets and combining some of that data and insights with the structured data?
+A: Yes, Tomas believes there is value in this approach. He thinks unstructured data provides necessary context for models and could potentially speed up the flow of information in the organization.
+
+Q: Right now, is the majority of your work in the structured data space?
+A: Yes, Tomas confirms that the majority of his work is currently in the structured data space.
+
+Q: Do you see a lot of follow-ups on the reports or do people just make assumptions and carry on? 
+A: There are typically follow-up discussions. If nothing abnormal has occurred, there are fewer questions asked. However, when there are new movements in the results, they must be explained.
+
+Q: Is there a human approval process before data is included in the quarterly report? 
+A: Yes, very much so. There are multiple reporting metrics and for each, the produced numbers are approved, and results are explained in a meeting.
+
+Q: We're working on three scenarios for you guys - doing the laundry one, discovering something new and bringing in external data. Do you think these scenarios cover all bases or is there something else you had in mind?
+A: These scenarios sound good and add extra value. The initial focus was the first part and anything extra is a bonus.
+
+Q: When you said the other use case, did you mean use case number 16? 
+A: Yes.
+
+Q: So, we should consider that use case number 16 is an extension of this current use case?
+A: You can see the two use cases as one big pipeline. One is the pre-processing step, and the other is analyzing the reports. It's ideal if one solution covers both to some extent.
+
+Q: Is it okay if we focus on use case number 17 for now?
+A: That sounds good. Both Thomas and I are excited about this use case.
+
+Q: What are your exact expectations for a 'functional working model'? Does 'functional' refer to a prototype level or MVP level?
+A: Any solution that shows promise or can deliver something would work. It can be an MVP or a smaller part of it working. It's about showing what is possible. We will look at all submissions.
+
+Q: For a common ground among the competitors, are there common guidelines and specific expectations?
+A: Not every functionality can be achieved within the time frame we have. If we have a mix of both functional and concept demonstrations, then that would be acceptable as well.
+
+Q: Would a prototype that uses mock data and presents potential functionalities be acceptable?
+A: Yes, using mock data is fine. You can create more artificial data to show a wider scope.
+
+Q: So for clarification, you would prefer the agents to actually do something and not just give an impression of doing something?
+A: Yes, a functional agent that actually does something would be preferred. However, understanding that not every functionality can be achieved within the time frame, a mix of both would also be acceptable.
+
+Q: What does the query status requirement mean?
+A: The requirement is more about having an easier task focused on a high-level status snapshot, where a manager can check the process and if a report is available.
+
+Q: If existing tools or services within Zurich can be integrated into the workflow and utilized for collecting information, would that fulfill the status information requirement?
+A: Integration of existing tools was not initially envisioned, but is viewed as a valuable suggestion. The original thought was a snapshot that details report readiness or awaiting information, but using current tools presents a new level of process control.
+
+Q: Is there any expectation concerning regulatory compliance in relation to the requirements, generated reports, and data sets?
+A: It would be very beneficial to have the ability to perform checks and validations throughout the process. It is hoped that the application has an audit trail for validity and compliance purposes. It should be able to flag and notify if the minimum regulatory required data sets are not met. This is considered a good addition, especially if linked to the latest available FINMA regulations.
+
+Q: In terms of the actual technology that we are bringing to the table, it's not just around AI, it's not just the agent technology, right? So is there going to be a separate technology review, if you will?
+A: Yes. There will be two sets of reviewers. One would be technological and the other would be functional, looking at how it works and reviewing the presentation of the solution. Data scientists from Zurich will be reviewing the technical aspects of the solution.
+
+Q: How should the real innovation that is achieved through the use of our tools and approaches be presented?
+A: It should be stressed in the technical report as this will be an essential part of the review on the technical side.
+
+Q: What are your thoughts on the human relationship to technology and AI, and what you would expect from this solution in five years?
+A: At the present level of technological advancement, it's hard to envision a scenario where agents are fully capable of replacing humans due to factors such as regulatory compliance and the necessity for human verification of numbers. The best case scenario right now is for the technology to augment the way we work, improving our speed, quality, and workload.
+
+Q: Are we going to get another opportunity to discuss this openly again?
+A: Confirmation on this was not directly provided but a willingness to double-check and share the information in a team's channel was stated.
+
+Q: Are collaborations welcomed, seeing as everyone else who contributes to this problem space will be bringing strengths and weaknesses?
+A: They might be allowed. Confirmation on this was not directly given but checking for an absolute assurance was promised.
+
+Q: Could there be a collaboration to create a super set of capabilities?
+A: Yes, there could be a collaboration to create a super set of capabilities through a pilot project by one team or a collaboration of teams.
+
+Q: Who possess the visibility of other submissions?
+A: This visibility only lies with Thomas, the teams wouldn't know what other submissions were made.
+
+Q: How many submissions are expected for this use case?
+A: Around 10 submissions are expected for this use case.
+
+Q: What is suggested for the exchange of ideas and collaboration among startups post-hackathon?
+A: It is suggested that a group may be created for startups to discuss and actively develop, sharing solutions and building the product together.
+
+Q: Would it be possible for selected solutions to work together for added value?
+A: Yes, selected solutions that work well together could be combined for added value. This could be a second chapter where different groups, technologies, or areas of expertise are brought together.
+
+Q: Can we expect feedback on our solution submissions?
+A: Yes, as long as the number of submissions is reasonable, feedback could be provided. However, if the submissions were in the hundreds, feedback to everyone could not be promised.
+
+Q: Will there be opportunities for solutions to be built even if they don't win?
+A: Yes, if any of the business units really like the solution, they should be able to come up with some budget to build it.
+
+Q: Could there be a situation where multiple startups collaborate on one project for the company?
+A: Yes, if there are different solutions that augment each other nicely, the company might propose that multiple startups collaborate on one project.
