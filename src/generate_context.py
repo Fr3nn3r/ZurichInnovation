@@ -54,6 +54,9 @@ try:
     from image_to_text_analyzer import OPENAI_API_KEY
     from PIL import Image
     from openai import OpenAI
+    import fitz  # PyMuPDF for PDF scan detection
+    from docx2pdf import convert as docx_to_pdf
+    import antiword
 except (ImportError, ModuleNotFoundError) as e:
     logging.error(f"Failed to import necessary modules: {e}")
     logging.error(
@@ -83,6 +86,10 @@ def get_file_type(file_path: Path) -> str:
     ext = file_path.suffix.lower()
     if ext == ".pdf":
         return "pdf"
+    if ext == ".docx":
+        return "doc_image"  # Treat as image for Vision API processing
+    if ext == ".doc":
+        return "doc_image"  # Treat as image for Vision API processing
     if ext in SUPPORTED_IMAGE_EXTENSIONS:
         return "image"
     if ext in SUPPORTED_SHEET_EXTENSIONS:
@@ -105,6 +112,152 @@ def read_text_file(file_path: Path) -> Optional[str]:
     except Exception as e:
         logging.error(f"Could not read text file {file_path}: {e}")
         return None
+
+
+def test_document_conversion_capabilities():
+    """
+    Test function to check if document conversion dependencies are working.
+    """
+    try:
+        # Test docx2pdf import
+        from docx2pdf import convert as docx_to_pdf
+
+        logging.info("✓ docx2pdf import successful")
+
+        # Test OpenAI client
+        if OPENAI_API_KEY:
+            client = OpenAI(api_key=OPENAI_API_KEY)
+            logging.info("✓ OpenAI client initialized")
+        else:
+            logging.warning("⚠ OPENAI_API_KEY not configured")
+
+        # Test PyMuPDF
+        import fitz
+
+        logging.info("✓ PyMuPDF (fitz) available")
+
+        return True
+
+    except Exception as e:
+        logging.error(f"✗ Document conversion capability test failed: {e}")
+        return False
+
+
+def convert_doc_to_images(client: OpenAI, file_path: Path) -> List[Dict[str, Any]]:
+    """
+    Converts a .doc or .docx file to images and processes them with Vision API.
+    """
+    import tempfile
+    import os
+    import subprocess
+
+    results = []
+    temp_pdf = None
+
+    try:
+        # Create temporary PDF file
+        with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as temp_file:
+            temp_pdf = temp_file.name
+
+        file_ext = file_path.suffix.lower()
+
+        if file_ext == ".docx":
+            # Use docx2pdf for .docx files
+            logging.info(f"Converting {file_path.name} to PDF using docx2pdf...")
+            try:
+                # Ensure the file exists and is readable
+                if not file_path.exists() or file_path.stat().st_size == 0:
+                    raise Exception(f"File {file_path.name} is empty or doesn't exist")
+
+                docx_to_pdf(str(file_path), temp_pdf)
+
+                # Verify PDF was created
+                if not os.path.exists(temp_pdf) or os.path.getsize(temp_pdf) == 0:
+                    raise Exception("docx2pdf created an empty or invalid PDF file")
+
+                logging.info(
+                    f"Successfully converted {file_path.name} to PDF ({os.path.getsize(temp_pdf)} bytes)"
+                )
+
+            except Exception as docx_error:
+                # Enhanced error reporting for docx conversion
+                logging.error(
+                    f"Failed to convert {file_path.name} to PDF: {docx_error}"
+                )
+                # Provide file information as fallback
+                file_stats = file_path.stat()
+                results = [
+                    {
+                        "detected_type": "docx_conversion_failed",
+                        "fields": {
+                            "filename": file_path.name,
+                            "file_size_bytes": file_stats.st_size,
+                            "modified_date": str(file_stats.st_mtime),
+                            "error": str(docx_error),
+                            "note": "DOCX file detected but conversion to PDF failed. This may be due to file corruption or unsupported format.",
+                        },
+                        "raw_text": f"File: {file_path.name} (DOCX document, conversion failed: {docx_error})",
+                        "image_description": f"This is a Microsoft Word document (.docx format) named '{file_path.name}' that could not be converted to PDF for Vision API processing. Error: {docx_error}",
+                    }
+                ]
+                return results
+        elif file_ext == ".doc":
+            # For .doc files, provide file information since full conversion is complex
+            logging.info(
+                f"Processing .doc file {file_path.name} - providing file information..."
+            )
+            file_stats = file_path.stat()
+            results = [
+                {
+                    "detected_type": "legacy_doc_file",
+                    "fields": {
+                        "filename": file_path.name,
+                        "file_size_bytes": file_stats.st_size,
+                        "modified_date": str(file_stats.st_mtime),
+                        "note": "Legacy .doc file format detected. Content extraction requires specialized tools.",
+                    },
+                    "raw_text": f"File: {file_path.name} (Legacy Microsoft Word document, {file_stats.st_size} bytes)",
+                    "image_description": f"This is a legacy Microsoft Word document (.doc format) named '{file_path.name}'. The file is {file_stats.st_size} bytes in size. Content extraction would require specialized conversion tools like LibreOffice or Microsoft Word.",
+                }
+            ]
+            return results
+
+        # For non-.doc files, check if PDF was created and process it
+        if file_ext != ".doc":
+            # Check if PDF was created successfully
+            if not os.path.exists(temp_pdf) or os.path.getsize(temp_pdf) == 0:
+                raise Exception("No valid PDF was created from document")
+
+            # Now process the PDF as images using existing function
+            logging.info(f"Processing converted PDF with Vision API...")
+            results = process_pdf_with_vision(client, Path(temp_pdf))
+
+    except Exception as e:
+        logging.error(f"Failed to convert {file_path} to images: {e}")
+        results = [{"error": "Document to image conversion failed", "details": str(e)}]
+
+    finally:
+        # Clean up temporary PDF file with retry mechanism
+        if temp_pdf and os.path.exists(temp_pdf):
+            import time
+
+            max_retries = 3
+            for attempt in range(max_retries):
+                try:
+                    os.unlink(temp_pdf)
+                    break
+                except Exception as e:
+                    if attempt < max_retries - 1:
+                        logging.warning(
+                            f"Temporary file cleanup attempt {attempt + 1} failed, retrying: {e}"
+                        )
+                        time.sleep(0.5)  # Wait before retry
+                    else:
+                        logging.warning(
+                            f"Could not delete temporary file {temp_pdf} after {max_retries} attempts: {e}"
+                        )
+
+    return results
 
 
 def read_sheet_file(file_path: Path) -> Optional[str]:
@@ -180,6 +333,32 @@ def is_ocr_gibberish(text: str) -> bool:
         return True  # Less than 60% alphanumeric characters suggests gibberish
 
     return False
+
+
+def is_pdf_scanned(pdf_path: Path) -> bool:
+    """
+    Detects if a PDF contains scanned pages by checking if pages have no text but have images.
+    """
+    try:
+        doc = fitz.open(pdf_path)
+        scanned_pages = 0
+        total_pages = len(doc)
+
+        for page in doc:
+            text = page.get_text()
+            images = page.get_images(full=True)
+
+            # If a page has no text but has images, it's likely scanned
+            if not text.strip() and images:
+                scanned_pages += 1
+
+        doc.close()
+
+        # If more than half the pages are scanned, consider it a scanned PDF
+        return scanned_pages > total_pages / 2
+    except Exception as e:
+        logging.error(f"Error checking if PDF {pdf_path} is scanned: {e}")
+        return False
 
 
 def extract_json_from_output(raw_output: str) -> Dict[str, Any]:
@@ -339,20 +518,38 @@ def generate_context(basefolder: str, output_folder: Optional[str] = None) -> No
 
         try:
             if file_type == "pdf":
-                ocr_text = process_pdf_ocr_only(str(file_path))
-                if is_ocr_gibberish(ocr_text):
-                    logging.warning(
-                        f"Sparse OCR for {relative_path}. Falling back to Vision API."
+                # Check if PDF contains scans first
+                if is_pdf_scanned(file_path):
+                    logging.info(
+                        f"Detected scanned PDF {relative_path}. Using Vision API."
                     )
                     if client:
                         content = process_pdf_with_vision(client, file_path)
                     else:
                         logging.error(
-                            "Cannot use Vision API fallback for PDF as OPENAI_API_KEY is not configured."
+                            "Cannot use Vision API for scanned PDF as OPENAI_API_KEY is not configured."
                         )
-                        content = {"error": "OCR failed and Vision API not available."}
+                        content = {
+                            "error": "Scanned PDF detected but Vision API not available."
+                        }
                 else:
-                    content = ocr_text
+                    # Regular PDF with text - try OCR first
+                    ocr_text = process_pdf_ocr_only(str(file_path))
+                    if is_ocr_gibberish(ocr_text):
+                        logging.warning(
+                            f"Sparse OCR for {relative_path}. Falling back to Vision API."
+                        )
+                        if client:
+                            content = process_pdf_with_vision(client, file_path)
+                        else:
+                            logging.error(
+                                "Cannot use Vision API fallback for PDF as OPENAI_API_KEY is not configured."
+                            )
+                            content = {
+                                "error": "OCR failed and Vision API not available."
+                            }
+                    else:
+                        content = ocr_text
             elif file_type == "image":
                 if client:
                     vision_output_str = ""
@@ -383,6 +580,16 @@ def generate_context(basefolder: str, output_folder: Optional[str] = None) -> No
                         "ocr_text": get_image_ocr_text(file_path),
                     }
 
+            elif file_type == "doc_image":
+                if client:
+                    content = convert_doc_to_images(client, file_path)
+                else:
+                    logging.error(
+                        f"Cannot process document {relative_path} as OPENAI_API_KEY is not configured."
+                    )
+                    content = {
+                        "error": "Document processing requires Vision API but API key not available."
+                    }
             elif file_type == "text":
                 content = read_text_file(file_path)
             elif file_type == "sheet":
@@ -423,6 +630,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "basefolder",
         type=str,
+        nargs="?",
         help="The base folder to recursively scan for files.",
     )
     parser.add_argument(
@@ -436,8 +644,31 @@ if __name__ == "__main__":
         action="store_true",
         help="Process each immediate subfolder of the basefolder individually.",
     )
+    parser.add_argument(
+        "--test-conversion",
+        action="store_true",
+        help="Test document conversion capabilities and exit.",
+    )
 
     args = parser.parse_args()
+
+    # Handle test conversion flag
+    if args.test_conversion:
+        logging.info("Running document conversion capability test...")
+        test_result = test_document_conversion_capabilities()
+        if test_result:
+            logging.info(
+                "✅ All document conversion capabilities are working correctly!"
+            )
+        else:
+            logging.error(
+                "❌ Some document conversion capabilities are missing or broken."
+            )
+        sys.exit(0 if test_result else 1)
+
+    # Check that basefolder is provided when not testing
+    if not args.basefolder:
+        parser.error("basefolder is required when not using --test-conversion")
 
     # Tesseract path configuration check
     # The original script has a hardcoded path. We should check if it's set.
