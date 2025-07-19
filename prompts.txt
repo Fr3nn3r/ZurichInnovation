@@ -169,6 +169,59 @@ There is not enough comments in our code, take all the files in src folder and a
 ok now run generate_context.py for all the folder in "C:\Users\fbrun\Documents\GitHub\ZurichInnovation\data\02- Claims- Motor Liability- UK\Data\TEMP" (in the output folder) and also update the output\analysis.xlsx file in the process
 
 ++++++++++++++++++++++++++++++++++++++++
+in the outpiut folder there is an excel file with these columns:
+basefoldername,folder_size_in_KB,estimated_tokens, zurich_challenge_id
+
+consider the original source folder: "ata\02- Claims- Motor Liability- UK\Data\TEMP"
+
+for each context.json in the output folder add one row to the sheet:
+basefoldername (from the corresponding original folder - context filename without -context.json) ,basefolder_size_in_KB for this context.json,estimated_tokens of the context.json, "02- Claims- Motor Liability- UK"
+
+
+++++++++++++++++++++++++++++++++
+
+from the output/context_report.xlsx I would like to plot the distribution of estimated_tokens
+
++++++++++++++++++++++++++++++++++++
+now for each new dataset context.json in output, insert a new row in n8n_context_cache, context_key=base_filename, dataset_id=base_filename without-context.json, context_value=content of base_filname-context.json, zurich_challenge_id="02- Claims- Motor Liability- UK", data_upload_id=zurich_07_2025_json_v0
+you can use upload_new_contexts but you must rewrite the logic of point "4.  **Upsert Logic (Check-Then-Act)**" the expected behavior it to ALWAYS upsert a new row, upload_new_contexts SHOULD NEVER update an existing row. Update the script,align the comments, and upsert the records.
+
+++++++
+now I want you to generate context files using generate_context.py for all folders contained in these 2 folders:
+- data\03- Claims- Disability- Ecuador\Data\First 11  sample files
+- data\03- Claims- Disability- Ecuador\Data\Sample 2 to share
+also update the output/context_report.xlsx with zurich_challenge_id="03- Claims- Disability- Ecuador"
+
++++++++++++++ 
+now for each new dataset -context.json in ./output, insert a new row in n8n_context_cache, context_key=base_filename, dataset_id=base_filename without-context.json, context_value=content of base_filname-context.json, zurich_challenge_id="03- Claims- Disability- Ecuador", data_upload_id=zurich_07_2025_json_v0 you can use upload_new_contexts.py
+++++++++++++++++++++++
+
+now generate context files using generate_context.py for all folders contained in these 2 folders:
+- data\04- Claims- Motor- Ecuador\Data\Ecuador-Vehicle Theft Sample Claim Files (Original)
+- data\04- Claims- Motor- Ecuador\Data\New Sample Claims Files
+also update the output/context_report.xlsx (basefoldername,folder_size_in_KB,estimated_tokens, zurich_challenge_id) with zurich_challenge_id="04- Claims- Motor- Ecuador"
++++++++
+now for each new dataset -context.json in ./output/contexts, insert a new row in n8n_context_cache, context_key=base_filename, dataset_id=base_filename without-context.json, context_value=content of base_filname-context.json, zurich_challenge_id="04- Claims- Motor- Ecuador", data_upload_id=zurich_07_2025_json_v0 you can use upload_new_contexts.py
+
+++++++++++++++
+generate_context.py needs to be able to read docx files content and add it the the context just like other filetypes
+
+For all PDF files that contain scans:
+    doc = fitz.open(pdf_path)
+    scanned_pages = 0
+    for page in doc:
+      page.get_text() → Extracts visible text.
+      page.get_images(full=True) → Detects embedded images.
+If a page has no text but has images, it's likely scanned.
+
+you must run the fallback OpenAI Vision to descibe the image.
+
+now generate context files using generate_context.py for all folders contained in: data\02- Claims- Motor Liability- UK\Data\Sample Claims File -Customer at Fault
+
+
+
+
+
 
 ------- FB: backup 14.07.2025
 now for all folder Sample 2 Claims.... / (Fault or Split Liability)/* create a context file in the output folder with all the text from the non-image non-video files (.md .html .json) include in the  context the description of the picture we created at the previous step (for all pictures we already have the description in the damage-analysis file)

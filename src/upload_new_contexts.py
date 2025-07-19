@@ -1,6 +1,6 @@
 # This script is designed to upload context data, stored in local JSON files, to a
 # Supabase table named 'n8n_context_cache'. It scans a specified folder for files
-# matching the pattern '*-context.json', reads their content, and then upserts
+# matching the pattern '*-context.json', reads their content, and then inserts
 # this data into the database.
 #
 # The script's main functionalities are:
@@ -17,18 +17,16 @@
 #     file content, the dataset ID, and some hardcoded metadata like
 #     `zurich_challenge_id` and `data_upload_id`.
 #
-# 4.  **Upsert Logic (Check-Then-Act)**: To prevent duplicate entries, the script
-#     implements an "upsert" (update or insert) logic. For each context file:
-#     a. It first queries the 'n8n_context_cache' table to check if a record with
-#        the same `dataset_id` already exists.
-#     b. If a record exists, it updates the existing record with the new data.
-#     c. If no record is found, it inserts the data as a new row.
+# 4.  **Upsert Logic**: For each context file, the script will perform an "upsert"
+#     operation into the 'n8n_context_cache' table. It checks for a record with
+#     the same `dataset_id` and `zurich_challenge_id`; if one exists, it updates
+#     it. Otherwise, it inserts a new record. This prevents duplicate entries for
+#     the same dataset.
 #
 # 5.  **Logging and Error Handling**: The script provides clear logging for each step
-#     of the process, including which file is being processed, whether it's being
-#     updated or inserted, and the success or failure of each database operation.
-#     It also handles potential exceptions during file processing and database
-#     interaction.
+#     of the process, including which file is being processed and the success or
+#     failure of each database operation. It also handles potential exceptions
+#     during file processing and database interaction.
 #
 # 6.  **Command-Line Interface**: It includes a simple command-line interface to
 #     specify the target folder containing the context files and an optional flag
@@ -74,10 +72,12 @@ def get_supabase_client():
 # --- Main Logic ---
 
 
-def upload_context_files(output_folder: str):
+def upload_context_files(
+    output_folder: str, zurich_challenge_id: str, data_upload_id: str
+):
     """
     Scans for '*-context.json' files, reads their content, and upserts them
-    to the 'n8n_context_cache' table in Supabase.
+    into the 'n8n_context_cache' table in Supabase.
     """
     supabase_client = get_supabase_client()
     if not supabase_client:
@@ -110,52 +110,30 @@ def upload_context_files(output_folder: str):
                 "context_key": context_key,
                 "dataset_id": dataset_id,
                 "context_value": context_value,
-                "zurich_challenge_id": "01- Claims- Travel- Canada",
-                "data_upload_id": "zurich_07_2025",
+                "zurich_challenge_id": zurich_challenge_id,
+                "data_upload_id": data_upload_id,
             }
 
-            # --- Check-Then-Act Logic ---
-            # 1. Check if a record with the same dataset_id exists
-            select_response = (
+            # --- Upsert Logic ---
+            # The script will update the record if a context with the same
+            # dataset_id and zurich_challenge_id already exists. Otherwise, it
+            # will insert a new record.
+            logging.info(f"  -> Upserting record for dataset_id: {dataset_id}...")
+            upsert_response = (
                 supabase_client.table("n8n_context_cache")
-                .select("id")
-                .eq("dataset_id", dataset_id)
+                .upsert(
+                    data_to_upsert,
+                    on_conflict="dataset_id,zurich_challenge_id",
+                )
                 .execute()
             )
 
-            if select_response.data:
-                # 2. If it exists, update it
-                logging.info(
-                    f"  -> Found existing record for dataset_id: {dataset_id}. Updating..."
+            if hasattr(upsert_response, "error") and upsert_response.error:
+                logging.error(
+                    f"  -> Failed to upsert {context_key}: {upsert_response.error.message}"
                 )
-                update_response = (
-                    supabase_client.table("n8n_context_cache")
-                    .update(data_to_upsert)
-                    .eq("dataset_id", dataset_id)
-                    .execute()
-                )
-                if hasattr(update_response, "error") and update_response.error:
-                    logging.error(
-                        f"  -> Failed to update {context_key}: {update_response.error.message}"
-                    )
-                else:
-                    logging.info(f"  -> Successfully updated: {context_key}")
             else:
-                # 3. If it does not exist, insert it
-                logging.info(
-                    f"  -> No record found for dataset_id: {dataset_id}. Inserting..."
-                )
-                insert_response = (
-                    supabase_client.table("n8n_context_cache")
-                    .insert(data_to_upsert)
-                    .execute()
-                )
-                if hasattr(insert_response, "error") and insert_response.error:
-                    logging.error(
-                        f"  -> Failed to insert {context_key}: {insert_response.error.message}"
-                    )
-                else:
-                    logging.info(f"  -> Successfully inserted: {context_key}")
+                logging.info(f"  -> Successfully upserted: {context_key}")
 
         except Exception as e:
             logging.error(
@@ -175,6 +153,18 @@ if __name__ == "__main__":
         help="The folder containing the '*-context.json' files. Defaults to 'output'.",
     )
     parser.add_argument(
+        "--zurich-challenge-id",
+        type=str,
+        required=True,
+        help="The Zurich Challenge ID.",
+    )
+    parser.add_argument(
+        "--data-upload-id",
+        type=str,
+        required=True,
+        help="The data upload ID.",
+    )
+    parser.add_argument(
         "-v",
         "--verbose",
         action="store_true",
@@ -189,4 +179,6 @@ if __name__ == "__main__":
     else:
         logging.getLogger().setLevel(logging.INFO)
 
-    upload_context_files(args.output_folder)
+    upload_context_files(
+        args.output_folder, args.zurich_challenge_id, args.data_upload_id
+    )
