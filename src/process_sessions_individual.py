@@ -190,8 +190,8 @@ def main():
     )
     parser.add_argument(
         "--only-session",
-        type=int,
-        help="Process only a specific session number (1-based)",
+        type=str,
+        help="Process only a specific session file path",
     )
 
     args = parser.parse_args()
@@ -201,12 +201,31 @@ def main():
         print(f"❌ Data root directory not found: {data_root}")
         return
 
-    # Filter sessions to process
+    # If a single session path is provided, process it directly
+    if args.only_session:
+        video_path = Path(args.only_session)
+        if not video_path.exists():
+            print(f"❌ Video file not found: {video_path}")
+            return
+
+        print(f"🎯 PROCESSING SINGLE SESSION")
+        print("=" * 80)
+        success = process_single_session_with_retry(video_path)
+        if success:
+            print(f"\n✅ Session processed successfully!")
+        else:
+            print(f"\n❌ Session processing failed.")
+        return
+
+    # Filter sessions to process from the predefined list
     sessions_to_process = MISSING_SESSIONS.copy()
 
-    if args.only_session:
-        if 1 <= args.only_session <= len(MISSING_SESSIONS):
-            sessions_to_process = [MISSING_SESSIONS[args.only_session - 1]]
+    # This part of the logic is now deprecated if --only-session is used with a path
+    # but kept for legacy numeric selection.
+    if args.only_session and args.only_session.isdigit():
+        session_num = int(args.only_session)
+        if 1 <= session_num <= len(MISSING_SESSIONS):
+            sessions_to_process = [MISSING_SESSIONS[session_num - 1]]
         else:
             print(
                 f"❌ Invalid session number. Must be between 1 and {len(MISSING_SESSIONS)}"

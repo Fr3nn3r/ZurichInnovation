@@ -1,0 +1,85 @@
+Q: How do we get access for SharePoint?
+A: Priority will be given to granting you access to SharePoint where all the necessary information is stored. If you experience SharePoint issues, please raise them for resolution. 
+
+Q: If one of the mandatory fields is absent, what's the flow like?
+A: Draft an email asking the broker for the information. Data enrichment should also be considered. Use different sources if the data isn't present in the submission.
+
+Q: How does the underwriting process end?
+A: The process concludes when the premium is calculated and the AI drafted the code schedule is returned to the broker. 
+
+Q: Is it acceptable to mock data, like for earthquake and flood zones for now?
+A: Yes, it is okay to mock the data.
+
+Q: What about the discrepancy in the underwriting guideline rules?
+A: Assume quick decline for values under 50K. The discrepancy concerning the maximum coverage limit of $5 million is due to a mock rule. The guidelines will be updated.
+
+Q: How many submissions are there in total?
+A: Each folder should consist of a single submission on the file, but the exact number needs to be confirmed.
+
+---CHUNK BREAK---
+
+Q: Will there be any hidden test data set for final judging?
+A: A small sample for testing will be provided, though the final details are yet to be confirmed.
+
+Q: What is the weighting on technical implementation?
+A: Evaluation is balanced between technical implementation and business objectives, each roughly weighted at 50%. Different reviewers will assess the technical and business aspects.
+
+Q: How should the final submission be submitted?
+A: Include a video, a PowerPoint presentation, and a technical summary document. Final round includes a live presentation.
+
+Q: Are participants anticipated to integrate with the legacy systems?
+A: No, integration with legacy systems such as policy administration mainframes isn't required for the hackathon.
+
+Q: How will the accuracy of submissions be guaranteed?
+A: Adjustments will be made to the guidelines if issues that influence accuracy are identified. Users should send direct messages if they spot these problems. Most submissions should process through.
+
+---CHUNK BREAK---
+
+Q: Does a high flood risk fall within the company's risk appetite?
+A: Yes, a high flooding risk is within the risk appetite, but it would affect pricing. Communicate conflicting data points for review.
+
+Q: Why does Zurich's underwriting process for this project require a premium calculation when others don't?
+A: Both models exist. Some risks are calculated using a rating engine for the premium, but in certain instances, the actuary is consulted. 
+
+Q: How will my submission be tested?
+A: New submissions will be tested using a small sample of things provided for processing through your tool.
+
+Q: Is there a requirement for an interface to receive new pages?
+A: The interface is optional but highly desirable. There is acknowledgment that it may not be feasible within the time frame.
+
+Q: Will there be an automated response system for agents' e-mails?
+A: An email response system is under consideration. Initially, different processing types' examples will suffice (ones falling out, going through, or referred). An automated bot to send responses back is not yet in place.
+
+Q: What will the file or e-mail formatting be like in the final dataset?
+A: The data is synthesized and anonymized into text files, which should resemble the format of their original documents.
+
+Q: How much human interaction with the system is expected?
+A: Minimized human intervention is anticipated, and it's acceptable if the AI processes from submission intake till premium calculation without human input.
+
+---CHUNK BREAK---
+
+Q: Is there a different scoring for creating extra features?
+A: The primary requirement is meeting the use case requirements. However, additional benefits useful to underwriters are open for consideration.
+
+Q: What is the overall scoring criteria?
+A: Scoring depends heavily on tester feedback. Test cases have been uploaded to assist with flagging false positives.
+
+Q: What was the selection process for underwriting submission data?
+A: The process involves communication between the broker and underwriters post-email reception of opportunities. Rarely are there perfect submissions. Many submission details are no longer required from the brokers due to new methods to obtain this property information. 
+
+Q: What approach should be taken for missing data in submissions?
+A: Communicate specific examples of missing data cases for help. Creating data is acceptable if the reasons are documented. The ultimate goal is to have most cases pass the end of the process.
+
+---CHUNK BREAK---
+
+Q: Are performance improvements expected compared to last year?
+A: This year's focus is more on agentic AI, making the performance comparison to last year's championship less applicable.
+
+Q: How would the accuracy of various large language models (LLMs) impact the project?
+A: Document the LLM used, the reasons, and implications. Both open source and paid tools could meet your requirements.
+
+Q: Are underwriters available for usability tests?
+A: Due to fairness and busy schedules, drop specific questions via direct messages rather than arranging meetings.
+
+Q: Do you work with any preferred hyperscalers like Microsoft, AWS, or GCP? 
+A: We engage with all of them and utilize a variety of language training platforms, choosing the right LLM as per the model requirement.

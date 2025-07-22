@@ -1,0 +1,108 @@
+
+The core goal: **build a system** that:
+
+1. Calculates loss cost
+2. Compares it against policy coverage
+3. Determines fault percentage
+4. Estimates reserve — nothing more, nothing less.
+
+---
+
+## 🛠 Data & Documents
+
+* Use **anonymized real‑life cases**, primarily PDFs and email bodies (some scanned, some handwritten).
+* Shared documents include: first‑notice claims, police reports, medical records, invoices, etc.
+* **For fault in provided cases: always 100%** — no split liability yet, though those are coming.
+* COIs (certificates of insurance) & policy terms: present but may be embedded/missing in some cases—team is working on better quality data.
+
+---
+
+## ❓Key Questions & Answers
+
+### 1. **Scope – No Active Checks**
+
+* No checking for “active customer” or matching open claims.
+* Just cost → coverage → fault → reserve.
+
+### 2. **External Reference Use**
+
+* Weather, scene, context—yes, investigators include that in real life.
+* **But** for use‑case: assume all provided information is already verified, so external lookup not needed.
+
+### 3. **Document Upload**
+
+* No user‑upload flows needed.
+* The system only flags “insufficient data” cases; subsequent information retrieval & reprocessing is out of scope.
+
+### 4. **Insufficient Data Handling**
+
+* At *any point* (cause, coverage, fault, quantum) if data is insufficient → trigger “insufficient data.”
+* No need to maintain state; resubmitted data *may* trigger re-start or resume—left open.
+
+### 5. **Fault % Decision**
+
+* Ideally, the system estimates fault %.
+* If not possible, assume 100% fault.
+* Shared cases currently don’t include splits; more coming later.
+
+### 6. **Minimum & Sufficiency Criteria**
+
+* Must have **basic registration data** (e.g. date of loss).
+* Beyond that, sufficiency depends on the specific claim.
+* No fixed checklist beyond that “minimum set.”
+
+### 7. **Data Delivery**
+
+* Currently via email (attachments).
+* Team is working on improving data format (more structured, easier to work with).
+
+### 8. **Timelines & Guidance**
+
+* Next dataset release is “soon” but no firm date yet.
+* Training materials and internal guidelines may be available — team to confirm.
+
+### 9. **Human‑in‑the‑Loop**
+
+* Final decisions always human-reviewed.
+* But automated steps (coverage check, email reminders, estimation) are encouraged for efficiency.
+
+### 10. **Fraud & Litigation**
+
+* **Fraud detection is out of scope** (assume truthfulness).
+* Loss estimate → reserve calculation is within scope. Litigation risk isn’t explicitly handled.
+
+---
+
+## 🕐 Time & Effort Estimates
+
+* **Simple claims**: 4–8 man‑hours
+* **Complex claims**: up to 100–150 man‑hours
+* Tasks consuming most time: coverage analysis, fault determination, and quantum (loss) estimation.
+
+---
+
+## ✅ Summary Table
+
+| Component                        | Required?      | Notes                                         |
+| -------------------------------- | -------------- | --------------------------------------------- |
+| Cost estimate                    | ✔️ Yes         | Compare with policy limits                    |
+| Coverage determination           | ✔️ Yes         | Must flag cases with insufficient data        |
+| Fault percentage estimation      | ✔️ Ideal       | Or default to 100%                            |
+| Loss quantum & reserve estimate  | ✔️ Yes         | Converts to reserve                           |
+| Insufficient data trigger        | ✔️ Yes         | Stops flow, flags requirement                 |
+| Scoped out: External lookups     | ❌ No (assumed) | Data already validated                        |
+| Scoped out: New document uploads | ❌ No           | Only detection of insufficiency included      |
+| Scoped out: Fraud check          | ❌ No           | Data assumed truthful                         |
+| Scoped in: Human in the loop     | ✔️ Yes         | Final decisions & edge cases guided by humans |
+
+---
+
+## ✅ Next Steps
+
+* **Data**: team is improving datasets (split-fault cases, better formatting, COIs).
+* **Guidance**: internal fault‑estimation guidelines may be shared.
+* **Timeline**: evaluation criteria & submission instructions coming within 1 hour.
+
+---
+
+Let me know if you'd like this unpacked further or visualized with flows—happy to dive deeper!

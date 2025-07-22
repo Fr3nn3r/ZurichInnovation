@@ -466,7 +466,11 @@ def process_pdf_with_vision(client: OpenAI, file_path: Path) -> List[Dict[str, A
 # --- Main Orchestration Function ---
 
 
-def generate_context(basefolder: str, output_folder: Optional[str] = None) -> None:
+def generate_context(
+    basefolder: str,
+    output_folder: Optional[str] = None,
+    vision_only_pdf: bool = False,
+) -> None:
     """
     Recursively scans a base folder, extracts content from files, and
     generates a JSON context file.
@@ -518,8 +522,19 @@ def generate_context(basefolder: str, output_folder: Optional[str] = None) -> No
 
         try:
             if file_type == "pdf":
+                if vision_only_pdf:
+                    logging.info(f"Vision-only mode is active for PDF: {relative_path}")
+                    if client:
+                        content = process_pdf_with_vision(client, file_path)
+                    else:
+                        logging.error(
+                            "Cannot use Vision API for PDF as OPENAI_API_KEY is not configured."
+                        )
+                        content = {
+                            "error": "Vision-only PDF mode requires Vision API but key not available."
+                        }
                 # Check if PDF contains scans first
-                if is_pdf_scanned(file_path):
+                elif is_pdf_scanned(file_path):
                     logging.info(
                         f"Detected scanned PDF {relative_path}. Using Vision API."
                     )
@@ -527,11 +542,9 @@ def generate_context(basefolder: str, output_folder: Optional[str] = None) -> No
                         content = process_pdf_with_vision(client, file_path)
                     else:
                         logging.error(
-                            "Cannot use Vision API for scanned PDF as OPENAI_API_KEY is not configured."
+                            "Cannot use Vision API fallback for PDF as OPENAI_API_KEY is not configured."
                         )
-                        content = {
-                            "error": "Scanned PDF detected but Vision API not available."
-                        }
+                        content = {"error": "OCR failed and Vision API not available."}
                 else:
                     # Regular PDF with text - try OCR first
                     ocr_text = process_pdf_ocr_only(str(file_path))
@@ -645,6 +658,11 @@ if __name__ == "__main__":
         help="Process each immediate subfolder of the basefolder individually.",
     )
     parser.add_argument(
+        "--vision-only-pdf",
+        action="store_true",
+        help="Force PDF processing using only OpenAI Vision for every page, skipping OCR.",
+    )
+    parser.add_argument(
         "--test-conversion",
         action="store_true",
         help="Test document conversion capabilities and exit.",
@@ -701,10 +719,12 @@ if __name__ == "__main__":
             if subfolder.is_dir():
                 logging.info(f"--- Generating context for: {subfolder.name} ---")
                 try:
-                    generate_context(str(subfolder), str(output_folder))
+                    generate_context(
+                        str(subfolder), str(output_folder), args.vision_only_pdf
+                    )
                 except Exception as e:
                     logging.error(f"Failed to process subfolder {subfolder.name}: {e}")
                     logging.error(traceback.format_exc())
         logging.info("--- All subfolders processed. ---")
     else:
-        generate_context(args.basefolder, args.output_folder)
+        generate_context(args.basefolder, args.output_folder, args.vision_only_pdf)

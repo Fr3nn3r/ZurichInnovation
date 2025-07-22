@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  
+  "title": "format_final_json_response",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "ClaimNumber":           { "type": ["string", "null"], "description": "Internal ClaimNumber" },
+    "ClaimStatus":           { "type": ["string", "null"], "enum": ["n/a", "Open", "Paid", "Closed", "Reserved"], "description": "Current lifecycle status of the claim" },
+    "dataset_id":            { "type": ["string", "null"], "description": "Exact match from input dataset_id"},
+    "LiabilityDecision":     { "type": ["string", "null"], "enum": ["At Fault", "Split"], "description": "claims liability decision" },
+    "ReportLink":            { "type": ["string", "null"], "format": "uri", "description": "Absolute URL of the generated report, or null if not produced" },
+    "EmailLink":             { "type": ["string", "null"], "format": "uri", "description": "Email link to customer, or null" },
+    "ExecSummary":           { "type": ["string", "null"], "maxLength": 2000, "description": "≤2000-character executive summary of the incident" },
+    "NextSteps":             { "type": ["string", "null"], "maxLength": 1000, "description": "Actionable next steps for the claims handler" },
+    "agent_run_id":          { "type": ["string"] },
+    
+    "Claim Reported Date":   { "type": ["string", "null"], "description": "Date format (DD.MM.YYYY) or null" },
+    "Claim Accident Date":   { "type": ["string", "null"], "description": "Date format (DD.MM.YYYY) or null" },
+    "Claim Entered Date":    { "type": ["string", "null"], "description": "Date format (DD.MM.YYYY) or null" },
+    "Claim Closed Date":     { "type": ["string", "null"], "description": "Date format (DD.MM.YYYY) or null" },
+    
+    "Primary Loss Cause":    { "type": ["string", "null"], "enum": ["Liab - Slip/Trip/Fall", "Liab - Struck By", "Liab - Burns", "Liab - All Other", "Unknown"] },
+    "Secondary Loss Cause":  { "type": ["string", "null"], "enum": ["Interior Foreign Object", "Interior fault", "Cause not otherwise listed", "Slippery conditions-food/liquid/grease spill", "Slippery conditions-ice/snow/water/etc.", "Object-handled by others", "Hot objects or substances", "Contact with steam/hot fluids", "Water damage or flood", "Object-handled by others", "Fire or flame", "Exterior fault", "Unknown"] },
+    "SIC Code":              { "type": ["string", "null"], "enum": ["5712 - Furniture Stores", "5411 - Grocery Stores", "5651 - Family Clothing Stores", "5812 - Eating Places", "6512 - Operators of Nonresidential Buildings", "1761 - Roofing", "Hot objects or substances", "6798 - Real Estate Investment Trusts", "Unknown" ]},
+    "Loss Location City":    { "type": ["string", "null"] },
+    "Loss Location Province":{ "type": ["string", "null"] },
+    "Loss Location Country": { "type": ["string", "null"] },
+    "Incurred":              { "type": ["string", "null"], "enum": [ "0-$20k", "$20-$50k", "$50-$100k", "$100-$200k", "$200k+", "Unknown" ] }
+
+  },
+  "required": [
+    "ClaimNumber",
+    "ClaimStatus",
+    "dataset_id",
+    "IndemnityDecision",
+    "ReportLink",
+    "EmailLink",
+    "ExecSummary",
+    "NextSteps",
+    "agent_run_id",
+	"Claim Reported Date",
+	"Claim Accident Date",
+	"Claim Entered Date",
+	"Claim Closed Date",
+	"Primary Loss Cause",
+	"Secondary Loss Cause",
+	"SIC Code",
+	"Incurred"
+  ]
+}

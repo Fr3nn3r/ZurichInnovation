@@ -223,11 +223,51 @@ only make required changes to the code
 add .doc support to generate_context.py and rerun folders 16 and 14
 
 +++++++++++++
+now generate context files using generate_context.py for all folders contained in these 2 folders (one context per sub-folder of these 2):
+- data\05- Claims- Liability Decisions- Canada\Data\Canada - Liability decisions data files
+- data\05- Claims- Liability Decisions- Canada\Data\Sample 2 to share
+
+++++++
+I want to create a mode for generate_context.py where we run every PDF page by OpenAI vision, no OCR, just OpenAI vision. 
+and then using the new mode generate context files using generate_context.py for all folders contained in these 2 folders (one context per sub-folder of these 2):
+- data\05- Claims- Liability Decisions- Canada\Data\Canada - Liability decisions data files
+- data\05- Claims- Liability Decisions- Canada\Data\Sample 2 to share
++++
+Using the new OpenAI vision mode to generate context files using generate_context.py for all folders contain in this folder:
+data\04- Claims- Motor- Ecuador\Data\New Sample Claims Files
 
 
+++++++++++
+
+for each new dataset in ./output/Case Y-context.json, insert a new row in n8n_context_cache, context_key=base_filename, dataset_id=base_filename without-context.json, context_value=content of base_filname-context.json, zurich_challenge_id="05- Claims- Liability Decisions- Canada", data_upload_id=zurich_07_2025_json_v2 
+you can use upload_new_contexts.py
+IMPORTANT: YOU MUST INSERT ROWS DO NOT UPDATE OR DELETE ANY pre-existing data from the DB
+
+++++++++
+
+process only this session (using process_sessions_individual.py):
+data\06- Underwriting- Mid Market-  Australia\Ask Me Anything Session Recording\Ask Me Anything Session – Agentic AI HyperChallenge - Transforming Mid-Market Property Insurance with a Digital Underwriting Solution-20250623_090307-Meeting Recording.mp4
 
 
+++++++++++++++++++++++++
+Write a script that lists all the eml files in C:\Users\fbrun\Documents\GitHub\ZurichInnovation\data\06- Underwriting- Mid Market-  Australia\Data\Additional Samples\BASEFILENAME.eml
 
+and for each file creates folder BASEFILENAME containing what is in the archive (email + attachement) for example:
+
+email.txt (full email data)
+attachement1.pdf 
+attachement2.xls
+etc...
+
+++++++++++
+
+now generate context files using generate_context.py (OpenAI vision mode) for all folders contained in these 3 folders:
+
+C:\Users\fbrun\Documents\GitHub\ZurichInnovation\data\06- Underwriting- Mid Market-  Australia\Data\Additional Samples\eml_extractions
+C:\Users\fbrun\Documents\GitHub\ZurichInnovation\data\06- Underwriting- Mid Market-  Australia\Data\Test data- original format
+C:\Users\fbrun\Documents\GitHub\ZurichInnovation\data\06- Underwriting- Mid Market-  Australia\Data\New sample data to share- Double checked!
+
+Outputfolder: C:\Users\fbrun\Documents\GitHub\ZurichInnovation\output\contexts\06
 
 ------- FB: backup 14.07.2025
 now for all folder Sample 2 Claims.... / (Fault or Split Liability)/* create a context file in the output folder with all the text from the non-image non-video files (.md .html .json) include in the  context the description of the picture we created at the previous step (for all pictures we already have the description in the damage-analysis file)
