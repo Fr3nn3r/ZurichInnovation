@@ -263,11 +263,20 @@ etc...
 
 now generate context files using generate_context.py (OpenAI vision mode) for all folders contained in these 3 folders:
 
-C:\Users\fbrun\Documents\GitHub\ZurichInnovation\data\06- Underwriting- Mid Market-  Australia\Data\Additional Samples\eml_extractions
-C:\Users\fbrun\Documents\GitHub\ZurichInnovation\data\06- Underwriting- Mid Market-  Australia\Data\Test data- original format
-C:\Users\fbrun\Documents\GitHub\ZurichInnovation\data\06- Underwriting- Mid Market-  Australia\Data\New sample data to share- Double checked!
+C:\Users\fbrun\Documents\GitHub\ZurichInnovation\input\eml_extractions\*
+C:\Users\fbrun\Documents\GitHub\ZurichInnovation\input\New sample data to share- Double checked!\*
+C:\Users\fbrun\Documents\GitHub\ZurichInnovation\input\Test data- original format\*
 
 Outputfolder: C:\Users\fbrun\Documents\GitHub\ZurichInnovation\output\contexts\06
+
+
++++++++++++++++++++
+
+in the output folder, create a sheet with one row per record from the table n8n_context_cache in supabase. The sheet must contain all columns except context_value, instead of context_value the sheet must contain a context_value_tokens column with the number of tokens estimated from the content of the context_value column.
+
+anaylze_output.py contains an example of how to count the tokens.
+
+
 
 ------- FB: backup 14.07.2025
 now for all folder Sample 2 Claims.... / (Fault or Split Liability)/* create a context file in the output folder with all the text from the non-image non-video files (.md .html .json) include in the  context the description of the picture we created at the previous step (for all pictures we already have the description in the damage-analysis file)

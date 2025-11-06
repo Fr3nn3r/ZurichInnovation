@@ -475,6 +475,7 @@ def generate_context(
     Recursively scans a base folder, extracts content from files, and
     generates a JSON context file.
     """
+    logging.info("Starting generate_context function")
     basefolder = basefolder.strip("'\"")  # Clean up path from shell quoting issues
     base_path = Path(basefolder)
     if not base_path.is_dir():
@@ -492,6 +493,7 @@ def generate_context(
     # Initialize OpenAI client if the key is available
     client = None
     if OPENAI_API_KEY:
+        logging.info("OpenAI API key found, initializing client.")
         client = OpenAI(api_key=OPENAI_API_KEY)
     else:
         logging.warning(
@@ -501,10 +503,12 @@ def generate_context(
     all_files_context: List[Dict[str, Any]] = []
 
     # Use rglob for recursive scanning
+    logging.info(f"Scanning for files in {base_path}.")
     files_to_process = list(base_path.rglob("*"))
     logging.info(f"Found {len(files_to_process)} files to process in {base_path}.")
 
-    for file_path in files_to_process:
+    for i, file_path in enumerate(files_to_process):
+        logging.info(f"Processing file {i+1}/{len(files_to_process)}: {file_path}")
         if not file_path.is_file():
             continue
 
@@ -632,11 +636,13 @@ def generate_context(
         logging.info(f"Successfully generated context file at {output_file}")
     except Exception as e:
         logging.error(f"Failed to write JSON output to {output_file}: {e}")
+    logging.info("generate_context function finished.")
 
 
 # --- CLI Interface ---
 
 if __name__ == "__main__":
+    logging.info("Script started.")
     parser = argparse.ArgumentParser(
         description="Generate a context JSON file from a directory of files."
     )
@@ -728,3 +734,4 @@ if __name__ == "__main__":
         logging.info("--- All subfolders processed. ---")
     else:
         generate_context(args.basefolder, args.output_folder, args.vision_only_pdf)
+    logging.info("Script finished.")

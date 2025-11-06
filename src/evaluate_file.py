@@ -66,7 +66,7 @@ import json
 import sys
 import re
 from rapidfuzz import process, fuzz
-from clause_splitter import split_clauses
+from tmp.clause_splitter import split_clauses
 import os
 from unidecode import unidecode
 import language_tool_python

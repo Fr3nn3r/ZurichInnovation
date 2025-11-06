@@ -1,0 +1,301 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Zurich Underwriting Submission (Full)",
+  "type": "object",
+  "properties": {
+    "broker_details": {
+      "type": "object",
+      "properties": {
+        "broker_network_company":      { "type": ["string", "null"] },
+        "broker_name":                 { "type": ["string", "null"] },
+        "broker_location_branch": {
+          "type": "object",
+          "properties": {
+            "street_address":          { "type": ["string", "null"] },
+            "post_code":               { "type": ["string", "null"] },
+            "citysuburb":              { "type": ["string", "null"] },
+            "state":                   { "type": ["string", "null"] },
+            "country":                 { "type": ["string", "null"] }
+          },
+          "required": []
+        },
+        "broker_email":                { "type": ["string", "null"] },
+        "broker_contact_mobile":       { "type": ["string", "null"] },
+        "broker_commission":           { "type": ["string", "null"] },
+        "quotation_required_by_date":  { "type": ["string", "null"], "format": "date" }
+      },
+      "required": []
+    },
+    "insured_details": {
+      "type": "object",
+      "properties": {
+        "insured":                     { "type": ["string", "null"] },
+        "abn":                         { "type": ["string", "null"] },
+        "business_description":        { "type": ["string", "null"] },
+        "current_insurer":             { "type": ["string", "null"] },
+        "gross_revenueannual_turnover":{ "type": ["string", "null"] },
+        "interested_parties":          { "type": ["string", "null"] }
+      },
+      "required": []
+    },
+    "policy_info": {
+      "type": "object",
+      "properties": {
+        "period_of_insurance": {
+          "type": "object",
+          "properties": {
+            "from":                   { "type": ["string", "null"], "format": "date" },
+            "to":                     { "type": ["string", "null"], "format": "date" },
+            "time_zone":              { "type": ["string", "null"] }
+          },
+          "required": ["from", "to"]
+        },
+        "product_type":                { "type": ["string", "null"] },
+        "firecrime_split":             { "type": ["string", "null"] },
+        "fire":                        { "type": ["string", "null"] },
+        "crime":                       { "type": ["string", "null"] }
+      },
+      "required": []
+    },
+    "policy_coverage": {
+      "type": "object",
+      "properties": {
+        "declared_values": {
+          "type": "object",
+          "properties": {
+            "section_1_material_loss_or_damage_pd": {
+              "type": "object",
+              "properties": {
+                "total": { "type": ["string", "null"] }
+              },
+              "required": []
+            },
+            "section_2_consequential_loss_business_interruption": {
+              "type": "object",
+              "properties": {
+                "total": { "type": ["string", "null"] }
+              },
+              "required": []
+            },
+            "gross_profit": { "type": ["string", "null"] },
+            "loss_of_rent_gross_rental_income": { "type": ["string", "null"] },
+            "payroll": { "type": ["string", "null"] },
+            "claims_preparation_costs": { "type": ["string", "null"] },
+            "severance_pay": { "type": ["string", "null"] },
+            "location_fees_value": { "type": ["string", "null"] },
+            "additional_increased_cost_of_working": { "type": ["string", "null"] },
+            "combined_section_1_2_total_insured_value_total_declared_value": { "type": ["string", "null"] }
+          },
+          "required": []
+        },
+        "limits_of_liability": {
+          "type": "object",
+          "properties": {
+            "section_1_material_damage": { "type": ["string", "null"] },
+            "section_2_consequential_loss_business_interruption": { "type": ["string", "null"] },
+            "combined_section_1_section_2": { "type": ["string", "null"] },
+            "undeclared_situations": { "type": ["string", "null"] }
+          },
+          "required": []
+        },
+        "material_loss_or_damage_sub_limits_section_1": {
+          "type": "object",
+          "properties": {
+            "accidental_damage": { "type": ["string", "null"] },
+            "burglary_andor_theft_of_property": { "type": ["string", "null"] },
+            "personal_property_of_employees_and_others_per_person": { "type": ["string", "null"] },
+            "personal_property_of_employees_and_others_per_event": { "type": ["string", "null"] },
+            "money": { "type": ["string", "null"] },
+            "glass": { "type": ["string", "null"] },
+            "removal_of_debris": { "type": ["string", "null"] },
+            "landscaping": { "type": ["string", "null"] },
+            "extra_cost_of_reinstatement": { "type": ["string", "null"] },
+            "professional_fees": { "type": ["string", "null"] },
+            "additional_extra_cost_of_reinstatement": { "type": ["string", "null"] },
+            "property_in_transit_within_the_commonwealth_of_australia": { "type": ["string", "null"] },
+            "contract_works": { "type": ["string", "null"] },
+            "loss_of_land_value": { "type": ["string", "null"] },
+            "legal_liability_to_make_enquiries": { "type": ["string", "null"] },
+            "rewriting_of_records": { "type": ["string", "null"] },
+            "theft_of_property_in_the_open_air": { "type": ["string", "null"] },
+            "statutory_inquiries": { "type": ["string", "null"] },
+            "accompanied_buggae": { "type": ["string", "null"] },
+            "cost_of_clearing_blocked_drains_pipes_filters_and_pumps": { "type": ["string", "null"] },
+            "signs": { "type": ["string", "null"] },
+            "unspecified_damage": { "type": ["string", "null"] },
+            "expediting_expenses": { "type": ["string", "null"] },
+            "unspecified_customer_goods": { "type": ["string", "null"] },
+            "works_of_art_antiques_and_curios": { "type": ["string", "null"] },
+            "weather_damage_to_certain_property_in_open_air": { "type": ["string", "null"] },
+            "decorative_livestock": { "type": ["string", "null"] },
+            "temporary_removal_exemption": { "type": ["string", "null"] },
+            "metered_water": { "type": ["string", "null"] },
+            "premises_in_the_vicinity_prevention_of_access": { "type": ["string", "null"] },
+            "contractual_damages": { "type": ["string", "null"] },
+            "remote_premises_of_public_utilities": { "type": ["string", "null"] },
+            "acquired_companies": { "type": ["string", "null"] },
+            "acquired_property": { "type": ["string", "null"] },
+            "damage_diminution_and_accidental_discharge_costs": { "type": ["string", "null"] },
+            "prevention_of_imminent_damage_andor_loss_minimisation": { "type": ["string", "null"] },
+            "statutory_authority_fees": { "type": ["string", "null"] },
+            "unpacking_expenses": { "type": ["string", "null"] },
+            "liability_for_duty": { "type": ["string", "null"] },
+            "environmental_improvements": { "type": ["string", "null"] },
+            "portable_property_in_open_air": { "type": ["string", "null"] },
+            "replacing_locks_or_keys_magnetic_keys_card_or_similar_devices": { "type": ["string", "null"] },
+            "general_property": { "type": ["string", "null"] },
+            "employee_dishonesty": { "type": ["string", "null"] },
+            "exploratory_costs": { "type": ["string", "null"] },
+            "labels_containers_and_wrappings": { "type": ["string", "null"] },
+            "securities": { "type": ["string", "null"] },
+            "machinery_breakdown": { "type": ["string", "null"] },
+            "tree_removal": { "type": ["string", "null"] },
+            "additional_sub_limit": { "type": ["string", "null"] }
+          },
+          "required": []
+        },
+        "consequential_loss_of_profitsbusiness_interuption_section_2_sub_limits": {
+          "type": "object",
+          "properties": {
+            "claims_preparation_costs": { "type": ["string", "null"] },
+            "additional_increased_cost_of_working": { "type": ["string", "null"] },
+            "accounts_receivable": { "type": ["string", "null"] },
+            "direct_suppliers_andor_direct_customers_premises": { "type": ["string", "null"] },
+            "unspecified_suppliers_and_or_customers_premises": { "type": ["string", "null"] },
+            "premisesproperty_of_electricity_gas_water_sewerage_or_communication_service_company_or_authority": { "type": ["string", "null"] },
+            "other_contributing_properties": { "type": ["string", "null"] },
+            "infectious_or_contagious_diseases_vermin_pests_or_defective_sanitary_arrangements": { "type": ["string", "null"] },
+            "food_or_drink_poisoning_murder_suicide": { "type": ["string", "null"] },
+            "contractual_fines_and_penalties": { "type": ["string", "null"] },
+            "remote_premises_of_public_utilities": { "type": ["string", "null"] },
+            "machinery_breakdown": { "type": ["string", "null"] },
+            "temporary_accommodation": { "type": ["string", "null"] },
+            "additional_sub_limit": { "type": ["string", "null"] }
+          },
+          "required": []
+        },
+        "combined_section_1_material_damage_section_2_consequential_loss_sub_limits_of_liability": {
+          "type": "object",
+          "properties": {
+            "earth_quake": { "type": ["string", "null"] },
+            "flood": { "type": ["string", "null"] }
+          },
+          "required": []
+        },
+        "indemnity_period": { "type": ["string", "null"] },
+        "deductible_section_1_material_loss_or_damage": {
+          "type": "object",
+          "properties": {
+            "all_other_losses": { "type": ["string", "null"] },
+            "flood": { "type": ["string", "null"] },
+            "earthquake": { "type": ["string", "null"] },
+            "specified_losses": { "type": ["string", "null"] }
+          },
+          "required": []
+        },
+        "deductible_section_2_consequential_loss": {
+          "type": "object",
+          "properties": {
+            "all_other_losses": { "type": ["string", "null"] },
+            "flood": { "type": ["string", "null"] },
+            "earthquake": { "type": ["string", "null"] },
+            "specified_losses": { "type": ["string", "null"] }
+          },
+          "required": []
+        },
+        "combined_section_1_section_2_deductible": {
+          "type": "object",
+          "properties": {
+            "all_other_losses": { "type": ["string", "null"] },
+            "flood": { "type": ["string", "null"] },
+            "earhquake": { "type": ["string", "null"] },
+            "specified_losses": { "type": ["string", "null"] }
+          },
+          "required": []
+        },
+        "payroll_limits": { "type": ["string", "null"] },
+        "uninsured_working_expenses": { "type": ["string", "null"] },
+        "endorsements": { "type": ["string", "null"] },
+        "insurer_proportion_capacity": { "type": ["string", "null"] },
+        "policy_wording": { "type": ["string", "null"] },
+        "additional_uw_information": { "type": ["string", "null"] }
+      },
+      "required": []
+    },
+    "risk": {
+      "type": "object",
+      "properties": {
+        "string_of_locations": { "type": ["string", "null"] },
+        "building_owner": { "type": ["string", "null"] },
+        "situation_property_addresses": {
+          "type": "object",
+          "properties": {
+            "property_construction_details": {
+              "type": "object",
+              "properties": {
+                "building": { "type": ["string", "null"] }
+              },
+              "required": []
+            },
+            "contentsstock_in_trade": { "type": ["string", "null"] },
+            "construction_wall": { "type": ["string", "null"] },
+            "construction_roof": { "type": ["string", "null"] },
+            "construction_floor": { "type": ["string", "null"] },
+            "construction_frame": { "type": ["string", "null"] },
+            "contruction_year_build": { "type": ["string", "null"] },
+            "fire_protection_sprinklers_hose_reels": { "type": ["string", "null"] },
+            "security_alarm_cctv": { "type": ["string", "null"] },
+            "sprinkler_effectiveness": { "type": ["string", "null"] },
+            "fire_alarm_effectiveness": { "type": ["string", "null"] },
+            "storage_height": { "type": ["string", "null"] },
+            "storage_packaging": { "type": ["string", "null"] },
+            "occupancy": { "type": ["string", "null"] },
+            "string_of_storeys": { "type": ["string", "null"] },
+            "location_coverage": {
+              "type": "object",
+              "properties": {
+                "limit_of_liability": { "type": ["string", "null"] }
+              },
+              "required": []
+            },
+            "fire_coverage": { "type": ["string", "null"] },
+            "explosion_and_aircraft": { "type": ["string", "null"] },
+            "water_damage": { "type": ["string", "null"] },
+            "strike_riot_civil_commotion": { "type": ["string", "null"] },
+            "accidental_damage": { "type": ["string", "null"] },
+            "burgraly_and_theft": { "type": ["string", "null"] },
+            "earthquake": { "type": ["string", "null"] },
+            "flood": { "type": ["string", "null"] },
+            "hail": { "type": ["string", "null"] },
+            "bushfire": { "type": ["string", "null"] },
+            "windstorm": { "type": ["string", "null"] },
+            "terrorism": { "type": ["string", "null"] },
+            "machinery_breakdown": { "type": ["string", "null"] }
+          },
+          "required": []
+        }
+      },
+      "required": []
+    },
+    "loss_history_claims_details": {
+      "type": "object",
+      "properties": {
+        "does_this_opportunity_have_past_claims": { "type": ["string", "null"] },
+        "string_of_claims": { "type": ["string", "null"] },
+        "claim_strings": { "type": ["string", "null"] },
+        "loss_date": { "type": ["string", "null"], "format": "date" },
+        "reported_date": { "type": ["string", "null"], "format": "date" },
+        "claimant": { "type": ["string", "null"] },
+        "risk_class": { "type": ["string", "null"] },
+        "loss_description": { "type": ["string", "null"] },
+        "claim_status": { "type": ["string", "null"] },
+        "excess_uninsured_excess": { "type": ["string", "null"] },
+        "recovery": { "type": ["string", "null"] },
+        "incurred_amount": { "type": ["string", "null"] },
+        "total_incurred_all_losses": { "type": ["string", "null"] }
+      },
+      "required": []
+    }
+  },
+  "required": []
+}

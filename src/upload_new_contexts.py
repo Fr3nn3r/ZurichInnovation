@@ -17,11 +17,11 @@
 #     file content, the dataset ID, and some hardcoded metadata like
 #     `zurich_challenge_id` and `data_upload_id`.
 #
-# 4.  **Upsert Logic**: For each context file, the script will perform an "upsert"
-#     operation into the 'n8n_context_cache' table. It checks for a record with
-#     the same `dataset_id` and `zurich_challenge_id`; if one exists, it updates
-#     it. Otherwise, it inserts a new record. This prevents duplicate entries for
-#     the same dataset.
+# 4.  **Insert Logic**: For each context file, the script will perform an "insert"
+#     operation into the 'n8n_context_cache' table. If a record with the same
+#     `dataset_id` and `zurich_challenge_id` already exists, the database may
+#     return an error, which will be logged. This ensures that only new,
+#     non-duplicate entries are added.
 #
 # 5.  **Logging and Error Handling**: The script provides clear logging for each step
 #     of the process, including which file is being processed and the success or
@@ -76,7 +76,7 @@ def upload_context_files(
     output_folder: str, zurich_challenge_id: str, data_upload_id: str
 ):
     """
-    Scans for '*-context.json' files, reads their content, and upserts them
+    Scans for '*-context.json' files, reads their content, and inserts them
     into the 'n8n_context_cache' table in Supabase.
     """
     supabase_client = get_supabase_client()
@@ -114,26 +114,23 @@ def upload_context_files(
                 "data_upload_id": data_upload_id,
             }
 
-            # --- Upsert Logic ---
-            # The script will update the record if a context with the same
-            # dataset_id and zurich_challenge_id already exists. Otherwise, it
-            # will insert a new record.
-            logging.info(f"  -> Upserting record for dataset_id: {dataset_id}...")
-            upsert_response = (
+            # --- Insert Logic ---
+            # The script will insert a new record. If a context with the same
+            # dataset_id and zurich_challenge_id already exists, the database
+            # will likely return an error, which will be logged.
+            logging.info(f"  -> Inserting record for dataset_id: {dataset_id}...")
+            insert_response = (
                 supabase_client.table("n8n_context_cache")
-                .upsert(
-                    data_to_upsert,
-                    on_conflict="dataset_id,zurich_challenge_id",
-                )
+                .insert(data_to_upsert)
                 .execute()
             )
 
-            if hasattr(upsert_response, "error") and upsert_response.error:
+            if hasattr(insert_response, "error") and insert_response.error:
                 logging.error(
-                    f"  -> Failed to upsert {context_key}: {upsert_response.error.message}"
+                    f"  -> Failed to insert {context_key}: {insert_response.error.message}"
                 )
             else:
-                logging.info(f"  -> Successfully upserted: {context_key}")
+                logging.info(f"  -> Successfully inserted: {context_key}")
 
         except Exception as e:
             logging.error(

@@ -1,0 +1,157 @@
+Hello and thank you very much for having me today. 
+
+In the next 8 minutes, I'll show you how to simplify your Ecuador motor claims from a tedious manual process into a maximum 3-minute review while maintaining 95% accuracy and full compliance.
+
+My name is Frederic Brunner, I am a freelance engineer. In my career I've spent 15 years transforming claims operations. Today, I'm here with a working solution based on your data.
+
+In Ecuador, based on the 25 claims datasets shared for this use case, your team reviews an average of 8 documents to process a claim. FNOL, driver's licence, police report, tracking device logs, customer ID, vehicleID, policy details, sometimes more. The work requires cross-checking information to ensure consistency and compliance, gathering data from up to 5 different systems, and complete simple acts of management.
+
+I am proposing to simplify this process by running an agent integrated within your Business Unit's IT ecosystem. Watch these claims being processed right now. For this demo, I have assumed that the agent was able to work with a policySystem, a claimSystem, a sanction screening service, a document generation service, and a vehicle data retrieval service. These are the tools below that are triggered automatically by the reasoning model.
+
+The agent utilizes the documents in the context and follows my instructions to break it down into simple tasks executed automatically: let me show you the source code, since it is actually plain english: 
+
+[Show the prompt in n8n]
+
+then provide your team with a report like this:
+
+[Show the completed report]
+
+Look at this output—everything your adjuster needs:
+
+• Key data points
+• Executive summary
+• Stakeholders
+• Events
+• Document checklist
+• Claims validation summary
+• Coverage validation
+• Loss estimate
+• Actions taken and next steps
+
+Now what happens when something's off? Then it stops and asks for help.
+
+See this claim? The driver failed sanctions screening. The agent flagged it, documented why, and is waiting for human review. Your experts handle the exceptions, not the routine.
+
+A few numbers (*): 
+• 25 of your 25 sample claims: Fully automated
+• Accuracy: 90% on data extraction (5 data points), 95% on decisions (end-to-end decision only)
+• Average adjuster time to process a motor claim in latin America: 60-120 minutes (1h)
+• Assuming 80% efficiency gains (from 1-2h to 12-24 minutes)
+• Assuming Ecuador BU operates 1,500 claims monthly that's 1200-2400 hours saved. Every month.
+(*) assumptions apply
+
+I built this alone a few days (in 4 weeks I actually built working prototypes for all claims use cases).
+
+Together with your team's expertise we can deliver a working solution in production in 12 weeks.
+
+I have been programming for 30 years, I know this technology works from first principle, I'm happy to work for free until my software delivers efficiency gains.
+
+The risk is entirely on execution. This is exactly my mission I want to prove that AI can be deployed in a responsible, safe and compliant way.  
+
+Now I need one thing from you: A mandate to implement 12-week pilot.
+
+do I have time to go aver the phases?
+
+Weeks 1-2: Implementation worksop, objectives and governance
+Weeks 3-4: implement read-only pipleline with live data to generate usable reports -> collect feedback
+Weeks 4-8: build policy and claim integration / testing
+Weeks 8-12: testing / dry-run / deployment on small sample of simple claims
+
+By week 12, you'll have 100 claims processed and know exactly what this is worth to Zurich.
+
+Thanks you very much for your attention, any questions?
+
+
+
+
+
+
+++++++++++++++++++++++++++++++++++++ 
+Hello and thank you very much for having me today, this is a great honor to be here.
+
+My name is Frederic Brunner, I am a freelance software engineer. I spent 15 years in professional services, delivering many claims transformation programms. 
+I competed to that challenge on my own and built 7 prototypes using this platform. Let me start the workflow execution in the background so I can show you a live demo.
+
+My goal today is to demonstrate I can help insurers execute on AI to solve concrete problems.
+
+In Ecuador, based on the 28 claims sample shared for this use case, your team reviews an average of 8 documents to process a claim. FNOL, driver's licence, police report, tracking device logs, customer ID, policy contract, sometimes more. The work requires cross-checking information, between the documents themselves and both internal and external systems, to ensure consistency and compliance.
+
+I am proposing to simplify this process by running an agent integrated with your Business Unit's IT ecosystem. For this demo, I have assumed that the agent was able to work with a policySystem, a claimSystem, a sanction screening service, a document generation service, and a vehicle data retrieval service.
+
+The agent will utilize the documents to execute simple tasks automatically and then provide your team with a report like this:
+
+Its has a Claim Summary with key data points
+Stakeholders digest
+Context summary
+Chronological events
+Document checklist
+Claims validation
+Coverage validation
+Loss estimate
+Actions taken
+Communications
+
+Basically all the obvious routine checks have been applied, and the report contains all informatiom your team needs to know to quickly undertsand the context of the claim and decide what is the next best action.
+
+In this case, all documents checked out, all verification succeeded, the agent completed its execution and closed the claim automatically.
+
+Let me quickly show you how it works.
+
+If the agent detects an anomaly in the claim file, the execution stops, it gets logged in the report.
+
+In this example the driver's sanction screening has failed, therefore the claim is still open and the agent is now expecting human feedback and you team start a conversation with the agent ask questions and follow-up
+
+Early evaluation shows over 95% on both data extraction accuracy and decision accuracy. Of course I would have to work with your team to document expected data points and decision for each dataset to build a complete evaluation pipeline. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+++++++++++++++++++++++++ V0
+Hello and thank you very much for having me today.
+
+My name is Frederic Brunner, I am software engineer with 15 years of experience in enterprise professional services. I just created an AI startup with the mission to serve the insurance industry. For this hackathon, I built - by myself - 7 prototypes. Let's dive into one of them.
+
+In Ecuador, based on the 28 claims sample shared for this use case, your team reviews an average of 8 documents to process a claim. FNOL, driver's licence, police report, tracking device logs, customer ID, policy contract, sometimes more. The work requires cross-checking and controlling information, between the documents and both internal and external systems.
+
+Instead I propose that your team reviews a report like this (this is just an example):
+
+Its has a Claim Summary with key data points
+Stakeholders digest
+Context summary
+Chronological events
+Document checklist
+Claims validation
+Coverage validation
+Loss estimate
+Actions taken
+Communications
+
+Let me explain how it work to go one step further: Here is the plaftorm I used program the agents, it's a bit technical please bear with me. 
+
+First, my application normalizes the dataset into a standard text format. The set of all documents determines the "context" of the claim. The Large Language Model reads the context and executes the instructions to produce the outcome. Let me show you.
+
+Let's start an execution in the background for one dataset. As you can see here below there is a set of tools that the agent can call to complete its tasks. Let me show you the instruction.
+
+Unlike regular technical code Artifical intelligence instructions are written almost in plain english, this is the actual prompt that is used for the Ecuador use case, let me walk you through it quickly.
+
+... 
+
+At the end of its execution the history of the conversation is saved into a database and we can switch to a conversational mode.
+
+... demo if there's time
+
+I have built agents like this for all claims use cases of the challenge showing scalability accross line.
+
+Next steps I would love to work with your team on building the evaluation pipeline for these agents. I mean documenting expected data points and decision for each dataset on compare with the execution. This step should produce the assets required to qualify the solution before launch and to monitor its behavior in production.
+
+I hope this was somewhat entertaining! 
+
